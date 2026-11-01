@@ -303,6 +303,53 @@ celdas; por ejemplo, MongoDB A Q2 con 1 cliente da 278, 269 y 270\,ms. Las celda
 dispersión son las de PostgreSQL Q1, donde el disco interviene (B con 1 cliente: de 3\,283
 a 5\,789\,ms).
 
+\subsection*{Huella por cada 1\,000 documentos procesados (M3)}
+\addcontentsline{toc}{subsection}{Huella por cada 1\,000 documentos procesados (M3)}
+La tabla~\ref{tab:huella} aplica esta definición, que está \emph{propuesta y pendiente de
+confirmación}:
+\begin{itemize}
+\item \textbf{Documento procesado:} una venta leída por la consulta. Por consulta se toman
+  los documentos examinados según los planes de la sección~\ref{sec:planes} (perfil A, 1
+  cliente): Q1 lee 500\,000 en ambos motores; Q2 y \cod{Q2\_RELAXED}, 227\,094 en ambos
+  (MongoDB: \cod{totalDocsExamined}; PostgreSQL: filas del \cod{Index Scan} más las
+  eliminadas por el filtro). Se asume que ese número no cambia con el perfil ni con la
+  concurrencia.
+\item \textbf{Documentos procesados en la ventana:} consultas ok (\cod{meta.json},
+  \cod{consultas.medidas\_ok}) por documentos por consulta.
+\item \textbf{CPU:} delta de \cod{usage\_usec} de \cod{cpu.stat} del cgroup entre el inicio
+  y el fin de la ventana, en ms por cada 1\,000 documentos procesados.
+\item \textbf{Memoria:} la RSS máxima de la ventana (\cod{max\_rss\_mb}) y la razón ``MiB
+  de RSS por cada 1\,000 documentos por segundo'' (RSS máxima entre miles de documentos
+  procesados por segundo). Esta razón es una interpretación de la frase ``huella de memoria
+  por cada 1\,000 documentos'' del enunciado: la RSS es un nivel, no un consumo
+  acumulable.
+\item Por celda, la mediana de las 3 rondas de cada valor.
+\end{itemize}
+
+{\small\setlength{\tabcolsep}{3.2pt}
+\input{generado/tabla_huella.tex}}
+
+\paragraph{Lo que muestran los números.} En Q1 con 1 cliente, PostgreSQL gasta entre 3,0 y 3,7
+veces el CPU por cada 1\,000 documentos de MongoDB: 8,7, 9,4 y 11,8\,ms en los perfiles
+A, B y C, frente a 2,9, 2,9 y 3,2\,ms. Con más clientes el costo sube en ambos motores
+(MongoDB A: 2,9, 4,6 y 5,4\,ms con 1, 10 y 50 clientes; PostgreSQL A: 8,7 y 17,0\,ms con
+1 y 10). Las celdas de PostgreSQL Q1 con 50 clientes (278,3 y 249,6\,ms en A y B) se
+calculan con 3 o 4 consultas y con el CPU de las consultas canceladas al cierre, y en B
+además con reinicios por OOM: no son comparables con las demás. En C no hay consultas ok
+y la huella no se puede calcular. En Q2 los dos motores quedan cerca, entre 1,1 y
+1,8\,ms por cada 1\,000 documentos: con 1 cliente MongoDB gasta menos (1,10 frente a
+1,60\,ms en A) y con 50 clientes PostgreSQL gasta menos (1,36 frente a 1,81\,ms en A;
+1,28 frente a 1,68\,ms en C). \cod{Q2\_RELAXED} da lo mismo que Q2 (MongoDB 1,66 y
+PostgreSQL 1,28\,ms en C con 50 clientes). El perfil cambia poco el CPU por documento con
+1 cliente, salvo en PostgreSQL Q1, que sube de 8,7 a 11,8\,ms de A a C. En memoria, la
+RSS de MongoDB está entre 493 y 974\,MiB en todas las celdas, así que su razón por
+documentos/s sube cuando el throughput baja (Q1 con 50 clientes: 1,3, 2,7 y 4,7\,MiB en
+A, B y C). La RSS de PostgreSQL en Q2 es mucho menor (entre 20 y 298\,MiB, con razones de
+0,015 a 0,38\,MiB). \emph{Hipótesis no verificada:} parte de la diferencia de RSS se debe a
+que \cod{container\_memory\_rss} no cuenta la memoria compartida, donde PostgreSQL guarda
+sus \cod{shared\_buffers}; por eso la comparación de memoria entre motores debe leerse
+con cautela.
+
 %=====================================================================
 \section{Análisis gráfico}
 %=====================================================================
@@ -560,6 +607,12 @@ repetir la matriz en Linux nativo.
   corridas a medias ni descartes.
 \item \textbf{\cod{memory.peak}.} Es el pico del cgroup desde que arranca el contenedor,
   incluido el calentamiento, y cuenta caché de página; no equivale a la RSS.
+\item \textbf{Huella por cada 1\,000 documentos (M3).} Es una definición propuesta. El CPU
+  de la ventana incluye el de las consultas en vuelo que se cancelan al cerrarla, lo que
+  sesga la huella hacia arriba, sobre todo con pocas consultas ok, y no incluye el
+  cliente, que corre en Windows. Los documentos por consulta salen de los planes con el
+  perfil A y 1 cliente y se asumen constantes. La razón de RSS por documentos/s es una
+  interpretación del enunciado.
 \end{enumerate}
 
 %=====================================================================
