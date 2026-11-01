@@ -475,6 +475,40 @@ relajadas (fijado antes de medir: que el plan cambiara entre variantes) no se cu
 %=====================================================================
 \section{Interpretación: límites de memoria, volcado a disco y throttling}
 %=====================================================================
+\subsection{Respuestas a las preguntas del enunciado (M1, M2, M3)}
+
+\paragraph{M1. ¿Cómo cambian la latencia P95 y P99 de las agregaciones sobre documentos
+anidados al limitar CPU y memoria?} En la agregación Q1, MongoDB aumenta su latencia casi
+en proporción a la cuota de CPU cuando hay concurrencia: con 10 clientes el P99 pasa de
+6\,090 a 11\,808 y 24\,799\,ms (perfiles A, B y C) y el P95 de 5\,923 a 11\,505 y
+23\,801\,ms; con 50 clientes el P99 pasa de 35\,077 a 66\,694 y 137\,694\,ms. Con 1 cliente
+el cambio es menor (P99 de 1\,411, 1\,429 y 2\,063\,ms). PostgreSQL parte de latencias más
+altas por el volcado a disco (P99 con 1 cliente: 2\,790, 5\,343 y 8\,497\,ms; P95: 2\,744,
+5\,038 y 8\,179\,ms) y con 50 clientes deja de responder: en B termina en OOM con 4
+consultas por ventana y en C en OOM sin ninguna. Con 10 clientes su P99 no sigue a la
+cuota (82\,581, 74\,662 y 105\,002\,ms), porque espera al disco. Detalle en la
+tabla~\ref{tab:rendimiento} y la figura~\ref{fig:p99} (sección 4).
+
+\paragraph{M2. ¿Qué motor usa de forma más eficiente los buffers de ordenamiento y
+agrupamiento antes de volcar a disco o fallar por OOM?} En Q1, MongoDB: su \cod{\$group}
+alcanza un pico de 42\,870\,B para 90 grupos y no usa disco (tabla~\ref{tab:planes}), y en
+sus 57 corridas no hubo volcado ni OOM (tabla~\ref{tab:recursos}). PostgreSQL ordena los
+documentos completos con un \cod{work\_mem} de 4\,MB, vuelca unos 0,8\,GiB por ejecución
+en los tres perfiles (21 corridas \cod{spill}) y con 50 clientes falla por OOM en B y C
+(6 corridas). En Q2 no hay diferencia: los dos resuelven el Top-1000 en memoria (unos
+3\,MB en PostgreSQL y 1,6\,MB en MongoDB) sin volcar, con ambas variantes de memoria
+(sección~\ref{sec:planes}).
+
+\paragraph{M3. ¿Cuál es la huella de CPU y memoria por cada 1\,000 documentos procesados en
+cada motor?} Con la definición propuesta de la sección 3, en Q1 con 1 cliente PostgreSQL
+usa 8,7--11,8\,ms de CPU por cada 1\,000 documentos y MongoDB 2,9--3,2\,ms; en Q2 los dos
+quedan entre 1,1 y 1,8\,ms (tabla~\ref{tab:huella}). En memoria, MongoDB mantiene una RSS
+de 493 a 974\,MiB y PostgreSQL usa menos RSS en Q2 (20 a 298\,MiB), con la salvedad sobre
+la memoria compartida que se indica en la sección 3. Las celdas de PostgreSQL Q1 con 50
+clientes no tienen una huella comparable (pocas consultas u OOM).
+
+\subsection{Análisis}
+
 \paragraph{El cuello de botella de PostgreSQL Q1 es el plan, no el límite de memoria.} El
 volcado aparece desde el perfil A con 1 cliente (4\,GiB de límite y 0,1\,\% de periodos
 con throttling) y con el mismo volumen, unos 0,8\,GiB por ejecución, en los tres perfiles.
