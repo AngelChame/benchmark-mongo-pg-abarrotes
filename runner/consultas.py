@@ -45,8 +45,12 @@ def preparar_sesion_pg(conn, query_id: str, timeout_s: float | None = None) -> N
                     else "RESET statement_timeout")
 
 
+COMENTARIO = "benchmark"   # etiqueta para localizar y cancelar consultas en vuelo
+
+
 def ejecutar_mongo(db, query_id: str, timeout_s: float | None = None) -> list:
     kw = opciones_mongo(query_id)
+    kw["comment"] = COMENTARIO
     if timeout_s:
         kw["maxTimeMS"] = int(timeout_s * 1000)
     return list(db[config.COLECCION].aggregate(pipeline(query_id), **kw))
