@@ -69,8 +69,10 @@ def _escribir_json(ruta: Path, datos) -> None:
 
 
 class Salidas:
-    def __init__(self, dir_resultados: Path | None = None, indice_evidencia: Path | None = None):
+    def __init__(self, dir_resultados: Path | None = None, indice_evidencia: Path | None = None,
+                 dir_runs: Path | None = None):
         self.dir = Path(dir_resultados or config.RAIZ / "results")
+        self.dir_runs = Path(dir_runs or self.dir / "runs")
         self.csv = self.dir / "benchmark_results.csv"
         self.descartes = self.dir / "descartes.csv"
         self.bitacora = self.dir / "bitacora.log"
@@ -115,7 +117,7 @@ class Salidas:
         """Escribe todos los archivos de una corrida terminada. Devuelve un resumen."""
         fila, motivos = self.cerrar_fila(res["fila"], run_number)
         rid = self.run_id(fila, run_number)
-        carpeta = self.dir / "runs" / rid
+        carpeta = self.dir_runs / rid
         carpeta.mkdir(parents=True, exist_ok=True)
         meta = res["meta"]
         motor = fila["engine"]
@@ -155,10 +157,10 @@ class Salidas:
             "archivos": archivos, **meta})
 
         if descartada:
-            _agregar(self.descartes, _linea_csv([
-                ahora_utc(), rid, motor, fila["profile"], fila["query_id"], fila["concurrency"],
-                run_number, intento, descartada]), _linea_csv(COLUMNAS_DESCARTES))
-            self.evento("descarte", f"{rid} intento {intento}: {descartada}")
+            self.registrar_descarte(rid, fila, run_number, intento, descartada)
+        elif clave_fila(fila) in self.claves_csv():
+            # Nunca se duplica una fila (misma celda y misma ronda).
+            self.evento("fila duplicada evitada", f"{rid}: la celda ya tiene fila en el CSV")
         else:
             _agregar(self.csv, _linea_csv([_valor_csv(fila[c]) for c in COLUMNAS]),
                      _linea_csv(COLUMNAS))
@@ -167,6 +169,31 @@ class Salidas:
                 self._indexar(fila, rid, carpeta, archivos, meta)
         return {"run_id": rid, "carpeta": carpeta, "fila": fila, "motivos": motivos,
                 "descartada": descartada, "archivos": archivos}
+
+    def claves_csv(self) -> set[tuple]:
+        """Celdas (engine, profile, query_id, concurrency, run_number) que ya tienen fila."""
+        if not self.csv.exists():
+            return set()
+        with self.csv.open(encoding="utf-8", newline="") as f:
+            return {clave_fila(r) for r in csv.DictReader(f)}
+
+    def descartes_por_clave(self) -> dict[tuple, int]:
+        """Número de intentos descartados por celda y ronda (D-007)."""
+        if not self.descartes.exists():
+            return {}
+        cuenta: dict[tuple, int] = {}
+        with self.descartes.open(encoding="utf-8", newline="") as f:
+            for r in csv.DictReader(f):
+                k = clave_fila(r)
+                cuenta[k] = cuenta.get(k, 0) + 1
+        return cuenta
+
+    def registrar_descarte(self, rid: str, celda: dict, run_number: int, intento: int,
+                           motivo: str) -> None:
+        _agregar(self.descartes, _linea_csv([
+            ahora_utc(), rid, celda["engine"], celda["profile"], celda["query_id"],
+            celda["concurrency"], run_number, intento, motivo]), _linea_csv(COLUMNAS_DESCARTES))
+        self.evento("descarte", f"{rid} intento {intento}: {motivo}")
 
     def _indexar(self, fila: dict, rid: str, carpeta: Path, archivos: list[str], meta: dict) -> None:
         rel = Path(os.path.relpath(carpeta, self.indice.parent)).as_posix()
@@ -177,6 +204,11 @@ class Salidas:
                       "(`results/benchmark_results.csv`).\n\n"
                       "| Fila (run_id) | status | Detalle | Archivos |\n|---|---|---|---|\n")
         _agregar(self.indice, f"| `{rid}` | {fila['status']} | {detalle} | {enlaces} |\n", encabezado)
+
+
+def clave_fila(f: dict) -> tuple:
+    return (str(f["engine"]), str(f["profile"]), str(f["query_id"]), int(f["concurrency"]),
+            int(f["run_number"]))
 
 
 def _valor_csv(v):
