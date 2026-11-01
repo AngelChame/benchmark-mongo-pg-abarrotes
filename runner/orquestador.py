@@ -151,7 +151,7 @@ class Orquestador:
         self.ejecutar = ejecutor
         self.sis = sistema or SistemaReal()
         self.dormir = dormir
-        self.dir = Path(args.results_dir).resolve()
+        self.dir = Path(args.results_dir or config.RAIZ / "results").resolve()
         principal = (config.RAIZ / "results").resolve()
         self.indice = (config.RAIZ / "evidence" / "INDEX.md") if self.dir == principal \
             else self.dir / "evidence_INDEX.md"
@@ -165,8 +165,10 @@ class Orquestador:
         self.ultima: dict | None = None
         self.siguiente: str = ""
         self.avisos_entorno: list[str] = []
+        self.avisos_fijos: list[str] = []
         self.corridas_sesion = 0
         self.respaldo_pendiente = False
+        self.respaldos_fallidos: list[dict] = []
 
     # ---------- utilidades ----------
     def log(self, tipo: str, detalle: str = "", aviso: bool = False) -> None:
@@ -206,7 +208,7 @@ class Orquestador:
     # ---------- revisión del entorno ----------
     def revisar(self, momento: str) -> None:
         info = self.sis.revisar_entorno(momento, self.a.min_free_gb)
-        self.avisos_entorno = info.get("avisos", [])
+        self.avisos_entorno = self.avisos_fijos + info.get("avisos", [])
         destino = self.dir / "revisiones_entorno"
         destino.mkdir(parents=True, exist_ok=True)
         marca = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -314,18 +316,49 @@ class Orquestador:
         return "fila"
 
     # ---------- respaldo ----------
+    def validar_respaldo(self) -> None:
+        """Al arrancar: la ruta de --respaldo existe o se puede crear, no está dentro de
+        results/ ni de evidence/, y se puede escribir. Si falla, no se arranca."""
+        if not self.a.respaldo:
+            self.avisos_fijos.append("Sin --respaldo: no se copiarán results/ ni evidence/.")
+            return
+        raiz = Path(self.a.respaldo).resolve()
+        for protegido in ((config.RAIZ / "results").resolve(), (config.RAIZ / "evidence").resolve(),
+                          self.dir):
+            if raiz == protegido or protegido in raiz.parents:
+                raise Abortar(f"--respaldo ({raiz}) no puede estar dentro de {protegido}.")
+        try:
+            raiz.mkdir(parents=True, exist_ok=True)
+            prueba = raiz / f".prueba_escritura_{os.getpid()}"
+            with prueba.open("w", encoding="utf-8") as f:
+                f.write("prueba\n")
+                f.flush()
+                os.fsync(f.fileno())
+            prueba.unlink()
+        except OSError as e:
+            raise Abortar(f"--respaldo ({raiz}) no se puede crear o escribir: {e}") from e
+        self.log("respaldo validado", str(raiz))
+
     def respaldar(self, etiqueta: str) -> None:
+        """Un fallo al respaldar no detiene las mediciones: se registra, se avisa y queda
+        pendiente (se reintenta al terminar la ronda siguiente y al final)."""
         if not self.a.respaldo:
             self.log("respaldo omitido", f"{etiqueta}: no se indicó --respaldo")
             return
+        try:
+            self._respaldar(etiqueta)
+        except Exception as e:  # noqa: BLE001
+            self.respaldo_pendiente = True
+            self.respaldos_fallidos.append({"etiqueta": etiqueta, "hora": ahora_local(), "error": repr(e)})
+            self.log("respaldo fallido", f"{etiqueta}: {e!r}; queda pendiente y se reintentará",
+                     aviso=True)
+
+    def _respaldar(self, etiqueta: str) -> None:
         raiz_respaldo = Path(self.a.respaldo).resolve()
-        for protegido in (self.dir, (config.RAIZ / "evidence").resolve()):
-            if raiz_respaldo == protegido or protegido in raiz_respaldo.parents:
-                raise Abortar(f"--respaldo ({raiz_respaldo}) no puede estar dentro de {protegido}.")
         marca = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         destino = raiz_respaldo / f"{marca}_{self.dir.name}_{etiqueta}"
         if destino.exists():
-            raise Abortar(f"El respaldo {destino} ya existe; no se sobrescribe.")
+            raise FileExistsError(f"El respaldo {destino} ya existe; no se sobrescribe.")
         evidencia = config.RAIZ / "evidence"
         shutil.copytree(self.dir, destino / self.dir.name)
         shutil.copytree(evidencia, destino / "evidence")
@@ -375,6 +408,9 @@ class Orquestador:
             lineas.append(f"Siguiente: {self.siguiente}")
         for a in self.avisos_entorno:
             lineas.append(f"AVISO: {a}")
+        if self.respaldo_pendiente and self.respaldos_fallidos:
+            u = self.respaldos_fallidos[-1]
+            lineas.append(f"AVISO: respaldo pendiente; último fallo {u['hora']} ({u['etiqueta']}): {u['error']}")
         lineas += ["", f"Pausar entre corridas:  crear el archivo {self.f_pausar}",
                    f"Reanudar:               borrar {self.f_pausar}",
                    f"Detener entre corridas: crear el archivo {self.f_detener}"]
@@ -419,15 +455,25 @@ class Orquestador:
                f"- Libre en C:: {shutil.disk_usage('C:/').free / 1e9:.1f} GB"]
         if self.avisos_entorno:
             md += ["\n## Avisos del entorno\n"] + [f"- {a}" for a in self.avisos_entorno]
+        if self.respaldos_fallidos:
+            md += ["\n## Respaldos fallidos\n"] + [
+                f"- {r['hora']} {r['etiqueta']}: {r['error']}" for r in self.respaldos_fallidos]
+            md.append(f"- Respaldo pendiente: {'sí' if self.respaldo_pendiente else 'no'}")
         _escribir(self.dir / "resumen.md", "\n".join(md) + "\n")
 
     # ---------- bucle principal ----------
     def correr(self) -> int:
+        # Antes de escribir nada: el piloto (--celdas) nunca escribe en la carpeta de la matriz.
+        if self.a.celdas and self.a.results_dir is None:
+            print("ABORTADO: se indicó --celdas sin --results-dir; no se corre para no mezclar el "
+                  "piloto con la matriz (usa, p. ej., --results-dir results/piloto).", file=sys.stderr)
+            return 2
         self.dir.mkdir(parents=True, exist_ok=True)
         self.log("arranque del orquestador",
                  f"rondas={self.a.rondas} celdas={len(self.celdas)} semilla={self.a.semilla} "
                  f"limite={self.limite} respaldo={self.a.respaldo} ntfy={'sí' if avisos.configurado() else 'no'}")
         try:
+            self.validar_respaldo()
             self.recuperar_interrumpida()
             self.revisar("arranque")
             self.sis.impedir_suspension(True)
@@ -520,7 +566,8 @@ def construir_parser() -> argparse.ArgumentParser:
     ap.add_argument("--semilla", type=int, default=SEMILLA_ORDEN)
     ap.add_argument("--hora-limite", type=_hora_limite, default=None,
                     help="'AAAA-MM-DD HH:MM' (hora de Ciudad de México)")
-    ap.add_argument("--results-dir", type=Path, default=config.RAIZ / "results")
+    ap.add_argument("--results-dir", type=Path, default=None,
+                    help="por defecto results/; obligatorio si se usa --celdas (piloto)")
     ap.add_argument("--respaldo", type=Path, default=None, help="segunda ubicación para copias")
     ap.add_argument("--celdas", type=parsear_celda, nargs="+", default=None,
                     help="subconjunto, p. ej. postgres:C:Q1:50 (para el piloto)")
@@ -549,6 +596,10 @@ def dry_run(args) -> int:
 
 def main() -> int:
     args = construir_parser().parse_args()
+    if args.celdas and args.results_dir is None and not args.dry_run:
+        print("ABORTADO: se indicó --celdas sin --results-dir; no se corre para no mezclar el "
+              "piloto con la matriz (usa, p. ej., --results-dir results/piloto).", file=sys.stderr)
+        return 2
     if args.dry_run:
         return dry_run(args)
     return Orquestador(args).correr()
