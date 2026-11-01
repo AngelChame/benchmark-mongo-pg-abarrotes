@@ -16,23 +16,16 @@ Capturado (foto del estado durante F2, antes del piloto): 2026-11-01T05:59:47Z (
 
 ```
 Versión de WSL: 2.6.3.0
-
 Versión de kernel: 6.6.87.2-1
-
 Versión de WSLg: 1.0.71
-
 Versión de MSRDC: 1.2.6353
-
 Versión de Direct3D: 1.611.1-81528511
-
 Versión de DXCore: 10.0.26100.1-240331-1435.ge-release
-
 Versión de Windows: 10.0.26200.9711
 ```
 
 ```
 NAME              STATE           VERSION
-
 * docker-desktop    Running         2
 ```
 

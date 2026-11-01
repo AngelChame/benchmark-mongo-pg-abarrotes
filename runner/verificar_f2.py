@@ -41,7 +41,16 @@ def ahora() -> str:
 
 def sh(cmd: list[str], utf16: bool = False) -> str:
     r = subprocess.run(cmd, capture_output=True)
-    datos = r.stdout + r.stderr
+    return _limpiar(_decodificar(r.stdout + r.stderr, utf16))
+
+
+def _limpiar(texto: str) -> str:
+    """Normaliza finales de linea (wsl.exe emite CR CR LF) y quita las lineas vacias."""
+    lineas = texto.replace(chr(13), "").split(chr(10))
+    return chr(10).join(l for l in lineas if l.strip()).strip()
+
+
+def _decodificar(datos: bytes, utf16: bool) -> str:
     if utf16 or b"\x00" in datos[:200]:
         return datos.decode("utf-16-le", errors="replace").replace("\x00", "").strip()
     for cod in ("utf-8", "oem"):
