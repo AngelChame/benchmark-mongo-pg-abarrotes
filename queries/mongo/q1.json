@@ -1,0 +1,14 @@
+[
+  { "$unwind": "$items" },
+  { "$match": { "items.precio_unitario": { "$gt": 50 } } },
+  { "$project": {
+      "tipo_pago": 1,
+      "proveedor_id": "$items.producto.proveedor.id",
+      "subtotal": { "$multiply": ["$items.cantidad", "$items.precio_unitario"] }
+  } },
+  { "$group": {
+      "_id": { "tipo_pago": "$tipo_pago", "proveedor_id": "$proveedor_id" },
+      "suma_subtotal": { "$sum": "$subtotal" },
+      "promedio_subtotal": { "$avg": "$subtotal" }
+  } }
+]

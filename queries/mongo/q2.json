@@ -1,0 +1,5 @@
+[
+  { "$match": { "es_fiado": false, "fecha": { "$gte": "2026-01-01T00:00:00Z" } } },
+  { "$sort": { "total": -1, "folio": 1 } },
+  { "$limit": 1000 }
+]

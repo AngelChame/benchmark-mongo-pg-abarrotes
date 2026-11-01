@@ -1,0 +1,8 @@
+[
+  { "$unwind": "$items" },
+  { "$match": { "items.precio_unitario": { "$gt": 50 } } },
+  { "$group": {
+      "_id": { "tipo_pago": "$tipo_pago", "proveedor_id": "$items.producto.proveedor.id" },
+      "articulos": { "$sum": 1 }
+  } }
+]
