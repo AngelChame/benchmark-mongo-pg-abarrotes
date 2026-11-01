@@ -282,7 +282,9 @@ def tabla_planes(planes: Path) -> str:
     out = ["\\begin{table}[h]", "\\centering\\footnotesize",
            "\\caption{Planes lado a lado (\\texttt{evidence/plans}, perfil A, 1 cliente, una "
            "ejecución; no es lo medido en la matriz)}\\label{tab:planes}",
-           "\\begin{tabular}{@{}llp{3.0cm}p{2.0cm}p{2.4cm}p{3.3cm}r@{}}", "\\toprule",
+           "\\begin{tabular}{@{}ll>{\\raggedright\\arraybackslash}p{3.1cm}"
+           ">{\\raggedright\\arraybackslash}p{2.0cm}>{\\raggedright\\arraybackslash}p{2.4cm}"
+           ">{\\raggedright\\arraybackslash}p{3.4cm}r@{}}", "\\toprule",
            "& Motor & Operador principal & Examinados & Ordenamiento o agrupamiento & "
            "Memoria o disco & " + H("Tiempo", "(ms)") + " \\\\", "\\midrule"]
     for i, f in enumerate(filas):
@@ -293,7 +295,9 @@ def tabla_planes(planes: Path) -> str:
             "valores de \\texttt{EXPLAIN} en JSON; filas examinadas = (filas + filas eliminadas por "
             "el filtro) $\\times$ loops del nodo de lectura; espacio de ordenamiento del líder y de "
             "cada trabajador. MongoDB: \\texttt{explain} en modo \\texttt{executionStats}. El "
-            "tiempo es el de esa única ejecución del plan.}\\\\",
+            "tiempo es el de esa única ejecución del plan. El extracto en texto de Q1 que sigue "
+            "(\\texttt{postgres\\_Q1.txt}) es una segunda ejecución, por eso sus tiempos y tamaños "
+            "difieren un poco.}\\\\",
             "\\end{tabular}", "\\end{table}"]
     return "\n".join(out) + "\n"
 

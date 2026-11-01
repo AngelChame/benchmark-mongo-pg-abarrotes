@@ -1,7 +1,7 @@
 \begin{table}[h]
 \centering\footnotesize
 \caption{Planes lado a lado (\texttt{evidence/plans}, perfil A, 1 cliente, una ejecución; no es lo medido en la matriz)}\label{tab:planes}
-\begin{tabular}{@{}llp{3.0cm}p{2.0cm}p{2.4cm}p{3.3cm}r@{}}
+\begin{tabular}{@{}ll>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}p{3.4cm}r@{}}
 \toprule
 & Motor & Operador principal & Examinados & Ordenamiento o agrupamiento & Memoria o disco & \begin{tabular}[b]{@{}c@{}}Tiempo\\(ms)\end{tabular} \\
 \midrule
@@ -11,6 +11,6 @@ Q1 & PostgreSQL & \texttt{Parallel Seq Scan} $\to$ \texttt{Sort} $\to$ \texttt{I
 Q2 & MongoDB & \texttt{IXSCAN} (\texttt{fecha\_1}) $\to$ \texttt{FETCH} $\to$ \texttt{SORT} & 227\,094 docs. (193\,203 pasan el filtro) & \texttt{SORT} con límite 1\,000 & memoria: 1\,598\,598 B ordenados, pico 1\,600\,108 B (límite 104\,857\,600 B); \texttt{usedDisk}: false & 266 \\
 Q2 & PostgreSQL & \texttt{Parallel Index Scan} (\texttt{ventas\_fecha\_idx}) $\to$ \texttt{Sort} $\to$ \texttt{Gather Merge} $\to$ \texttt{Limit} & 227\,094 filas (193\,203 pasan el filtro) & \texttt{top-N heapsort} & memoria: 3\,071/3\,040/3\,059 kB; 0 bloques temporales & 185{,}1 \\
 \bottomrule
-\multicolumn{7}{p{0.97\linewidth}}{\scriptsize PostgreSQL: valores de \texttt{EXPLAIN} en JSON; filas examinadas = (filas + filas eliminadas por el filtro) $\times$ loops del nodo de lectura; espacio de ordenamiento del líder y de cada trabajador. MongoDB: \texttt{explain} en modo \texttt{executionStats}. El tiempo es el de esa única ejecución del plan.}\\
+\multicolumn{7}{p{0.97\linewidth}}{\scriptsize PostgreSQL: valores de \texttt{EXPLAIN} en JSON; filas examinadas = (filas + filas eliminadas por el filtro) $\times$ loops del nodo de lectura; espacio de ordenamiento del líder y de cada trabajador. MongoDB: \texttt{explain} en modo \texttt{executionStats}. El tiempo es el de esa única ejecución del plan. El extracto en texto de Q1 que sigue (\texttt{postgres\_Q1.txt}) es una segunda ejecución, por eso sus tiempos y tamaños difieren un poco.}\\
 \end{tabular}
 \end{table}
