@@ -276,9 +276,18 @@ def correr(motor: str, perfil: str, query_id: str, concurrencia: int,
     oom_kill = (cg_final or {}).get("oom_kill", 0) - (cg_ini or {}).get("oom_kill", 0) \
         if cg_ini else None
     oom = bool(estado.get("OOMKilled")) or (oom_kill or 0) > 0 or not estado.get("Running", False)
-    spill_bytes = (motor_fin["spill_bytes"] - motor_ini["spill_bytes"]) \
-        if motor_ini and motor_fin else None
-    spill = (spill_bytes or 0) > 0
+    # Bytes temporales: solo valen si ambos contadores se leyeron y no hubo una caída del
+    # motor en medio (PostgreSQL descarta sus estadísticas al recuperarse de un OOM kill).
+    temp_no_medido = None
+    if not (motor_ini and motor_fin):
+        temp_no_medido = "no se pudieron leer los contadores del motor (¿en recuperación tras OOM?)"
+    elif motor == "postgres" and (oom_kill or 0) > 0:
+        temp_no_medido = "hubo OOM kill: PostgreSQL reinicia sus estadísticas al recuperarse"
+    elif motor_fin["spill_bytes"] < motor_ini["spill_bytes"]:
+        temp_no_medido = "el contador retrocedió (estadísticas reiniciadas)"
+    spill_bytes = None if temp_no_medido else motor_fin["spill_bytes"] - motor_ini["spill_bytes"]
+    spill = None if spill_bytes is None else spill_bytes > 0     # None: no medido, nunca estimado
+    disco_vm = prometheus(f"sum(increase(node_disk_written_bytes_total[{int(medicion_s)}s]))", t_med_fin)
     rss = prometheus(f'max_over_time(container_memory_rss{{name="{config.CONTENEDOR[motor]}"}}'
                      f'[{int(medicion_s)}s])', t_med_fin)
     thr_prom = prometheus(f'increase(container_cpu_cfs_throttled_seconds_total'
@@ -326,8 +335,13 @@ def correr(motor: str, perfil: str, query_id: str, concurrencia: int,
                       "clientes_que_reportaron": len(resultados),
                       "cancelaciones_enviadas": canceladas},
         "temporales": {"bytes": spill_bytes,
-                       "eventos": (motor_fin["spill_eventos"] - motor_ini["spill_eventos"])
-                       if motor_ini and motor_fin else None,
+                       "eventos": None if temp_no_medido
+                       else motor_fin["spill_eventos"] - motor_ini["spill_eventos"],
+                       "no_medido": temp_no_medido,
+                       "escritura_disco_vm_bytes": disco_vm,
+                       "nota_escritura_disco_vm": "Node Exporter, todos los dispositivos de la VM, "
+                                                  "ventana de medición; comprobación cruzada, no "
+                                                  "exclusiva del motor",
                        "nota": "PostgreSQL: pg_stat_database.temp_bytes; Mongo: spillToDiskBytes + "
                                "group.spilledDataStorageSize; desde el inicio de la medición hasta "
                                "el fin de la recolección"},

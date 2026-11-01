@@ -198,10 +198,15 @@ class Salidas:
     def _indexar(self, fila: dict, rid: str, carpeta: Path, archivos: list[str], meta: dict) -> None:
         rel = Path(os.path.relpath(carpeta, self.indice.parent)).as_posix()
         enlaces = " · ".join(f"[{a}]({rel}/{a})" for a in archivos)
-        tmp = meta.get("temporales", {}).get("bytes")
-        detalle = f"temporales {tmp / 2**20:.1f} MiB" if tmp else "sin bytes temporales"
+        temporales = meta.get("temporales", {})
+        tmp = temporales.get("bytes")
+        if tmp is None:
+            detalle = f"bytes temporales NO medidos ({temporales.get('no_medido') or 'sin contadores'})"
+        else:
+            detalle = f"temporales {tmp / 2**20:.1f} MiB" if tmp else "0 bytes temporales"
+        csv_rel = Path(os.path.relpath(self.csv, self.indice.parent)).as_posix()
         encabezado = ("# Índice de evidencia\n\nUna línea por cada fila `spill` u `oom` del CSV "
-                      "(`results/benchmark_results.csv`).\n\n"
+                      f"(`{csv_rel}`).\n\n"
                       "| Fila (run_id) | status | Detalle | Archivos |\n|---|---|---|---|\n")
         _agregar(self.indice, f"| `{rid}` | {fila['status']} | {detalle} | {enlaces} |\n", encabezado)
 
