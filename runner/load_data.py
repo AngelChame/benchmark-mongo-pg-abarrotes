@@ -6,7 +6,7 @@ El mismo NDJSON entra en ambos motores; en PostgreSQL la columna `id` es el
 uuid5 de `_id` (synthetic_data_generator.uuid_de_venta).
 
 Uso:
-    python runner/load_data.py --engine all
+    .venv/Scripts/python runner/load_data.py --engine all   (Windows; en Linux .venv/bin/python)
     python runner/load_data.py --engine postgres --profile PROFILE_A_BASELINE
 """
 
@@ -23,8 +23,8 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RAIZ))
 from synthetic_data_generator import uuid_de_venta  # noqa: E402
+from runner import contenedores  # noqa: E402
 
-CONTENEDOR = {"mongo": "bench-mongo", "postgres": "bench-postgres"}
 PSQL = ["docker", "exec", "-i", "bench-postgres", "psql", "-X", "-q", "-v",
         "ON_ERROR_STOP=1", "-U", "bench", "-d", "benchmark"]
 MONGOSH = ["docker", "exec", "-i", "bench-mongo", "mongosh", "--quiet", "benchmark"]
@@ -38,17 +38,10 @@ def sh(cmd: list[str], entrada: str | None = None) -> str:
     return r.stdout.strip()
 
 
-def compose(*args: str, perfil: str | None = None) -> None:
-    cmd = ["docker", "compose"]
-    if perfil:
-        cmd += ["--env-file", f"profiles/{perfil}.env"]
-    sh(cmd + list(args))
-
-
 def encender_solo(motor: str, perfil: str) -> None:
-    otro = "postgres" if motor == "mongo" else "mongo"
-    compose("--profile", otro, "stop", otro)
-    compose("--profile", motor, "up", "-d", "--wait", motor, perfil=perfil)
+    # Identidad del servidor por el puerto publicado (27018 / 5432) y límites del perfil.
+    info = contenedores.encender_solo(motor, perfil)
+    print(f"[{motor}] identidad verificada: {info}", flush=True)
 
 
 def cargar_mongo(archivo: Path) -> dict:
@@ -146,7 +139,7 @@ def main() -> int:
                     fecha_utc=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
         resultado[motor] = info
         print(json.dumps(info, ensure_ascii=False, indent=2), flush=True)
-        compose("--profile", motor, "stop", motor)
+        contenedores.apagar(motor)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(resultado, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return 0
