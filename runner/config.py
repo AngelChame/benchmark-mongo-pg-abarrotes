@@ -41,4 +41,7 @@ VARIANTES = {
     "Q1": {"mongo": {}, "postgres": {}},
     "Q2": {"mongo": {"allowDiskUse": False}, "postgres": {"work_mem": "4MB"}},
     "Q2_RELAXED": {"mongo": {"allowDiskUse": True}, "postgres": {"work_mem": "64MB"}},
+    # Solo evidencia (D-022): plan de Q1 en PostgreSQL con 64 MB fijados en la sesión.
+    # No se mide en la matriz; Q1 se mide con work_mem por defecto.
+    "Q1_WM64": {"postgres": {"work_mem": "64MB"}},
 }
