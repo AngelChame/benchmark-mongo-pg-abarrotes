@@ -16,7 +16,8 @@ Protocolo (DOC1 §5.5, D-006, D-009, D-012, D-017, D-021, D-022):
 
 Uso (prueba corta, no cuenta como medición):
     .venv/Scripts/python runner/run_cell.py --engine postgres --profile PROFILE_C_SEVERE \\
-        --query Q2 --concurrency 2 --warmup 5 --measure 15 --cooldown 3 --out <carpeta>
+        --query Q2 --concurrency 2 --run-number 1 --warmup 5 --measure 15 --cooldown 3 \
+        --results-dir <carpeta> --evidence-index <carpeta>/INDEX.md
 """
 
 from __future__ import annotations
@@ -34,7 +35,7 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from runner import config, consultas, contenedores, host, identidad  # noqa: E402
+from runner import config, consultas, contenedores, host, identidad, salidas  # noqa: E402
 
 PROMETHEUS = "http://127.0.0.1:9090"
 TIMEOUT_S = 300.0          # D-017: valor inicial; se fija con el piloto
@@ -355,24 +356,28 @@ def main() -> int:
     ap.add_argument("--min-free-gb", type=float, default=host.MIN_LIBRE_GB)
     ap.add_argument("--permitir-mongodb-windows", action="store_true",
                     help="solo para pruebas de desarrollo; nunca en el piloto ni en la matriz")
-    ap.add_argument("--out", type=Path, required=True, help="carpeta para el resultado de prueba")
+    ap.add_argument("--run-number", type=int, required=True)
+    ap.add_argument("--intento", type=int, default=1, help="2 = reintento tras un descarte (D-007)")
+    ap.add_argument("--results-dir", type=Path, default=config.RAIZ / "results")
+    ap.add_argument("--evidence-index", type=Path, default=config.RAIZ / "evidence" / "INDEX.md")
     args = ap.parse_args()
+    sal = salidas.Salidas(args.results_dir, args.evidence_index)
+    desc = (f"{args.engine} {args.profile} {args.query} c{args.concurrency} "
+            f"r{args.run_number} intento {args.intento}")
+    sal.evento("inicio corrida", desc)
     try:
         res = correr(args.engine, args.profile, args.query, args.concurrency, args.warmup,
                      args.measure, args.cooldown, args.timeout, args.permitir_mongodb_windows,
                      args.min_free_gb)
     except (identidad.ServidorIncorrecto, host.PrecondicionFallida) as e:
+        sal.evento("corrida abortada antes de medir", f"{desc}: {e}")
         print(f"ABORTADO: {e}", file=sys.stderr)
         return 2
-    args.out.mkdir(parents=True, exist_ok=True)
-    nombre = f"{args.engine}_{args.profile}_{args.query}_c{args.concurrency}"
-    (args.out / f"{nombre}.json").write_text(
-        json.dumps({k: v for k, v in res.items() if k != "crudas"}, indent=2, ensure_ascii=False,
-                   default=str) + "\n", encoding="utf-8")
-    (args.out / f"{nombre}_crudas.json").write_text(json.dumps(res["crudas"]), encoding="utf-8")
-    print(json.dumps(res["fila"], indent=2, ensure_ascii=False))
-    print(json.dumps(res["meta"]["consultas"], indent=2, ensure_ascii=False))
-    print(json.dumps(res["meta"]["temporales"], indent=2, ensure_ascii=False))
+    r = sal.guardar_corrida(res, args.run_number, args.intento)
+    print(json.dumps({"run_id": r["run_id"], "carpeta": str(r["carpeta"]),
+                      "fila": r["fila"], "motivos": r["motivos"],
+                      "descartada": r["descartada"], "archivos": r["archivos"]},
+                     indent=2, ensure_ascii=False))
     return 0
 
 
