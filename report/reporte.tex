@@ -314,8 +314,8 @@ confirmación}:
   (MongoDB: \cod{totalDocsExamined}; PostgreSQL: filas del \cod{Index Scan} más las
   eliminadas por el filtro). Se asume que ese número no cambia con el perfil ni con la
   concurrencia.
-\item \textbf{Documentos procesados en la ventana:} consultas ok (\cod{meta.json},
-  \cod{consultas.medidas\_ok}) por documentos por consulta.
+\item \textbf{Documentos procesados en la ventana:} consultas ok de la ventana (campo
+  \cod{medidas\_ok} de \cod{meta.json}) por documentos por consulta.
 \item \textbf{CPU:} delta de \cod{usage\_usec} de \cod{cpu.stat} del cgroup entre el inicio
   y el fin de la ventana, en ms por cada 1\,000 documentos procesados.
 \item \textbf{Memoria:} la RSS máxima de la ventana (\cod{max\_rss\_mb}) y la razón ``MiB
@@ -326,7 +326,7 @@ confirmación}:
 \item Por celda, la mediana de las 3 rondas de cada valor.
 \end{itemize}
 
-{\small\setlength{\tabcolsep}{3.2pt}
+{\footnotesize\setlength{\tabcolsep}{3pt}
 \input{generado/tabla_huella.tex}}
 
 \paragraph{Lo que muestran los números.} En Q1 con 1 cliente, PostgreSQL gasta entre 3,0 y 3,7
