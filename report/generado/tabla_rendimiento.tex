@@ -1,0 +1,60 @@
+\begin{longtable}{llcrlrrrrr}
+\caption{Rendimiento por celda (ventana de 300 s)}\label{tab:rendimiento}\\
+\toprule
+ & Motor & Perfil & $c$ & Estados & QPS & \begin{tabular}[b]{@{}c@{}}P50\\(ms)\end{tabular} & \begin{tabular}[b]{@{}c@{}}P95\\(ms)\end{tabular} & \begin{tabular}[b]{@{}c@{}}P99\\(ms)\end{tabular} & \begin{tabular}[b]{@{}c@{}}P99 entre rondas\\mín.--máx. (ms)\end{tabular} \\
+\midrule
+\endfirsthead
+\toprule
+ & Motor & Perfil & $c$ & Estados & QPS & \begin{tabular}[b]{@{}c@{}}P50\\(ms)\end{tabular} & \begin{tabular}[b]{@{}c@{}}P95\\(ms)\end{tabular} & \begin{tabular}[b]{@{}c@{}}P99\\(ms)\end{tabular} & \begin{tabular}[b]{@{}c@{}}P99 entre rondas\\mín.--máx. (ms)\end{tabular} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{10}{r}{\footnotesize continúa}\\
+\endfoot
+\bottomrule
+\multicolumn{10}{p{0.95\linewidth}}{\footnotesize Q2R: \texttt{Q2\_RELAXED}. Mediana de las 3 rondas por celda; P99 mín.--máx. entre rondas. Percentiles por rango más cercano sobre las consultas exitosas de la ventana (D-007): $^{\dagger}$ menos de 100 consultas en alguna ronda, el P99 es igual al máximo; $^{\ddagger}$ entre 100 y 999, P99 orientativo. ``---'': sin consultas terminadas.}\\
+\endlastfoot
+Q1 & MongoDB & A & 1 & 3$\times$ok & 0{,}77 & 1\,279 & 1\,359 & 1\,411$^{\ddagger}$ & 1\,356--1\,435 \\
+Q1 & MongoDB & A & 10 & 3$\times$ok & 1{,}72 & 5\,708 & 5\,923 & 6\,090$^{\ddagger}$ & 5\,806--6\,396 \\
+Q1 & MongoDB & A & 50 & 3$\times$ok & 1{,}48 & 30\,704 & 33\,419 & 35\,077$^{\ddagger}$ & 34\,592--35\,198 \\
+Q1 & MongoDB & B & 1 & 3$\times$ok & 0{,}76 & 1\,304 & 1\,387 & 1\,429$^{\ddagger}$ & 1\,419--1\,571 \\
+Q1 & MongoDB & B & 10 & 3$\times$ok & 0{,}87 & 10\,995 & 11\,505 & 11\,808$^{\ddagger}$ & 11\,594--12\,393 \\
+Q1 & MongoDB & B & 50 & 3$\times$ok & 0{,}67 & 58\,995 & 64\,498 & 66\,694$^{\ddagger}$ & 66\,497--67\,097 \\
+Q1 & MongoDB & C & 1 & 3$\times$ok & 0{,}63 & 1\,461 & 2\,027 & 2\,063$^{\ddagger}$ & 1\,988--2\,148 \\
+Q1 & MongoDB & C & 10 & 3$\times$ok & 0{,}42 & 22\,293 & 23\,801 & 24\,799$^{\ddagger}$ & 23\,503--25\,702 \\
+Q1 & MongoDB & C & 50 & 3$\times$ok & 0{,}30 & 115\,995 & 127\,894 & 137\,694$^{\dagger}$ & 133\,193--138\,096 \\
+\addlinespace
+Q1 & PostgreSQL & A & 1 & 3$\times$spill & 0{,}37 & 2\,676 & 2\,744 & 2\,790$^{\ddagger}$ & 2\,758--2\,941 \\
+Q1 & PostgreSQL & A & 10 & 3$\times$spill & 0{,}17 & 44\,561 & 80\,579 & 82\,581$^{\dagger}$ & 82\,456--86\,205 \\
+Q1 & PostgreSQL & A & 50 & 3$\times$spill & 0{,}01 & 179\,946 & 210\,294 & 210\,294$^{\dagger}$ & 188\,248--211\,003 \\
+Q1 & PostgreSQL & B & 1 & 3$\times$spill & 0{,}25 & 3\,822 & 5\,038 & 5\,343$^{\dagger}$ & 3\,283--5\,789 \\
+Q1 & PostgreSQL & B & 10 & 3$\times$spill & 0{,}13 & 62\,638 & 74\,523 & 74\,662$^{\dagger}$ & 70\,775--77\,263 \\
+Q1 & PostgreSQL & B & 50 & 3$\times$oom & 0{,}01 & 133\,112 & 157\,157 & 157\,157$^{\dagger}$ & 131\,864--176\,270 \\
+Q1 & PostgreSQL & C & 1 & 3$\times$spill & 0{,}14 & 7\,290 & 8\,179 & 8\,497$^{\dagger}$ & 8\,233--11\,142 \\
+Q1 & PostgreSQL & C & 10 & 3$\times$spill & 0{,}08 & 93\,100 & 104\,898 & 105\,002$^{\dagger}$ & 97\,429--110\,414 \\
+Q1 & PostgreSQL & C & 50 & 3$\times$oom & 0{,}00 & --- & --- & --- & --- \\
+\addlinespace
+Q2 & MongoDB & A & 1 & 3$\times$ok & 4{,}09 & 243 & 257 & 270 & 269--278 \\
+Q2 & MongoDB & A & 10 & 3$\times$ok & 10{,}70 & 908 & 1\,086 & 1\,108 & 1\,105--1\,116 \\
+Q2 & MongoDB & A & 50 & 3$\times$ok & 9{,}74 & 5\,011 & 7\,517 & 8\,587 & 8\,516--8\,599 \\
+Q2 & MongoDB & B & 1 & 3$\times$ok & 3{,}95 & 250 & 275 & 289 & 282--292 \\
+Q2 & MongoDB & B & 10 & 3$\times$ok & 5{,}55 & 1\,794 & 2\,091 & 2\,193 & 2\,108--2\,415 \\
+Q2 & MongoDB & B & 50 & 3$\times$ok & 5{,}09 & 9\,294 & 15\,498 & 18\,087 & 17\,705--18\,295 \\
+Q2 & MongoDB & C & 1 & 3$\times$ok & 3{,}59 & 248 & 502 & 587 & 520--593 \\
+Q2 & MongoDB & C & 10 & 3$\times$ok & 2{,}80 & 3\,499 & 4\,105 & 4\,503$^{\ddagger}$ & 4\,408--4\,506 \\
+Q2 & MongoDB & C & 50 & 3$\times$ok & 2{,}59 & 17\,804 & 27\,504 & 31\,686$^{\ddagger}$ & 31\,498--35\,196 \\
+\addlinespace
+Q2 & PostgreSQL & A & 1 & 3$\times$ok & 6{,}65 & 149 & 163 & 175 & 175--177 \\
+Q2 & PostgreSQL & A & 10 & 3$\times$ok & 10{,}22 & 896 & 1\,410 & 1\,524 & 1\,520--1\,579 \\
+Q2 & PostgreSQL & A & 50 & 3$\times$ok & 12{,}93 & 3\,678 & 5\,523 & 6\,755 & 6\,719--6\,817 \\
+Q2 & PostgreSQL & B & 1 & 3$\times$ok & 5{,}54 & 183 & 202 & 218 & 207--219 \\
+Q2 & PostgreSQL & B & 10 & 3$\times$ok & 5{,}64 & 1\,597 & 2\,592 & 2\,792 & 2\,789--2\,916 \\
+Q2 & PostgreSQL & B & 50 & 3$\times$ok & 6{,}68 & 6\,978 & 11\,117 & 12\,907 & 12\,805--12\,999 \\
+Q2 & PostgreSQL & C & 1 & 3$\times$ok & 2{,}87 & 328 & 398 & 411$^{\ddagger}$ & 402--460 \\
+Q2 & PostgreSQL & C & 10 & 3$\times$ok & 2{,}88 & 3\,084 & 5\,097 & 5\,703$^{\ddagger}$ & 5\,307--5\,714 \\
+Q2 & PostgreSQL & C & 50 & 3$\times$ok & 3{,}42 & 12\,992 & 21\,732 & 25\,294$^{\ddagger}$ & 24\,796--26\,290 \\
+\addlinespace
+Q2R & MongoDB & C & 50 & 3$\times$ok & 2{,}62 & 17\,286 & 27\,297 & 31\,795$^{\ddagger}$ & 30\,406--34\,405 \\
+\addlinespace
+Q2R & PostgreSQL & C & 50 & 3$\times$ok & 3{,}45 & 12\,887 & 21\,610 & 25\,389 & 25\,097--25\,390 \\
+\end{longtable}

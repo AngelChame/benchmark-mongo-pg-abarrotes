@@ -1,0 +1,60 @@
+\begin{longtable}{llcrrrrrrr}
+\caption{Recursos por celda (ventana de 300 s)}\label{tab:recursos}\\
+\toprule
+ & Motor & Perfil & $c$ & \begin{tabular}[b]{@{}c@{}}Throttling\\(s)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Periodos con\\throttling (\%)\end{tabular} & \begin{tabular}[b]{@{}c@{}}RSS máx.\\(MiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Pico cgroup\\(MiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Temporales\\(GiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Consultas\\ok\end{tabular} \\
+\midrule
+\endfirsthead
+\toprule
+ & Motor & Perfil & $c$ & \begin{tabular}[b]{@{}c@{}}Throttling\\(s)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Periodos con\\throttling (\%)\end{tabular} & \begin{tabular}[b]{@{}c@{}}RSS máx.\\(MiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Pico cgroup\\(MiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Temporales\\(GiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Consultas\\ok\end{tabular} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{10}{r}{\footnotesize continúa}\\
+\endfoot
+\bottomrule
+\multicolumn{10}{p{0.95\linewidth}}{\footnotesize Q2R: \texttt{Q2\_RELAXED}. Mediana de las 3 rondas salvo RSS y pico del cgroup (máximo). Throttling: delta de \texttt{throttled\_usec} de \texttt{cpu.stat}, que suma el tiempo de todas las CPU del grupo y puede superar los 300 s de la ventana. Periodos con throttling: \texttt{nr\_throttled}/\texttt{nr\_periods}. RSS: cAdvisor (\texttt{container\_memory\_rss}); pico del cgroup: \texttt{memory.peak}, que incluye caché de página y memoria compartida desde el arranque del contenedor. Temporales: \texttt{pg\_stat\_database.temp\_bytes} (PostgreSQL) o \texttt{spillToDiskBytes} (MongoDB); n/m: no medido (PostgreSQL reinicia sus estadísticas tras un OOM kill).}\\
+\endlastfoot
+Q1 & MongoDB & A & 1 & 0 & 0 & 744 & 1\,102 & 0{,}0 & 232 \\
+Q1 & MongoDB & A & 10 & 1\,871 & 100 & 816 & 1\,170 & 0{,}0 & 517 \\
+Q1 & MongoDB & A & 50 & 2\,350 & 100 & 978 & 1\,335 & 0{,}0 & 443 \\
+Q1 & MongoDB & B & 1 & 4 & 6 & 757 & 1\,122 & 0{,}0 & 228 \\
+Q1 & MongoDB & B & 10 & 2\,527 & 100 & 812 & 1\,167 & 0{,}0 & 260 \\
+Q1 & MongoDB & B & 50 & 2\,956 & 100 & 908 & 1\,263 & 0{,}0 & 202 \\
+Q1 & MongoDB & C & 1 & 74 & 63 & 547 & 899 & 0{,}0 & 188 \\
+Q1 & MongoDB & C & 10 & 2\,884 & 100 & 585 & 939 & 0{,}0 & 127 \\
+Q1 & MongoDB & C & 50 & 3\,228 & 100 & 710 & 1\,024 & 0{,}0 & 90 \\
+\addlinespace
+Q1 & PostgreSQL & A & 1 & 0 & 0 & 102 & 1\,716 & 87{,}7 & 110 \\
+Q1 & PostgreSQL & A & 10 & 159 & 14 & 566 & 4\,096 & 51{,}6 & 50 \\
+Q1 & PostgreSQL & A & 50 & 179 & 14 & 1\,972 & 4\,096 & 65{,}9 & 4 \\
+Q1 & PostgreSQL & B & 1 & 83 & 19 & 102 & 1\,703 & 60{,}1 & 75 \\
+Q1 & PostgreSQL & B & 10 & 688 & 46 & 568 & 2\,048 & 43{,}1 & 38 \\
+Q1 & PostgreSQL & B & 50 & 990 & 56 & 1\,787 & 2\,048 & n/m & 4 \\
+Q1 & PostgreSQL & C & 1 & 147 & 53 & 103 & 1\,024 & 33{,}1 & 41 \\
+Q1 & PostgreSQL & C & 10 & 2\,232 & 100 & 569 & 1\,024 & 32{,}5 & 24 \\
+Q1 & PostgreSQL & C & 50 & 2\,637 & 86 & 966 & 1\,024 & n/m & 0 \\
+\addlinespace
+Q2 & MongoDB & A & 1 & 0 & 0 & 500 & 797 & 0{,}0 & 1\,226 \\
+Q2 & MongoDB & A & 10 & 1\,737 & 100 & 552 & 845 & 0{,}0 & 3\,211 \\
+Q2 & MongoDB & A & 50 & 2\,356 & 100 & 641 & 935 & 0{,}0 & 2\,923 \\
+Q2 & MongoDB & B & 1 & 2 & 5 & 494 & 706 & 0{,}0 & 1\,184 \\
+Q2 & MongoDB & B & 10 & 2\,453 & 100 & 542 & 840 & 0{,}0 & 1\,665 \\
+Q2 & MongoDB & B & 50 & 2\,969 & 100 & 622 & 836 & 0{,}0 & 1\,527 \\
+Q2 & MongoDB & C & 1 & 59 & 30 & 536 & 835 & 0{,}0 & 1\,077 \\
+Q2 & MongoDB & C & 10 & 2\,838 & 100 & 551 & 836 & 0{,}0 & 840 \\
+Q2 & MongoDB & C & 50 & 3\,254 & 100 & 624 & 917 & 0{,}0 & 777 \\
+\addlinespace
+Q2 & PostgreSQL & A & 1 & 0 & 0 & 24 & 497 & 0{,}0 & 1\,995 \\
+Q2 & PostgreSQL & A & 10 & 1\,955 & 100 & 92 & 580 & 0{,}0 & 3\,067 \\
+Q2 & PostgreSQL & A & 50 & 2\,322 & 100 & 298 & 826 & 0{,}0 & 3\,880 \\
+Q2 & PostgreSQL & B & 1 & 140 & 96 & 23 & 497 & 0{,}0 & 1\,663 \\
+Q2 & PostgreSQL & B & 10 & 2\,600 & 100 & 93 & 581 & 0{,}0 & 1\,691 \\
+Q2 & PostgreSQL & B & 50 & 2\,935 & 100 & 298 & 824 & 0{,}0 & 2\,005 \\
+Q2 & PostgreSQL & C & 1 & 491 & 100 & 23 & 497 & 0{,}0 & 861 \\
+Q2 & PostgreSQL & C & 10 & 2\,981 & 100 & 93 & 581 & 0{,}0 & 864 \\
+Q2 & PostgreSQL & C & 50 & 3\,237 & 100 & 298 & 820 & 0{,}0 & 1\,027 \\
+\addlinespace
+Q2R & MongoDB & C & 50 & 3\,256 & 100 & 623 & 920 & 0{,}0 & 785 \\
+\addlinespace
+Q2R & PostgreSQL & C & 50 & 3\,235 & 100 & 298 & 819 & 0{,}0 & 1\,036 \\
+\end{longtable}

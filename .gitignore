@@ -23,3 +23,13 @@ CLAUDE.md
 .claude/
 hooks/
 PROMPT-ARRANQUE.txt
+
+# Compilación de LaTeX del reporte (el PDF se versiona cuando el usuario lo apruebe)
+report/*.aux
+report/*.log
+report/*.toc
+report/*.out
+report/*.fls
+report/*.fdb_latexmk
+report/*.synctex.gz
+report/reporte.pdf

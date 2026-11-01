@@ -1,0 +1,588 @@
+% Reporte de métricas: contención de CPU y memoria, MongoDB vs PostgreSQL JSONB.
+% Compilar desde esta carpeta:  latexmk -pdf reporte.tex
+% Las tablas y figuras de generado/ salen de analysis/consolidar.py (no se editan a mano).
+\documentclass[11pt,a4paper]{article}
+\usepackage[spanish,es-noshorthands,es-tabla]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{booktabs,longtable,array,multirow}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\captionsetup{font=small,labelfont=bf}
+\setlength{\emergencystretch}{3em}
+\setlist{itemsep=2pt,topsep=4pt}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,
+  frame=single,rulecolor=\color{black!25},xleftmargin=2pt,xrightmargin=2pt,
+  literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {×}{{$\times$}}1}
+\newcommand{\cod}[1]{\texttt{#1}}
+\newcommand{\pend}[1]{\textcolor{red!70!black}{[#1]}}
+
+\title{Contención de CPU y memoria en bases de datos documentales:\\
+MongoDB frente a PostgreSQL JSONB con límites de Docker (cgroups v2)\\[4pt]
+\large Reporte de métricas}
+\author{\pend{Nombre del autor} \\ \small\pend{Materia, grupo y profesor}}
+\date{1 de noviembre de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent Se midió el comportamiento de MongoDB 9.0.4 y PostgreSQL 18.6 (JSONB) con
+500\,000 ventas sintéticas de un sistema de abarrotes, bajo tres perfiles de límites de
+Docker (4 CPU/4 GiB, 2 CPU/2 GiB y 1 CPU/1 GiB), dos consultas (Q1, agregación con
+desanidado, orientada a CPU; Q2, filtro con ordenamiento Top-1000, orientada a memoria) y
+1, 10 y 50 clientes concurrentes. La matriz de 38 celdas se repitió en 3 rondas
+(114 corridas de 300\,s, sin descartes): 87 corridas terminaron \cod{ok}, 21 con
+volcado a disco (\cod{spill}) y 6 con \cod{oom}. Todas las corridas \cod{spill} y
+\cod{oom} son de PostgreSQL con Q1: su plan ordena los documentos completos antes de
+agrupar y escribe unos 0,8\,GiB de archivos temporales por ejecución, su P99 es entre
+2,0 y 13,6 veces el de MongoDB en las celdas que terminan sin OOM, y con 50 clientes
+agota la memoria en los perfiles B y C. En Q2 ambos motores escalan en proporción a la
+cuota de CPU; PostgreSQL es más rápido con 1 cliente y logra unas 1,3 veces más
+QPS con 50 clientes, y ninguna de las variantes de memoria de Q2 vuelca a disco.
+\end{abstract}
+
+\tableofcontents
+\clearpage
+
+%=====================================================================
+\section{Especificaciones del host y del entorno Docker}
+%=====================================================================
+Las mediciones se hicieron en una laptop con Windows y Docker Desktop sobre WSL2, no en
+Linux nativo; este entorno se aceptó para la práctica \pend{citar la indicación del
+profesor} (ver ``Desviaciones y limitaciones''). La captura completa del entorno está en
+\cod{evidence/entorno/} (\cod{entorno.json} y salidas crudas).
+
+\begin{table}[h]
+\centering\small
+\caption{Host y entorno de ejecución}\label{tab:host}
+\begin{tabular}{@{}p{0.27\linewidth}p{0.68\linewidth}@{}}
+\toprule
+Equipo & HP Victus 15-fb2xxx (laptop), conectada a la corriente durante toda la matriz \\
+CPU & AMD Ryzen 5 8645HS, 6 núcleos / 12 hilos, hasta 4,3\,GHz \\
+RAM del host & 15,3\,GiB \\
+Disco & SSD NVMe WD PC SN560, 1\,TB \\
+Sistema & Windows 11 Home Single Language 10.0.26200 (64 bits); modo de energía
+  ``máximo rendimiento'' con corriente alterna \\
+WSL & 2.6.3.0; kernel \cod{6.6.87.2-microsoft-standard-WSL2}; sin \cod{.wslconfig}
+  (valores por defecto) \\
+Máquina virtual de Docker & 12 CPU, 7,39\,GiB de RAM, 2\,GiB de swap de la VM \\
+Docker & Docker Desktop 4.97.0, Engine 29.9.2, Compose 5.6.1; cgroups v2 (driver
+  \cod{cgroupfs}); almacenamiento \cod{overlayfs} \\
+Cliente de carga & Python 3.12.10 en Windows (fuera de la VM); pymongo 4.19.0,
+  psycopg 3.3.6 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Imágenes usadas (etiqueta exacta y digest) y versión que reporta cada motor}\label{tab:imagenes}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Imagen & Versión que reporta & Digest \\
+\midrule
+\cod{mongo:9.0.4} & 9.0.4 & (1) \\
+\cod{postgres:18.6} & 18.6 (Debian 18.6-1.pgdg13+2) & (2) \\
+\cod{prom/prometheus:v3.15.1} & --- & (3) \\
+\cod{prom/node-exporter:v1.12.1} & --- & (4) \\
+\cod{ghcr.io/google/cadvisor:v0.60.6} & --- & (5) \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+{\scriptsize\ttfamily
+\begin{tabular}{@{}ll@{}}
+(1) & sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058 \\
+(2) & sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81 \\
+(3) & sha256:fa3302279710be2f21a8301ec17a8b4f2301fd829bd113839b3b6b02b6f191a2 \\
+(4) & sha256:1b4e4438faca4dd7e001dd445d161a4a2091b0fededa84093b3a8dfeae1f1be0 \\
+(5) & sha256:b8e7d1093144fd088f425ff003d75a4aa405de075db78dae3bc563730b1bd07a \\
+\end{tabular}}
+\end{table}
+
+\paragraph{Perfiles de recursos.} Cada motor corre solo (el otro contenedor está
+apagado) y se recrea en cada corrida con los límites del perfil. Los límites se
+verificaron leyendo el cgroup real del contenedor
+(\cod{evidence/verificacion/limites.json}) y se vuelven a leer y guardar en cada
+corrida (\cod{meta.json}, campo \cod{identidad.limites}).
+
+\begin{table}[h]
+\centering\small
+\caption{Perfiles y límites reales leídos del cgroup}\label{tab:perfiles}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+Perfil & \cod{cpus} & \cod{mem\_limit} & \cod{cpu.max} & \cod{memory.max} & \cod{memory.swap.max} \\
+\midrule
+A (\cod{PROFILE\_A\_BASELINE}) & 4 & 4096\,MiB & \cod{400000 100000} & 4\,294\,967\,296 & 0 \\
+B (\cod{PROFILE\_B\_MEDIUM})   & 2 & 2048\,MiB & \cod{200000 100000} & 2\,147\,483\,648 & 0 \\
+C (\cod{PROFILE\_C\_SEVERE})   & 1 & 1024\,MiB & \cod{100000 100000} & 1\,073\,741\,824 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Configuración de los motores: la de cada imagen, sin ajustes de memoria ni de
+paralelismo. MongoDB se publica en el puerto 27018 del host (el 27017 lo ocupa otro
+servicio, detenido durante toda la matriz). PostgreSQL usa la base \cod{benchmark} con
+collation C y \cod{shm\_size: 1g} (desviación declarada). La telemetría la recogen
+cAdvisor y Node Exporter, consultados por Prometheus cada segundo.
+
+%=====================================================================
+\section{Método de medición y verificación del baseline}
+%=====================================================================
+\subsection{Datos y consultas}
+El documento es una venta del sistema de abarrotes del autor (datos sintéticos): folio,
+fecha ISO-8601 UTC, tipo de pago (\cod{EFECTIVO}, \cod{TRANSFERENCIA}, \cod{FIADO}),
+total, bandera \cod{es\_fiado} y una lista \cod{items} de 1 a 10 artículos (promedio 3,0);
+cada artículo lleva \cod{producto.proveedor.\{id, empresa\}}, lo que da 4 niveles de
+anidamiento. Se generaron 500\,000 ventas con semilla fija (20261101) en un solo archivo
+NDJSON (SHA-256 \cod{59c35b36\ldots2ad6a8c1}, 940,2\,B por venta) que se cargó en ambos
+motores: colección \cod{ventas} en MongoDB y tabla \cod{ventas(id UUID PRIMARY KEY,
+data JSONB)} en PostgreSQL. Índices: en MongoDB, \cod{fecha} y \cod{folio}; en
+PostgreSQL, la llave primaria y un B-Tree sobre \cod{(data->>'fecha')}.
+
+\begin{lstlisting}[caption={Q1 (CPU): desanidar, filtrar, calcular y agrupar}]
+-- PostgreSQL
+SELECT data->>'tipo_pago', item->'producto'->'proveedor'->>'id',
+       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric),
+       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric)
+FROM ventas, jsonb_array_elements(data->'items') AS item
+WHERE (item->>'precio_unitario')::numeric > 50
+GROUP BY 1, 2
+// MongoDB
+[{$unwind: "$items"}, {$match: {"items.precio_unitario": {$gt: 50}}},
+ {$project: {tipo_pago: 1, proveedor_id: "$items.producto.proveedor.id",
+             subtotal: {$multiply: ["$items.cantidad", "$items.precio_unitario"]}}},
+ {$group: {_id: {tipo_pago: "$tipo_pago", proveedor_id: "$proveedor_id"},
+           suma_subtotal: {$sum: "$subtotal"}, promedio_subtotal: {$avg: "$subtotal"}}}]
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Q2 (memoria): filtrar y ordenar sin índice, Top-1000}]
+-- PostgreSQL (Q2: SET work_mem = '4MB'; Q2_RELAXED: SET work_mem = '64MB')
+SELECT data FROM ventas
+WHERE (data->>'es_fiado')::boolean = false AND data->>'fecha' >= '2026-01-01T00:00:00Z'
+ORDER BY (data->>'total')::numeric DESC, (data->>'folio')::int ASC
+LIMIT 1000
+// MongoDB (Q2: allowDiskUse false; Q2_RELAXED: allowDiskUse true)
+[{$match: {es_fiado: false, fecha: {$gte: "2026-01-01T00:00:00Z"}}},
+ {$sort: {total: -1, folio: 1}}, {$limit: 1000}]
+\end{lstlisting}
+
+\subsection{Matriz y protocolo}
+La matriz tiene 38 celdas: 2 motores $\times$ 3 perfiles $\times$ 2 consultas (Q1, Q2)
+$\times$ 3 concurrencias (1, 10, 50), más \cod{Q2\_RELAXED} con 50 clientes en el
+perfil C para cada motor. Se ejecutó en 3 rondas completas; dentro de cada ronda el orden
+de las celdas es aleatorio con semilla fija (\cod{random.Random("20261101:ronda:<n>")}),
+para que la hora del día no se confunda con el perfil. El número de ronda es el
+\cod{run\_number} del CSV. Cada corrida sigue estos pasos (\cod{runner/run\_cell.py}):
+\begin{enumerate}
+\item Precondiciones: laptop conectada, servicio MongoDB de Windows detenido y al menos
+  60\,GB libres en disco.
+\item Recrear el contenedor del motor con los límites del perfil (el otro motor queda
+  apagado) y verificar su identidad: puerto, versión exacta, un dato propio del
+  contenedor (hostname o IP) y los límites del cgroup. Si no coinciden, la corrida aborta.
+\item Vaciar la caché de páginas de la VM (\cod{drop\_caches}).
+\item Lanzar $c$ procesos cliente (\cod{multiprocessing}, modo \cod{spawn}), cada uno con
+  su propia conexión, en lazo cerrado y sin pausa entre consultas.
+\item 60\,s de calentamiento, 300\,s de medición y 60\,s de enfriamiento. Timeout por
+  consulta: 300\,s. Las consultas que siguen en curso al cerrar la ventana se cancelan y
+  no se cuentan.
+\end{enumerate}
+
+\subsection{Métricas}
+\begin{itemize}
+\item \textbf{Throughput (QPS):} consultas exitosas que empezaron y terminaron dentro de
+  la ventana, entre 300\,s.
+\item \textbf{Latencias P50/P95/P99:} percentil por rango más cercano sobre las
+  latencias de esas consultas. Con menos de 100 consultas el P99 coincide con el máximo y
+  así se rotula; entre 100 y 999, el P99 se considera orientativo.
+\item \textbf{Throttling de CPU:} diferencia de \cod{throttled\_usec} de
+  \cod{cpu.stat} del cgroup entre el inicio y el fin de la ventana. En cgroups v2 este
+  contador acumula el tiempo de espera de todas las CPU en que el grupo tenía hilos
+  listos, por lo que puede superar los 300\,s de reloj. Se complementa con la fracción de
+  periodos CFS con throttling (\cod{nr\_throttled}/\cod{nr\_periods}).
+\item \textbf{RSS máxima:} máximo de \cod{container\_memory\_rss} de cAdvisor en la
+  ventana; también se guarda \cod{memory.peak} del cgroup, que incluye caché de página.
+\item \textbf{Volcado a disco:} bytes temporales en la ventana: \cod{temp\_bytes} de
+  \cod{pg\_stat\_database} en PostgreSQL; \cod{spillToDiskBytes} y
+  \cod{spilledDataStorageSize} de \cod{serverStatus} en MongoDB.
+\item \textbf{OOM:} \cod{oom\_kill} de \cod{memory.events} y la bandera
+  \cod{OOMKilled} de Docker.
+\item \textbf{Estado:} prioridad \cod{oom} $>$ \cod{error} $>$ \cod{spill} $>$
+  \cod{ok}. Una corrida se descarta solo por una causa externa fijada de antemano
+  (corriente, suspensión, caída de Docker); un OOM o un volcado son resultados, no
+  descartes.
+\end{itemize}
+Cada corrida deja \cod{meta.json} (identidad, contadores del cgroup, consultas, temporales),
+\cod{latencias.csv} (todas las consultas), \cod{serie\_1s.csv} (RSS y throttling cada
+segundo) y, si hubo \cod{oom} o \cod{error}, \cod{docker\_logs.txt}.
+
+\subsection{Verificación del baseline}
+Antes del piloto se comprobó que ambos motores tienen los mismos datos y devuelven lo
+mismo (\cod{runner/verificar\_f2.py}; detalle en \cod{evidence/verificacion/}). Todas las
+condiciones se cumplieron:
+\begin{itemize}
+\item 500\,000 ventas en cada motor; 1\,998 documentos de muestra idénticos entre motores.
+\item Tamaño por venta: 940,2\,B en JSON, 984\,B en BSON y 1\,174,6\,B en JSONB.
+\item Q1: los mismos 90 grupos y 674\,686 artículos; diferencia máxima de las sumas
+  $9{,}3\times10^{-10}$ (tolerancia: 1 centavo).
+\item Q2 y \cod{Q2\_RELAXED}: las mismas 1\,000 filas en el mismo orden en ambos motores.
+\item Con 1 cliente en el perfil A, Q1 tarda 2,06\,s en MongoDB y 3,44\,s en PostgreSQL;
+  Q2, 0,28\,s y 0,25\,s (una sola ejecución, no es medición).
+\item Los límites reales de los 6 contenedores coinciden con su perfil y
+  \cod{drop\_caches} funciona en la VM (caché de 850\,MB a 375\,MB).
+\end{itemize}
+
+\subsection{Ejecución}
+Un piloto de 3 corridas (resultados en \cod{results/piloto/}, fuera de la matriz) fijó
+la duración real: unos 7,4\,min por corrida. La matriz se lanzó el 1 de noviembre de
+2026 a las 01:15 (hora de la Ciudad de México) y terminó a las 16:09. Según
+\cod{results/bitacora.log}, hubo una sola pausa, entre corridas, de 11:59 a 12:49; al
+reanudar, el orquestador volvió a revisar el entorno. Las 114 corridas tienen fila en el
+CSV, sin descartes ni reintentos. Al cerrar cada ronda se hizo un respaldo con manifiesto
+SHA-256, verificado con \cod{sha256sum -c}.
+
+%=====================================================================
+\section{Resultados consolidados}
+%=====================================================================
+Las tablas~\ref{tab:rendimiento} y~\ref{tab:recursos} resumen cada celda con la mediana
+de sus 3 rondas y el rango del P99 entre rondas. Se usa la mediana y no la media porque
+con 3 valores no se deja arrastrar por una ronda atípica. Las 114 filas individuales están
+en \cod{results/benchmark\_results.csv}; el resumen por celda, en
+\cod{report/generado/celdas.csv}.
+
+\paragraph{Estados.} Las tres rondas dan exactamente los mismos estados: por ronda,
+29 corridas \cod{ok}, 7 \cod{spill} y 2 \cod{oom}, sin \cod{error}. Todas las corridas
+\cod{spill} y \cod{oom} son de PostgreSQL con Q1; MongoDB no tuvo volcado a disco ni OOM
+en ninguna celda.
+
+{\small\setlength{\tabcolsep}{3.5pt}
+\input{generado/tabla_rendimiento.tex}}
+
+{\small\setlength{\tabcolsep}{3.5pt}
+\input{generado/tabla_recursos.tex}}
+
+\paragraph{Q1 (CPU).} MongoDB completa Q1 en todas las celdas. Con 1 cliente, su P99 va de
+1\,411\,ms (perfil A) a 2\,063\,ms (C); con 50 clientes, de 35\,077\,ms (A) a
+137\,694\,ms (C). PostgreSQL es más lento en todas las celdas de Q1 y vuelca a disco en
+todas las que terminan:
+\begin{itemize}
+\item Con 1 cliente: P99 de 2\,790\,ms (A), 5\,343\,ms (B) y 8\,497\,ms (C), entre 2,0 y
+  4,1 veces el de MongoDB.
+\item Con 10 clientes: 0,17, 0,13 y 0,08\,QPS, frente a 1,72, 0,87 y 0,42 de MongoDB.
+\item Con 50 clientes: en el perfil A solo terminan 3 o 4 consultas por ventana
+  (0,01\,QPS; el P99 de 210\,294\,ms es el máximo). En B, las tres rondas terminan en
+  \cod{oom} (5 OOM kills en total) y apenas 4 consultas por ventana. En C, las tres rondas
+  terminan en \cod{oom} (144 OOM kills) sin ninguna consulta exitosa.
+\item Volumen temporal: entre 32,5 y 87,7\,GiB por ventana de 300\,s; 1\,140\,GiB en toda
+  la matriz.
+\end{itemize}
+
+\paragraph{Q2 (memoria).} Ningún motor vuelca a disco. Con 1 cliente PostgreSQL tiene menor
+P99 en los tres perfiles (175, 218 y 411\,ms, frente a 270, 289 y 587\,ms de MongoDB).
+Con 50 clientes PostgreSQL da más QPS (12,93, 6,68 y 3,42, frente a 9,74, 5,09 y 2,59) y
+menor P99 (6\,755, 12\,907 y 25\,294\,ms, frente a 8\,587, 18\,087 y 31\,686\,ms). Con 10
+clientes los dos quedan cerca: MongoDB tiene menor P99 en los tres perfiles.
+
+\paragraph{Variante relajada de Q2.} En el perfil C con 50 clientes, \cod{Q2\_RELAXED}
+(\cod{allowDiskUse: true} / \cod{work\_mem = 64MB}) no cambia el resultado: MongoDB
+2,62\,QPS y P99 de 31\,795\,ms (frente a 2,59 y 31\,686 con Q2); PostgreSQL 3,45\,QPS y
+25\,389\,ms (frente a 3,42 y 25\,294). La sección~\ref{sec:planes} muestra por qué.
+
+\paragraph{Repetibilidad.} El rango del P99 entre rondas es estrecho en casi todas las
+celdas; por ejemplo, MongoDB A Q2 con 1 cliente da 278, 269 y 270\,ms. Las celdas con más
+dispersión son las de PostgreSQL Q1, donde el disco interviene (B con 1 cliente: de 3\,283
+a 5\,789\,ms).
+
+%=====================================================================
+\section{Análisis gráfico}
+%=====================================================================
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{generado/fig_p99_concurrencia.pdf}
+\caption{P99 frente a concurrencia (mediana de 3 rondas; las barras muestran el mínimo
+y el máximo entre rondas). Escalas logarítmicas. Todas las corridas de PostgreSQL Q1
+volcaron a disco; con 50 clientes, B terminó en OOM y C en OOM sin consultas exitosas.}
+\label{fig:p99}
+\end{figure}
+
+\paragraph{P99 frente a concurrencia (figura~\ref{fig:p99}).} En Q2 las curvas de los dos
+motores casi se superponen y crecen de forma aproximadamente lineal con la concurrencia:
+en lazo cerrado, una vez saturada la cuota de CPU, cada cliente adicional se forma en la
+cola y la latencia aumenta en proporción. En Q1 la curva de PostgreSQL queda siempre arriba
+de la de MongoDB, y la distancia es mayor con 10 clientes que con 1 (13,6 veces en el
+perfil A), porque las ejecuciones simultáneas compiten por el mismo disco.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{generado/fig_throttling_qps.pdf}
+\caption{Throttling de CFS en la ventana (\cod{throttled\_usec} de \cod{cpu.stat}) frente
+a QPS; una marca por corrida (114). Eje de QPS logarítmico.}
+\label{fig:throttling}
+\end{figure}
+
+\paragraph{Throttling frente a QPS (figura~\ref{fig:throttling}).} Se forman dos grupos.
+Con 10 y 50 clientes, las corridas limitadas por CPU (todas las de MongoDB y las de Q2 en
+PostgreSQL) tienen throttling en el 100\,\% de los periodos y acumulan entre 1\,700 y
+3\,300\,s por ventana, más cuanto menor es la cuota. Su QPS es casi proporcional a la cuota:
+Q2 con 50 clientes da 12,93/6,68/3,42\,QPS en PostgreSQL y 9,74/5,09/2,59 en MongoDB
+para 4/2/1 CPU (razón cercana a 3,8:2:1). En cambio, PostgreSQL Q1 tiene poco throttling
+y además muy bajo QPS: en el perfil A con 10 clientes, solo el 14\,\% de los periodos
+tienen throttling. Esa consulta espera al disco, no a la CPU. Con 1 cliente, el
+throttling es casi nulo en A y B, pero no en C: MongoDB Q1 tiene throttling en el
+63\,\% de los periodos y su P99 sube de 1\,411 a 2\,063\,ms aunque solo haya un cliente.
+Como el throttling solo ocurre cuando el grupo agota su cuota dentro de un periodo, esto
+indica que, con una sola consulta, MongoDB usa más de una CPU durante parte del tiempo.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{generado/fig_rss.pdf}
+\caption{RSS del contenedor cada segundo (cAdvisor) durante la ventana de medición, Q1
+con 50 clientes, ronda 1. La línea discontinua es \cod{memory.max}. Las caídas de
+PostgreSQL en B y C son OOM kills: el kernel mata un proceso y PostgreSQL reinicia todos
+sus procesos.}
+\label{fig:rss}
+\end{figure}
+
+\paragraph{Curva RSS (figura~\ref{fig:rss}).} MongoDB se mantiene por debajo de
+1\,GiB en los tres perfiles (entre unos 550 y 980\,MiB), con oscilaciones regulares y sin
+acercarse al límite. Con 50 clientes en Q1, PostgreSQL ocupa entre 1\,800 y 1\,970\,MiB
+de RSS en el perfil A: casi todo el límite de B (2\,048\,MiB) y casi el doble que el de C. En B la RSS
+sube hasta cerca de 1\,780\,MiB y cae casi a cero cuando ocurre el OOM kill; en C toca
+los 960\,MiB y cae una y otra vez durante toda la ventana.
+
+%=====================================================================
+\section{Planes de ejecución}\label{sec:planes}
+%=====================================================================
+Los planes se guardaron antes de medir, con el perfil A y un solo cliente, usando
+\cod{runner/explain\_plans.py}. MongoDB, con \cod{explain} en modo
+\cod{executionStats}; PostgreSQL con \cod{EXPLAIN} y las opciones \cod{ANALYZE},
+\cod{BUFFERS}, \cod{VERBOSE} y \cod{SETTINGS}.
+Están completos en \cod{evidence/plans/}.
+
+\paragraph{Q1 en PostgreSQL vuelca a disco.} El planificador ordena los documentos JSONB
+completos (\cod{width=1172}) por \cod{tipo\_pago} en un \cod{Sort} paralelo, antes de
+desanidar los artículos, para alimentar un \cod{Incremental Sort} y un
+\cod{GroupAggregate}. Cada uno de los 3 procesos (líder y 2 trabajadores) ordena
+unos 190--200\,MB, muy por encima de \cod{work\_mem} (4\,MB por defecto):
+
+\begin{lstlisting}
+GroupAggregate (actual time=1971.048..3137.176 rows=90.00 loops=1)
+  Buffers: shared hit=358 read=80006, temp read=200883 written=201096
+  ->  Incremental Sort (... rows=674686.00 loops=1)
+        Pre-sorted Groups: 3  Sort Method: external merge  Average Disk: 141280kB
+        ->  Nested Loop
+              ->  Gather Merge  (Workers Launched: 2)
+                    ->  Sort  (... rows=166666.67 loops=3)
+                          Sort Key: ((ventas.data ->> 'tipo_pago'::text))
+                          Sort Method: external merge  Disk: 190536kB
+                          Worker 0: Sort Method: external merge  Disk: 202128kB
+                          Worker 1: Sort Method: external merge  Disk: 191872kB
+                          ->  Parallel Seq Scan on public.ventas
+              ->  Function Scan on jsonb_array_elements item (loops=500000)
+Execution Time: 3211.518 ms
+\end{lstlisting}
+
+\noindent La ejecución del \cod{EXPLAIN} escribió 840\,851\,456 bytes temporales
+(\cod{pg\_stat\_database}), unos 0,78\,GiB. En la matriz, el volumen por consulta con 1
+cliente es el mismo: 87,7\,GiB para 110 consultas en el perfil A, 60,1\,GiB para 75 en B
+y 33,1\,GiB para 41 en C, es decir, unos 0,8\,GiB por ejecución. Subir \cod{work\_mem} a
+64\,MB solo en la sesión no elimina el volcado: el plan sigue con \cod{external merge} y
+escribe 804\,732\,928 bytes (\cod{postgres\_Q1\_WM64.txt}; esta variante es solo
+evidencia y no se midió en la matriz).
+
+\paragraph{Q1 en MongoDB no vuelca.} El plan es \cod{COLLSCAN} sobre los 500\,000
+documentos, \cod{\$unwind}, \cod{\$match}, \cod{\$project} y \cod{\$group} con 90 grupos;
+\cod{usedDisk: false} y 2\,535\,ms en el perfil A. El \cod{\$group} solo guarda los 90
+acumuladores, así que su memoria no depende del tamaño de la colección, y nunca reordena
+los documentos.
+
+\paragraph{Q2 en ambos motores.} Los dos usan el índice de \cod{fecha} y un ordenamiento
+Top-N en memoria:
+\begin{itemize}
+\item PostgreSQL: \cod{Parallel Index Scan using ventas\_fecha\_idx}, filtro de
+  \cod{es\_fiado} y \cod{Sort Method: top-N heapsort Memory: 3070kB} en cada proceso;
+  0 bytes temporales con 4\,MB y con 64\,MB.
+\item MongoDB: \cod{IXSCAN} sobre \cod{fecha}, 227\,094 documentos examinados,
+  \cod{SORT} con 1\,598\,598 bytes ordenados (el límite por etapa es 104\,857\,600 bytes) y
+  \cod{usedDisk: false} con \cod{allowDiskUse} en \cod{false} y en \cod{true}.
+\end{itemize}
+Como Q2 solo conserva las 1\,000 mejores filas, el ordenamiento nunca llena la memoria
+disponible, y las variantes restrictiva y relajada dan el mismo plan. Eso explica que
+\cod{Q2\_RELAXED} no cambie las métricas (sección 3). El criterio para medir más celdas
+relajadas (fijado antes de medir: que el plan cambiara entre variantes) no se cumplió.
+
+%=====================================================================
+\section{Interpretación: límites de memoria, volcado a disco y throttling}
+%=====================================================================
+\paragraph{El cuello de botella de PostgreSQL Q1 es el plan, no el límite de memoria.} El
+volcado aparece desde el perfil A con 1 cliente (4\,GiB de límite y 0,1\,\% de periodos
+con throttling) y con el mismo volumen, unos 0,8\,GiB por ejecución, en los tres perfiles.
+Lo que lo provoca es la decisión del planificador de ordenar los documentos completos
+antes de desanidarlos, con un \cod{work\_mem} de 4\,MB por nodo de ordenamiento; el límite
+del contenedor no interviene. Por eso su throttling es bajo y su QPS cae con la
+concurrencia: con 10 clientes en A el QPS baja de 0,37 a 0,17, aunque haya CPU libre
+(86\,\% de los periodos sin throttling). Las consultas se forman detrás del disco.
+
+\paragraph{El OOM aparece cuando la memoria de 50 sesiones no cabe en el límite.} En el
+perfil A, 50 clientes de Q1 llevan la RSS de PostgreSQL a 1\,970\,MiB y
+\cod{memory.peak} llega a los 4\,096\,MiB del límite; no hay OOM porque esa diferencia es
+caché de página de los archivos temporales, que el kernel puede liberar. En B el límite es
+de 2\,048\,MiB: la RSS sube a unos 1\,780\,MiB y, sumada a la caché de los temporales,
+toca el límite; sin swap (\cod{memory.swap.max = 0}), el kernel mata un proceso
+(5 OOM kills en 3 rondas). En C (1\,024\,MiB) la RSS llega a 960\,MiB en segundos y hay
+144 OOM kills en 3 rondas. En los registros de PostgreSQL se ve
+\cod{client backend \ldots was terminated by signal 9: Killed} seguido de
+\cod{all server processes terminated; reinitializing} y de una recuperación automática:
+cada OOM kill tira todas las sesiones, no solo la que lo provocó, y por eso hay errores
+de conexión (12\,168 en C y 428 en B). \emph{Hipótesis no verificada:} la RSS por sesión
+viene de los búferes de ordenamiento de hasta 3 procesos por consulta y de la compilación
+JIT que muestra el plan (191\,ms de JIT por ejecución).
+
+\paragraph{MongoDB se degrada por CPU, no por memoria.} MongoDB no volcó a disco ni tuvo
+OOM; su RSS se mantuvo por debajo de 1\,GiB en todos los perfiles. En Q1 su QPS con 10
+clientes es casi proporcional a la cuota de CPU (1,72/0,87/0,42 para 4/2/1 CPU), y su P99
+con 50 clientes crece en la misma proporción (35, 67 y 138\,s). En el perfil C su
+\cod{memory.peak} llega a 1\,024\,MiB con Q1 y 50 clientes sin OOM: la memoria que
+excede la RSS es caché que el kernel recupera.
+
+\paragraph{El throttling mide saturación de la cuota, no trabajo perdido.} Con 10 o más
+clientes, toda corrida limitada por CPU tiene throttling en el 100\,\% de los periodos, y
+los segundos acumulados crecen al bajar la cuota (por ejemplo, Q2 con 50 clientes en
+PostgreSQL: 2\,322, 2\,935 y 3\,237\,s en A, B y C). Como el contador suma el tiempo de
+espera de todas las CPU, sirve para comparar celdas y para ver cuándo la cuota está
+saturada, pero no se puede leer como ``segundos de reloj perdidos''. El indicador que
+traduce el throttling al usuario es el QPS, que en esas corridas escala con la cuota.
+
+\paragraph{Q2: con un Top-1000 no hay presión de memoria.} Ninguna variante vuelca a disco
+porque el ordenamiento Top-N solo conserva 1\,000 filas (unos 3\,MB en PostgreSQL y
+1,6\,MB en MongoDB). La diferencia entre motores en Q2 es de CPU: PostgreSQL usa
+trabajadores paralelos y responde antes con 1 cliente; con 50 clientes saca unas 1,3 veces más
+QPS con la misma cuota (1,33, 1,31 y 1,32 en A, B y C). \emph{Hipótesis no verificada:} el costo por
+consulta de PostgreSQL en Q2 es menor porque lee los documentos JSONB desde el índice y
+descarta pronto los que no entran en el Top-N.
+
+%=====================================================================
+\section{Recomendaciones técnicas}
+%=====================================================================
+Para el sistema de abarrotes, a partir de lo medido:
+\begin{enumerate}
+\item \textbf{Agregaciones sobre los artículos de las ventas (tipo Q1).} Con el esquema
+  JSONB tal como está, no conviene ejecutarlas en PostgreSQL de forma concurrente: cada
+  ejecución escribe unos 0,8\,GiB temporales y con 50 clientes provocó OOM con 1 y 2\,GiB.
+  Las opciones, en orden de esfuerzo:
+  \begin{itemize}
+  \item Ejecutarlas en MongoDB, que las resolvió sin disco y sin OOM en todos los perfiles.
+  \item En PostgreSQL, guardar los artículos en una tabla relacional (o en una columna
+    generada) para no ordenar el documento JSONB completo. \emph{No se midió.}
+  \item Limitar la concurrencia de estos reportes (por ejemplo, una cola o un
+    \textit{pool} de 1 a 2 conexiones), porque el volumen temporal crece con los clientes.
+  \end{itemize}
+\item \textbf{No confiar en subir \cod{work\_mem}.} Con 64\,MB el plan de Q1 sigue
+  volcando; además, \cod{work\_mem} se reserva por nodo y por proceso, y con muchas
+  sesiones el riesgo de OOM aumenta. Cualquier cambio debe probarse con el
+  \cod{EXPLAIN} y con la concurrencia real.
+\item \textbf{Dimensionar la memoria de PostgreSQL por sesión, no por consulta.} Con 50
+  sesiones de Q1, la RSS llegó a unos 2\,GiB; un contenedor de 1--2\,GiB no basta. Con
+  límites estrictos, conviene un \textit{pooler} que limite las conexiones activas.
+\item \textbf{Consultas de listado tipo Q2.} Ambos motores las resuelven en memoria; si el
+  objetivo es la latencia con pocos clientes, PostgreSQL fue más rápido. Para más
+  clientes, lo que importa es la cuota de CPU: el QPS escaló casi en proporción a ella.
+  Las variantes de memoria (\cod{allowDiskUse}, \cod{work\_mem}) no aportan nada aquí.
+\item \textbf{Vigilar el throttling junto con el QPS.} En producción, un 100\,\% de
+  periodos con throttling indica que la cuota de CPU está saturada; si coincide con un QPS
+  que no sube, hace falta más CPU. Un QPS bajo con poco throttling, como PostgreSQL Q1,
+  apunta al disco o al plan.
+\end{enumerate}
+\textbf{Trabajo futuro (no medido):} esquema relacional de los artículos en PostgreSQL,
+efecto de desactivar JIT o el paralelismo en Q1, índices sobre \cod{total} para Q2, y
+repetir la matriz en Linux nativo.
+
+%=====================================================================
+\section*{Desviaciones y limitaciones}\label{sec:desviaciones}
+\addcontentsline{toc}{section}{Desviaciones y limitaciones}
+%=====================================================================
+\begin{enumerate}
+\item \textbf{Entorno.} Docker Desktop sobre WSL2 en Windows, no Linux nativo. La VM tiene
+  12 CPU y 7,39\,GiB; el cliente de carga corre en Windows y comparte el procesador con la
+  VM.
+\item \textbf{Dataset adaptado al proyecto de abarrotes.} En lugar de las órdenes del
+  enunciado: \cod{es\_fiado = false} reemplaza al estado \cod{completed}; \cod{tipo\_pago}
+  a país; el proveedor del artículo a categoría; \cod{folio} desempata el orden de Q2; el
+  \cod{id} de PostgreSQL es un UUID determinista (uuid5) calculado del \cod{\_id}. Cada
+  artículo lleva un subdocumento \cod{producto} para llegar a 4 niveles. Datos
+  sintéticos; 940\,B por venta en JSON.
+\item \textbf{Tolerancia en Q1.} Las sumas de MongoDB son \cod{double} y las de
+  PostgreSQL \cod{numeric}; se aceptó una diferencia de hasta 1 centavo (la máxima fue
+  $9{,}3\times10^{-10}$).
+\item \textbf{\cod{shm\_size: 1g} en PostgreSQL.} El \cod{/dev/shm} de 64\,MB que Docker
+  da por defecto corta las consultas paralelas. Es un ajuste de Docker, no del motor.
+\item \textbf{Swap.} \cod{mem\_swappiness: 0} no se aplica en cgroups v2 (Docker lo
+  ignora); el swap se anuló con \cod{memswap\_limit} igual a la memoria y se verificó
+  \cod{memory.swap.max = 0}.
+\item \textbf{Puerto de MongoDB.} El contenedor se publica en el 27018 porque el 27017 lo
+  usa un servicio MongoDB de Windows, que se mantuvo detenido durante la matriz.
+\item \textbf{Throttling.} El valor del CSV sale de \cod{cpu.stat} y suma todas las CPU,
+  por lo que puede superar los 300\,s de la ventana. La serie de cada segundo de cAdvisor
+  tiene una resolución efectiva de unos 2\,s.
+\item \textbf{Percentiles con pocas consultas.} En PostgreSQL Q1 con 50 clientes
+  terminan 3 o 4 consultas por ventana (perfiles A y B): su P95 y su P99 son el máximo.
+  Varias celdas de Q1 tienen menos de 100 consultas (marcadas con $\dagger$).
+\item \textbf{Temporales tras un OOM.} PostgreSQL reinicia sus estadísticas al
+  recuperarse de un OOM kill, así que en las corridas \cod{oom} los bytes temporales no
+  se pudieron medir: \cod{disk\_spill} queda vacío y nunca se estima.
+\item \textbf{Serie de RSS de cada segundo.} El runner consultó cAdvisor por nombre de
+  contenedor y tomó la primera serie devuelta; cuando el contenedor se recrea, Prometheus
+  conserva unos minutos la serie del contenedor anterior con el mismo nombre. Una
+  auditoría posterior (\cod{analysis/auditar\_rss.py}), que filtra por el id del
+  contenedor de cada corrida, encontró que en 24 de las 114 corridas el
+  \cod{serie\_1s.csv} guardado es de otro contenedor; la figura~\ref{fig:rss} usa las
+  series corregidas (\cod{report/generado/rss\_corregida/}). El \cod{max\_rss\_mb} del
+  CSV es correcto en las 114 corridas, y el throttling del CSV sale del cgroup, así que
+  no se ve afectado.
+\item \textbf{Piloto.} En el CSV del piloto (\cod{results/piloto/}, fuera de la matriz)
+  la fila de PostgreSQL C Q1 con 50 clientes, que terminó en \cod{oom}, quedó con
+  \cod{disk\_spill = false} sin haberse medido. Se corrigió el runner antes de la matriz y
+  el CSV del piloto se conserva tal como salió.
+\item \textbf{Lazo cerrado.} Los clientes lanzan la siguiente consulta en cuanto termina
+  la anterior, sin tiempo de espera; con 50 clientes la latencia refleja sobre todo la
+  cola, no la velocidad de una consulta aislada.
+\item \textbf{Pausa.} La matriz se pausó una vez entre corridas (11:59 a 12:49). No hubo
+  corridas a medias ni descartes.
+\item \textbf{\cod{memory.peak}.} Es el pico del cgroup desde que arranca el contenedor,
+  incluido el calentamiento, y cuenta caché de página; no equivale a la RSS.
+\end{enumerate}
+
+%=====================================================================
+\appendix
+\section{Reproducción y archivos}
+%=====================================================================
+Desde la raíz del repositorio, con el entorno de Python de \cod{requirements.txt}:
+\begin{lstlisting}
+docker compose --profile telemetry up -d       # Prometheus, cAdvisor y Node Exporter
+python synthetic_data_generator.py              # 500 000 ventas, semilla 20261101
+python runner/load_data.py                      # carga e índices en ambos motores
+python runner/verificar_f2.py                   # verificación del baseline
+python runner/explain_plans.py --out evidence/plans --queries Q1 Q1_WM64 Q2 Q2_RELAXED
+./run_benchmarks.sh --rondas 3 --timeout 300    # matriz completa (orquestador)
+python analysis/auditar_rss.py                  # auditoría de la RSS (con Prometheus)
+python analysis/consolidar.py                   # tablas y figuras de este reporte
+\end{lstlisting}
+
+\begin{itemize}
+\item \cod{results/benchmark\_results.csv}: las 114 filas (14 columnas fijas).
+\item \cod{results/ronda\_0n/runs/<run\_id>/}: \cod{meta.json}, \cod{latencias.csv},
+  \cod{serie\_1s.csv} y, en \cod{oom}, \cod{docker\_logs.txt}.
+\item \cod{results/bitacora.log}: eventos con hora (inicio, pausa, reanudación, respaldos).
+\item \cod{evidence/INDEX.md}: una línea por cada corrida \cod{spill} u \cod{oom} con sus
+  archivos.
+\item \cod{evidence/plans/}, \cod{evidence/verificacion/}, \cod{evidence/entorno/}.
+\end{itemize}
+
+\end{document}

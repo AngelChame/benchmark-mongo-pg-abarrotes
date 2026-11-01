@@ -199,8 +199,14 @@ def pocas(f):
     return ""
 
 
+def H(*lineas):
+    """Encabezado de varias líneas."""
+    return "\\begin{tabular}[b]{@{}c@{}}" + "\\\\".join(lineas) + "\\end{tabular}"
+
+
+CONSULTA_CORTA = {"Q1": "Q1", "Q2": "Q2", "Q2_RELAXED": "Q2R"}
 COMUNES = [
-    ("Consulta", "l", lambda f: nombre_q(f["query_id"])),
+    ("", "l", lambda f: CONSULTA_CORTA[f["query_id"]]),
     ("Motor", "l", lambda f: NOMBRE_MOTOR[f["engine"]]),
     ("Perfil", "c", lambda f: CORTO[f["profile"]]),
     ("$c$", "r", lambda f: str(f["concurrency"])),
@@ -208,22 +214,22 @@ COMUNES = [
 COL_REND = COMUNES + [
     ("Estados", "l", lambda f: estados_tex(f["estados"])),
     ("QPS", "r", lambda f: fmt(f["qps"], 2)),
-    ("P50 (ms)", "r", lambda f: fmt_ms(f["p50"])),
-    ("P95 (ms)", "r", lambda f: fmt_ms(f["p95"])),
-    ("P99 (ms)", "r", lambda f: fmt_ms(f["p99"]) + pocas(f)),
-    ("P99 mín.--máx.", "r", lambda f: "---" if f["p99_min"] is None
+    (H("P50", "(ms)"), "r", lambda f: fmt_ms(f["p50"])),
+    (H("P95", "(ms)"), "r", lambda f: fmt_ms(f["p95"])),
+    (H("P99", "(ms)"), "r", lambda f: fmt_ms(f["p99"]) + pocas(f)),
+    (H("P99 entre rondas", "mín.--máx. (ms)"), "r", lambda f: "---" if f["p99_min"] is None
      else f"{fmt_ms(f['p99_min'])}--{fmt_ms(f['p99_max'])}"),
 ]
 COL_REC = COMUNES + [
-    ("Throttling (s)", "r", lambda f: fmt(f["throttled_s"], 0)),
-    ("\\% periodos", "r", lambda f: fmt(f["pct_periodos"], 0)),
-    ("RSS máx. (MiB)", "r", lambda f: fmt(f["rss_mb_max"], 0)
+    (H("Throttling", "(s)"), "r", lambda f: fmt(f["throttled_s"], 0)),
+    (H("Periodos con", "throttling (\\%)"), "r", lambda f: fmt(f["pct_periodos"], 0)),
+    (H("RSS máx.", "(MiB)"), "r", lambda f: fmt(f["rss_mb_max"], 0)
      + ("$^{\\S}$" if f["rss_corregidas"] else "")),
-    ("Pico cgroup (MiB)", "r", lambda f: fmt(f["memory_peak_mib_max"], 0)),
-    ("Temporales (GiB)", "r", lambda f: fmt(f["temp_gib"], 1) if f["temp_medidas"] else
-     ("no medido" if f["temp_gib"] is None and f["engine"] == "postgres" and "oom" in f["estados"]
+    (H("Pico cgroup", "(MiB)"), "r", lambda f: fmt(f["memory_peak_mib_max"], 0)),
+    (H("Temporales", "(GiB)"), "r", lambda f: fmt(f["temp_gib"], 1) if f["temp_medidas"] else
+     ("n/m" if f["temp_gib"] is None and f["engine"] == "postgres" and "oom" in f["estados"]
       else "---")),
-    ("Consultas ok", "r", lambda f: fmt(f["ok_medidas_mediana"], 0)),
+    (H("Consultas", "ok"), "r", lambda f: fmt(f["ok_medidas_mediana"], 0)),
 ]
 
 
@@ -380,21 +386,21 @@ def main() -> int:
         "celdas_detalle": celdas,
     }, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
 
-    nota = ("Mediana de las 3 rondas por celda; P99 mín.--máx. entre rondas. "
+    nota = ("Q2R: \\texttt{Q2\\_RELAXED}. Mediana de las 3 rondas por celda; P99 mín.--máx. entre rondas. "
             "Percentiles por rango más cercano sobre las consultas exitosas de la ventana (D-007): "
             "$^{\\dagger}$ menos de 100 consultas en alguna ronda, el P99 es igual al máximo; "
             "$^{\\ddagger}$ entre 100 y 999, P99 orientativo. ``---'': sin consultas terminadas.")
     (a.out / "tabla_rendimiento.tex").write_text(tabla(
         celdas, COL_REND, "Rendimiento por celda (ventana de 300 s)", "tab:rendimiento", nota),
         encoding="utf-8")
-    nota_rec = ("Mediana de las 3 rondas salvo RSS y pico del cgroup (máximo). Throttling: delta de "
+    nota_rec = ("Q2R: \\texttt{Q2\\_RELAXED}. Mediana de las 3 rondas salvo RSS y pico del cgroup (máximo). Throttling: delta de "
                 "\\texttt{throttled\\_usec} de \\texttt{cpu.stat}, que suma el tiempo de todas las CPU "
-                "del grupo y puede superar los 300 s de la ventana. \\% periodos: "
+                "del grupo y puede superar los 300 s de la ventana. Periodos con throttling: "
                 "\\texttt{nr\\_throttled}/\\texttt{nr\\_periods}. RSS: cAdvisor "
                 "(\\texttt{container\\_memory\\_rss}); pico del cgroup: \\texttt{memory.peak}, que "
                 "incluye caché de página y memoria compartida desde el arranque del contenedor. "
                 "Temporales: \\texttt{pg\\_stat\\_database.temp\\_bytes} (PostgreSQL) o "
-                "\\texttt{spillToDiskBytes} (MongoDB); ``no medido'' tras un OOM kill.")
+                "\\texttt{spillToDiskBytes} (MongoDB); n/m: no medido (PostgreSQL reinicia sus estadísticas tras un OOM kill).")
     (a.out / "tabla_recursos.tex").write_text(tabla(
         celdas, COL_REC, "Recursos por celda (ventana de 300 s)", "tab:recursos", nota_rec),
         encoding="utf-8")
