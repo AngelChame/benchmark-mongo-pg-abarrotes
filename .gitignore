@@ -1,0 +1,25 @@
+# Dataset generado (500 000 ventas sintéticas): se regenera con la semilla fija
+data/*
+!data/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Temporales del sistema y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
+
+# Archivos de trabajo locales (no forman parte de la entrega)
+memoria/
+CLAUDE.md
+.claude/
+hooks/
+PROMPT-ARRANQUE.txt
