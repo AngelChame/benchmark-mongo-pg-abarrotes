@@ -11,6 +11,8 @@ Escribe en report/generado/:
   cifras.json           las mismas cifras en JSON, para citarlas en el texto
   tabla_rendimiento.tex tabla LaTeX (longtable): estados, QPS y percentiles
   tabla_recursos.tex    tabla LaTeX (longtable): throttling, memoria y temporales
+  huella.csv, tabla_huella.tex  M3 (definición propuesta): CPU y RSS por 1 000 documentos
+  tabla_planes.tex      planes de Q1 y Q2 lado a lado (lee evidence/plans)
   fig_p99_concurrencia.pdf, fig_throttling_qps.pdf, fig_rss.pdf
 
 Resumen por celda: mediana de las corridas con dato (D-006: 3 rondas). Una corrida OOM
@@ -105,8 +107,195 @@ def leer_corridas(results: Path, out: Path) -> list[dict]:
             "oom_kill": cg["oom_kill_delta"],
             "ok_medidas": m["consultas"]["medidas_ok"],
             "errores": sum(m["consultas"].get("errores_por_tipo", {}).values()),
+            # M3: CPU del cgroup en la ventana de medición (todas las CPU, en segundos).
+            "cpu_s": (cg["fin_medicion"]["usage_usec"] - cg["inicio_medicion"]["usage_usec"]) / 1e6,
+            "medicion_s": m["ventana"]["medicion_s"],
         })
     return corridas
+
+
+# ---------- Planes (evidence/plans) y huella por cada 1 000 documentos (M3) ----------
+
+def _nodos_pg(nodo):
+    yield nodo
+    for hijo in nodo.get("Plans", []):
+        yield from _nodos_pg(hijo)
+
+
+def plan_pg(planes: Path, q: str) -> dict:
+    j = json.loads((planes / f"postgres_{q}.json").read_text(encoding="utf-8"))
+    j = j[0] if isinstance(j, list) else j
+    nodos = list(_nodos_pg(j["Plan"]))
+    scan = next(n for n in nodos if n["Node Type"] in ("Seq Scan", "Index Scan"))
+    # EXPLAIN informa filas y filas eliminadas por el filtro como promedio por loop.
+    leidas = round((scan["Actual Rows"] + scan.get("Rows Removed by Filter", 0)) * scan["Actual Loops"])
+    pasan = round(scan["Actual Rows"] * scan["Actual Loops"])
+    sorts = [n for n in nodos if n["Node Type"] == "Sort"]
+    return {"nodos": nodos, "scan": scan, "leidas": leidas, "pasan_filtro": pasan,
+            "sort": sorts[0] if sorts else None, "raiz": j["Plan"],
+            "tiempo_ms": j["Execution Time"]}
+
+
+def plan_mongo(planes: Path, q: str) -> dict:
+    j = json.loads((planes / f"mongo_{q}.json").read_text(encoding="utf-8"))
+    if "stages" in j:  # agregación (Q1)
+        cursor = j["stages"][0]["$cursor"]
+        es = cursor["executionStats"]
+        grupo = next(s for s in j["stages"] if "$group" in s)
+        return {"docs": es["totalDocsExamined"], "claves": es["totalKeysExamined"],
+                "tiempo_ms": es["executionTimeMillis"], "grupos": grupo["nReturned"],
+                "used_disk": grupo["usedDisk"], "pico_bytes": grupo["peakTrackedMemBytes"],
+                "etapa": cursor["executionStats"]["executionStages"]["inputStage"]["stage"]}
+    es = j["executionStats"]
+    st = es["executionStages"]
+    ix = st["inputStage"]["inputStage"]
+    return {"docs": es["totalDocsExamined"], "claves": es["totalKeysExamined"],
+            "tiempo_ms": es["executionTimeMillis"], "ordenados_bytes": st["totalDataSizeSorted"],
+            "used_disk": st["usedDisk"], "pico_bytes": st["peakTrackedMemBytes"],
+            "mem_limit": st["memLimit"], "limite": st["limitAmount"], "indice": ix["indexName"],
+            "pasan_filtro": st["inputStage"]["nReturned"]}
+
+
+def docs_por_consulta(planes: Path) -> dict:
+    """Documentos examinados por ejecución según los planes (perfil A, 1 cliente)."""
+    docs = {}
+    for q in CONSULTAS:
+        docs[("mongo", q)] = plan_mongo(planes, q)["docs"]
+        docs[("postgres", q)] = plan_pg(planes, q)["leidas"]
+    return docs
+
+
+def huella(corridas: list[dict], docs: dict) -> list[dict]:
+    """M3 (definición propuesta): CPU y RSS por cada 1 000 documentos procesados."""
+    celdas = {}
+    for c in corridas:
+        celdas.setdefault((c["engine"], c["profile"], c["query_id"], c["concurrency"]), []).append(c)
+    orden = {q: i for i, q in enumerate(CONSULTAS)}
+    filas = []
+    for (e, p, q, n), cs in sorted(celdas.items(), key=lambda kv: (
+            orden[kv[0][2]], kv[0][0], PERFILES.index(kv[0][1]), kv[0][3])):
+        por_ronda = []
+        for c in sorted(cs, key=lambda c: c["run_number"]):
+            d = c["ok_medidas"] * docs[(e, q)]
+            por_ronda.append({
+                "run_number": c["run_number"], "ok": c["ok_medidas"], "docs": d,
+                "cpu_s": c["cpu_s"], "rss_mb": c["rss_mb"], "status": c["status"],
+                "cpu_ms_por_kdoc": c["cpu_s"] * 1000 / (d / 1000) if d else None,
+                "rss_mb_por_kdoc_s": c["rss_mb"] / (d / c["medicion_s"] / 1000) if d else None,
+            })
+        validas = [r for r in por_ronda if r["docs"]]
+        filas.append({
+            "engine": e, "profile": p, "query_id": q, "concurrency": n,
+            "docs_por_consulta": docs[(e, q)], "rondas": len(por_ronda),
+            "rondas_en_mediana": len(validas),
+            "ok_mediana": mediana([r["ok"] for r in por_ronda]),
+            "ok_min": min(r["ok"] for r in por_ronda),
+            "cpu_s_mediana": mediana([r["cpu_s"] for r in por_ronda]),
+            "cpu_ms_por_kdoc": mediana([r["cpu_ms_por_kdoc"] for r in validas]),
+            "rss_mb_mediana": mediana([r["rss_mb"] for r in por_ronda]),
+            "rss_mb_por_kdoc_s": mediana([r["rss_mb_por_kdoc_s"] for r in validas]),
+            "con_oom": any(r["status"] == "oom" for r in por_ronda),
+            "detalle_rondas": json.dumps(por_ronda),
+        })
+    return filas
+
+
+def tabla_huella(filas: list[dict]) -> str:
+    def marca(f):
+        if f["rondas_en_mediana"] == 0:
+            return ""
+        m = ""
+        if f["con_oom"]:
+            m += "$^{*}$"
+        if f["ok_min"] < 10:
+            m += "$^{\\dagger}$"
+        return m
+
+    def nc(x, dec):
+        return "n/c" if x is None else fmt(x, dec)
+
+    columnas = COMUNES + [
+        (H("Consultas ok", "(mediana)"), "r", lambda f: fmt(f["ok_mediana"], 0)),
+        (H("Docs. por", "consulta"), "r", lambda f: fmt(f["docs_por_consulta"], 0)),
+        (H("CPU en la", "ventana (s)"), "r", lambda f: fmt(f["cpu_s_mediana"], 0)),
+        (H("ms de CPU por", "1\\,000 docs."), "r", lambda f: nc(f["cpu_ms_por_kdoc"], 1) + marca(f)),
+        (H("RSS máx.", "(MiB)"), "r", lambda f: fmt(f["rss_mb_mediana"], 0)),
+        (H("MiB de RSS por", "1\\,000 docs./s"), "r", lambda f: nc(f["rss_mb_por_kdoc_s"], 1) + marca(f)),
+    ]
+    nota = ("Definición propuesta, pendiente de confirmación. Q2R: \\texttt{Q2\\_RELAXED}. "
+            "Documentos procesados = consultas ok de la ventana $\\times$ documentos examinados "
+            "por consulta según el plan (perfil A, 1 cliente; se asume constante entre perfiles y "
+            "concurrencias). CPU: delta de \\texttt{usage\\_usec} de \\texttt{cpu.stat} en la "
+            "ventana de 300 s (todas las CPU del contenedor; incluye las consultas en vuelo "
+            "canceladas al cierre y no incluye el cliente). RSS máx.: \\texttt{max\\_rss\\_mb} del "
+            "CSV. Mediana de las 3 rondas por celda (también la RSS). n/c: sin consultas ok, no "
+            "se puede calcular. $^{*}$ celda con OOM: el CPU incluye los reinicios y la "
+            "recuperación del motor. $^{\\dagger}$ menos de 10 consultas ok en alguna ronda: el "
+            "CPU de las consultas en vuelo pesa mucho en el cociente.")
+    return tabla(filas, columnas, "Huella de CPU y memoria por cada 1\\,000 documentos procesados (M3)",
+                 "tab:huella", nota)
+
+
+def tabla_planes(planes: Path) -> str:
+    m1, m2 = plan_mongo(planes, "Q1"), plan_mongo(planes, "Q2")
+    p1, p2 = plan_pg(planes, "Q1"), plan_pg(planes, "Q2")
+    raiz1 = p1["raiz"]
+    inc = next(n for n in p1["nodos"] if n["Node Type"] == "Incremental Sort")
+    s1 = p1["sort"]
+    disco1 = [s1["Sort Space Used"]] + [w["Sort Space Used"] for w in s1.get("Workers", [])]
+    s2 = p2["sort"]
+    mem2 = [s2["Sort Space Used"]] + [w["Sort Space Used"] for w in s2.get("Workers", [])]
+    kb = lambda xs: "/".join(fmt(x, 0) for x in xs)  # noqa: E731
+    filas = [
+        ("Q1", "MongoDB", f"\\texttt{{{m1['etapa']}}} $\\to$ \\texttt{{\\$unwind}} $\\to$ "
+         "\\texttt{\\$group}",
+         f"{fmt(m1['docs'], 0)} docs.",
+         f"\\texttt{{\\$group}}, {m1['grupos']} grupos",
+         f"memoria: pico {fmt(m1['pico_bytes'], 0)} B; \\texttt{{usedDisk}}: "
+         f"{str(m1['used_disk']).lower()}",
+         fmt(m1["tiempo_ms"], 0)),
+        ("Q1", "PostgreSQL", f"\\texttt{{Parallel {p1['scan']['Node Type']}}} $\\to$ "
+         f"\\texttt{{Sort}} $\\to$ \\texttt{{Incremental Sort}} $\\to$ "
+         f"\\texttt{{{raiz1['Node Type']} ({raiz1.get('Strategy', '')})}}",
+         f"{fmt(p1['leidas'], 0)} filas",
+         f"Sort: \\texttt{{{s1['Sort Method']}}} ({s1['Actual Loops']} procesos); "
+         f"Incremental Sort: \\texttt{{{inc['Pre-sorted Groups']['Sort Methods Used'][0]}}}",
+         f"disco: Sort {kb(disco1)} kB; {fmt(raiz1['Temp Written Blocks'], 0)} bloques "
+         "temporales escritos",
+         fmt(p1["tiempo_ms"], 1)),
+        ("Q2", "MongoDB", f"\\texttt{{IXSCAN}} (\\texttt{{{m2['indice'].replace('_', chr(92) + '_')}}}) "
+         "$\\to$ \\texttt{FETCH} $\\to$ \\texttt{SORT}",
+         f"{fmt(m2['docs'], 0)} docs. ({fmt(m2['pasan_filtro'], 0)} pasan el filtro)",
+         f"\\texttt{{SORT}} con límite {fmt(m2['limite'], 0)}",
+         f"memoria: {fmt(m2['ordenados_bytes'], 0)} B ordenados, pico "
+         f"{fmt(m2['pico_bytes'], 0)} B (límite {fmt(m2['mem_limit'], 0)} B); "
+         f"\\texttt{{usedDisk}}: {str(m2['used_disk']).lower()}",
+         fmt(m2["tiempo_ms"], 0)),
+        ("Q2", "PostgreSQL", f"\\texttt{{Parallel {p2['scan']['Node Type']}}} "
+         f"(\\texttt{{{p2['scan']['Index Name'].replace('_', chr(92) + '_')}}}) $\\to$ "
+         "\\texttt{Sort} $\\to$ \\texttt{Gather Merge} $\\to$ \\texttt{Limit}",
+         f"{fmt(p2['leidas'], 0)} filas ({fmt(p2['pasan_filtro'], 0)} pasan el filtro)",
+         f"\\texttt{{{s2['Sort Method']}}}",
+         f"memoria: {kb(mem2)} kB; {fmt(p2['raiz']['Temp Written Blocks'], 0)} bloques temporales",
+         fmt(p2["tiempo_ms"], 1)),
+    ]
+    out = ["\\begin{table}[h]", "\\centering\\footnotesize",
+           "\\caption{Planes lado a lado (\\texttt{evidence/plans}, perfil A, 1 cliente, una "
+           "ejecución; no es lo medido en la matriz)}\\label{tab:planes}",
+           "\\begin{tabular}{@{}llp{3.3cm}p{2.0cm}p{2.5cm}p{3.6cm}r@{}}", "\\toprule",
+           "& Motor & Operador principal & Examinados & Ordenamiento o agrupamiento & "
+           "Memoria o disco & " + H("Tiempo", "(ms)") + " \\\\", "\\midrule"]
+    for i, f in enumerate(filas):
+        if i == 2:
+            out.append("\\addlinespace")
+        out.append(" & ".join(f) + " \\\\")
+    out += ["\\bottomrule", "\\multicolumn{7}{p{0.97\\linewidth}}{\\scriptsize PostgreSQL: "
+            "valores de \\texttt{EXPLAIN} en JSON; filas examinadas = (filas + filas eliminadas por "
+            "el filtro) $\\times$ loops del nodo de lectura; espacio de ordenamiento del líder y de "
+            "cada trabajador. MongoDB: \\texttt{explain} en modo \\texttt{executionStats}. El "
+            "tiempo es el de esa única ejecución del plan.}\\\\",
+            "\\end{tabular}", "\\end{table}"]
+    return "\n".join(out) + "\n"
 
 
 def resumir(corridas: list[dict]) -> list[dict]:
@@ -404,6 +593,16 @@ def main() -> int:
     (a.out / "tabla_recursos.tex").write_text(tabla(
         celdas, COL_REC, "Recursos por celda (ventana de 300 s)", "tab:recursos", nota_rec),
         encoding="utf-8")
+
+    # M3 (definición propuesta) y planes lado a lado, desde evidence/plans.
+    planes = RAIZ / "evidence" / "plans"
+    filas_huella = huella(corridas, docs_por_consulta(planes))
+    with (a.out / "huella.csv").open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(filas_huella[0]), lineterminator="\n")
+        w.writeheader()
+        w.writerows(filas_huella)
+    (a.out / "tabla_huella.tex").write_text(tabla_huella(filas_huella), encoding="utf-8")
+    (a.out / "tabla_planes.tex").write_text(tabla_planes(planes), encoding="utf-8")
 
     estilo()
     fig_p99(celdas, a.out)
