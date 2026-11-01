@@ -1,0 +1,109 @@
+# Benchmark de contención: MongoDB vs PostgreSQL JSONB (Docker, cgroups v2)
+#
+# Un solo motor encendido a la vez. Los límites de recursos salen del perfil:
+#   docker compose --env-file profiles/PROFILE_C_SEVERE.env --profile postgres up -d postgres
+# La telemetría (cAdvisor, Node Exporter, Prometheus) se levanta aparte:
+#   docker compose --profile telemetry up -d
+#
+# Imágenes fijadas con etiqueta exacta y digest (versiones estables al 2026-10-31).
+# Configuración de los motores: la de fábrica.
+
+name: benchmark
+
+x-limites: &limites
+  cpus: ${CPUS:-4.0}
+  mem_limit: ${MEM_LIMIT:-4096m}
+  memswap_limit: ${MEM_LIMIT:-4096m}   # swap = memoria → sin swap (memory.swap.max = 0)
+  mem_swappiness: 0                    # lo pide el PDF; en cgroups v2 Docker no lo aplica
+
+services:
+  mongo:
+    profiles: ["mongo"]
+    image: mongo:9.0.4@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058
+    container_name: bench-mongo
+    <<: *limites
+    ports:
+      - "127.0.0.1:27018:27017"   # 27018 en Windows: el 27017 lo usa un MongoDB local
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+
+  postgres:
+    profiles: ["postgres"]
+    image: postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81
+    container_name: bench-postgres
+    <<: *limites
+    shm_size: 1g   # /dev/shm de Docker es 64 MB por defecto y corta las consultas paralelas
+    environment:
+      POSTGRES_DB: benchmark
+      POSTGRES_USER: bench
+      POSTGRES_PASSWORD: bench
+      POSTGRES_INITDB_ARGS: "--locale=C --encoding=UTF8"   # collation C (D-017)
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "bench", "-d", "benchmark"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+
+  cadvisor:
+    profiles: ["telemetry"]
+    image: ghcr.io/google/cadvisor:v0.60.6@sha256:b8e7d1093144fd088f425ff003d75a4aa405de075db78dae3bc563730b1bd07a
+    container_name: bench-cadvisor
+    privileged: true
+    command:
+      - --housekeeping_interval=1s
+      - --docker_only=true
+      - --store_container_labels=false
+    devices:
+      - /dev/kmsg
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    ports:
+      - "127.0.0.1:8080:8080"
+
+  node-exporter:
+    profiles: ["telemetry"]
+    image: prom/node-exporter:v1.12.1@sha256:1b4e4438faca4dd7e001dd445d161a4a2091b0fededa84093b3a8dfeae1f1be0
+    container_name: bench-node-exporter
+    pid: host
+    command:   # montajes separados: Docker Desktop no admite "/:/host:ro,rslave"
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/rootfs
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - "127.0.0.1:9100:9100"
+
+  prometheus:
+    profiles: ["telemetry"]
+    image: prom/prometheus:v3.15.1@sha256:fa3302279710be2f21a8301ec17a8b4f2301fd829bd113839b3b6b02b6f191a2
+    container_name: bench-prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=7d
+    volumes:
+      - ./telemetry/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prom_data:/prometheus
+    ports:
+      - "127.0.0.1:9090:9090"
+
+volumes:
+  mongo_data:
+  pg_data:
+  prom_data:
