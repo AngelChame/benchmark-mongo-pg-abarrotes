@@ -21,12 +21,15 @@
   frame=single,rulecolor=\color{black!25},xleftmargin=2pt,xrightmargin=2pt,
   literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1 {×}{{$\times$}}1}
 \newcommand{\cod}[1]{\texttt{#1}}
-\newcommand{\pend}[1]{\textcolor{red!70!black}{[#1]}}
 
 \title{Contención de CPU y memoria en bases de datos documentales:\\
 MongoDB frente a PostgreSQL JSONB con límites de Docker (cgroups v2)\\[4pt]
 \large Reporte de métricas}
-\author{\pend{Nombre del autor} \\ \small\pend{Materia, grupo y profesor}}
+\author{Ángel Eduardo Chamé Pérez \\[2pt]
+\small Bases de Datos en la Nube \\
+\small Universidad Politécnica de Chiapas (IT2iD) \\
+\small Grupo 7-B \\
+\small Profesor: Horacio Irán Solís Cisneros}
 \date{1 de noviembre de 2026}
 
 \begin{document}
@@ -54,9 +57,9 @@ QPS con 50 clientes, y ninguna de las variantes de memoria de Q2 vuelca a disco.
 %=====================================================================
 \section{Especificaciones del host y del entorno Docker}
 %=====================================================================
-Las mediciones se hicieron en una laptop con Windows y Docker Desktop sobre WSL2, no en
-Linux nativo; este entorno se aceptó para la práctica \pend{citar la indicación del
-profesor} (ver ``Desviaciones y limitaciones''). La captura completa del entorno está en
+% P-24: fuente de la aceptación pendiente
+Las mediciones se hicieron con Docker Desktop sobre WSL2 en Windows, no en Linux nativo
+(ver ``Desviaciones y limitaciones''). La captura completa del entorno está en
 \cod{evidence/entorno/} (\cod{entorno.json} y salidas crudas).
 
 \begin{table}[h]
