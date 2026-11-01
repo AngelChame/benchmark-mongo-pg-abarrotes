@@ -414,7 +414,11 @@ Los planes se guardaron antes de medir, con el perfil A y un solo cliente, usand
 \cod{runner/explain\_plans.py}. MongoDB, con \cod{explain} en modo
 \cod{executionStats}; PostgreSQL con \cod{EXPLAIN} y las opciones \cod{ANALYZE},
 \cod{BUFFERS}, \cod{VERBOSE} y \cod{SETTINGS}.
-Están completos en \cod{evidence/plans/}.
+Están completos en \cod{evidence/plans/}. La tabla~\ref{tab:planes} los pone lado a lado.
+Cada valor sale de esos archivos y corresponde a una sola ejecución con el perfil A y 1
+cliente: \emph{no} es lo medido en la matriz (secciones 3 y 4).
+
+\input{generado/tabla_planes.tex}
 
 \paragraph{Q1 en PostgreSQL vuelca a disco.} El planificador ordena los documentos JSONB
 completos (\cod{width=1172}) por \cod{tipo\_pago} en un \cod{Sort} paralelo, antes de

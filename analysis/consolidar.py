@@ -282,7 +282,7 @@ def tabla_planes(planes: Path) -> str:
     out = ["\\begin{table}[h]", "\\centering\\footnotesize",
            "\\caption{Planes lado a lado (\\texttt{evidence/plans}, perfil A, 1 cliente, una "
            "ejecución; no es lo medido en la matriz)}\\label{tab:planes}",
-           "\\begin{tabular}{@{}llp{3.3cm}p{2.0cm}p{2.5cm}p{3.6cm}r@{}}", "\\toprule",
+           "\\begin{tabular}{@{}llp{3.0cm}p{2.0cm}p{2.4cm}p{3.3cm}r@{}}", "\\toprule",
            "& Motor & Operador principal & Examinados & Ordenamiento o agrupamiento & "
            "Memoria o disco & " + H("Tiempo", "(ms)") + " \\\\", "\\midrule"]
     for i, f in enumerate(filas):
