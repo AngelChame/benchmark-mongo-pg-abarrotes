@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import os
 import shutil
 import subprocess
+from pathlib import Path
 
 from runner import config
 
@@ -138,3 +140,65 @@ def impedir_suspension(activar: bool = True) -> bool:
         return bool(ctypes.windll.kernel32.SetThreadExecutionState(flags))
     except Exception:  # noqa: BLE001
         return False
+
+
+# Modo de energía de Windows 11 (Configuración > Energía), superpuesto al plan de powercfg.
+MODOS_ENERGIA = {
+    "ded574b5-45a0-4f42-8737-46345c09c238": "Máximo rendimiento",
+    "3af9b8d9-7c97-431d-ad78-34a8bfea439f": "Mejor rendimiento",
+    "961cc777-2547-4f9d-8174-7d86181b8a7a": "Mejor eficiencia energética",
+    "": "Equilibrado (sin modo superpuesto)",
+    "00000000-0000-0000-0000-000000000000": "Equilibrado (sin modo superpuesto)",
+}
+PLANES_ALTO_RENDIMIENTO = {"8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",   # Alto rendimiento
+                           "e9a42b02-d5df-448d-aa00-03f14749eb61"}   # Máximo rendimiento (Ultimate)
+
+
+def modo_energia() -> dict:
+    """Plan activo y modo superpuesto en corriente alterna (registro de Windows)."""
+    try:
+        import winreg
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,
+                            r"SYSTEM\CurrentControlSet\Control\Power\User\PowerSchemes") as k:
+            def leer(nombre):
+                try:
+                    return str(winreg.QueryValueEx(k, nombre)[0]).lower()
+                except OSError:
+                    return ""
+            plan, modo_ac = leer("ActivePowerScheme"), leer("ActiveOverlayAcPowerScheme")
+    except Exception as e:  # noqa: BLE001
+        return {"error": repr(e)}
+    return {"plan_guid": plan, "modo_ac_guid": modo_ac,
+            "modo_ac": MODOS_ENERGIA.get(modo_ac, f"desconocido ({modo_ac})"),
+            "maximo_rendimiento": modo_ac == "ded574b5-45a0-4f42-8737-46345c09c238"
+            or plan in PLANES_ALTO_RENDIMIENTO}
+
+
+# --------------------------------------------------------------------------
+# Un solo orquestador a la vez (D-006): candado del sistema operativo
+# --------------------------------------------------------------------------
+_CANDADO = None
+
+
+def tomar_candado() -> bool:
+    """Toma un candado exclusivo en el directorio temporal. El sistema operativo lo
+    libera si el proceso termina, aunque sea a la fuerza. False si otro lo tiene."""
+    global _CANDADO
+    if _CANDADO is not None:          # este proceso ya lo tiene
+        return True
+    import tempfile
+    ruta = Path(tempfile.gettempdir()) / "benchmark_orquestador.lock"
+    f = open(ruta, "a+")
+    try:
+        if os.name == "nt":
+            import msvcrt
+            f.seek(0)
+            msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        f.close()
+        return False
+    _CANDADO = f
+    return True

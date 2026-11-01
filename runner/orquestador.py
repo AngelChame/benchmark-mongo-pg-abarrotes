@@ -119,8 +119,12 @@ class SistemaReal:
         for c in susp["no_comprobado"]:
             info["avisos"].append(f"No se pudo comprobar con powercfg: {c}"
                                   + (" (no cierres la tapa durante la matriz)" if c == "accion_tapa" else ""))
-        if "Equilibrado" in info["plan_energia"] or "Balanced" in info["plan_energia"]:
-            info["avisos"].append("Plan de energía 'Equilibrado'; D-009 pide máximo rendimiento.")
+        info["modo_energia"] = host.modo_energia()
+        if "error" in info["modo_energia"]:
+            info["avisos"].append(f"No se pudo leer el modo de energía: {info['modo_energia']['error']}")
+        elif not info["modo_energia"]["maximo_rendimiento"]:
+            info["avisos"].append(f"Modo de energía en corriente: {info['modo_energia']['modo_ac']}; "
+                                  "D-009 pide máximo rendimiento.")
         contenedores.compose("--profile", "telemetry", "up", "-d")
         for motor in MOTORES:
             ident = contenedores.encender_solo(motor, "PROFILE_C_SEVERE", recrear=True)
@@ -166,12 +170,16 @@ class Orquestador:
         self.siguiente: str = ""
         self.avisos_entorno: list[str] = []
         self.avisos_fijos: list[str] = []
+        self.sin_escritura = False
         self.corridas_sesion = 0
         self.respaldo_pendiente = False
         self.respaldos_fallidos: list[dict] = []
 
     # ---------- utilidades ----------
     def log(self, tipo: str, detalle: str = "", aviso: bool = False) -> None:
+        if self.sin_escritura:            # modo --revisar-entorno: solo pantalla
+            print(f"[{ahora_local()}] {tipo}: {detalle}", flush=True)
+            return
         self.sal.evento(tipo, detalle)
         print(f"[{ahora_local()}] {tipo}: {detalle}", flush=True)
         if aviso:
@@ -468,6 +476,10 @@ class Orquestador:
             print("ABORTADO: se indicó --celdas sin --results-dir; no se corre para no mezclar el "
                   "piloto con la matriz (usa, p. ej., --results-dir results/piloto).", file=sys.stderr)
             return 2
+        if not host.tomar_candado():
+            print("ABORTADO: ya hay otro orquestador corriendo (D-006: una corrida a la vez). "
+                  "Espera a que termine o detenlo con DETENER.", file=sys.stderr)
+            return 2
         self.dir.mkdir(parents=True, exist_ok=True)
         self.log("arranque del orquestador",
                  f"rondas={self.a.rondas} celdas={len(self.celdas)} semilla={self.a.semilla} "
@@ -578,6 +590,8 @@ def construir_parser() -> argparse.ArgumentParser:
     ap.add_argument("--descanso", type=float, default=0, help="segundos de espera entre corridas")
     ap.add_argument("--min-free-gb", type=float, default=host.MIN_LIBRE_GB)
     ap.add_argument("--dry-run", action="store_true", help="muestra el orden y el estado; no mide")
+    ap.add_argument("--revisar-entorno", action="store_true",
+                    help="solo la revisión del entorno y del respaldo; no mide ni escribe resultados")
     return ap
 
 
@@ -594,6 +608,33 @@ def dry_run(args) -> int:
     return 0
 
 
+def revisar_entorno(args) -> int:
+    """Revisión del entorno (D-009) y validación del respaldo, sin medir ni escribir resultados.
+    Recrea brevemente cada motor con el Perfil C para leer el cgroup y contar documentos."""
+    if not host.tomar_candado():
+        print("ERROR: hay un orquestador corriendo; la revisión recrearía sus contenedores.")
+        return 2
+    o = Orquestador(args)
+    o.sin_escritura = True
+    try:
+        o.validar_respaldo()
+        info = o.sis.revisar_entorno("revision_manual", args.min_free_gb)
+    except (Abortar, host.PrecondicionFallida, identidad.ServidorIncorrecto) as e:
+        print(f"ERROR: {e}")
+        return 2
+    print(json.dumps({"powercfg_ac": info["suspension"]["valores"], "plan": info["plan_energia"],
+                      "modo_energia": info["modo_energia"],
+                      **{m: {"documentos": info[m]["documentos"], "limites_C": info[m]["identidad"]["limites"],
+                             "version": info[m]["identidad"]["version"],
+                             "precondiciones": info[m]["precondiciones"]} for m in MOTORES}},
+                     indent=2, ensure_ascii=False))
+    avisos_ = o.avisos_fijos + info["avisos"]
+    print("AVISOS:" if avisos_ else "Sin avisos.")
+    for a in avisos_:
+        print(f"  - {a}")
+    return 0
+
+
 def main() -> int:
     args = construir_parser().parse_args()
     if args.celdas and args.results_dir is None and not args.dry_run:
@@ -602,6 +643,8 @@ def main() -> int:
         return 2
     if args.dry_run:
         return dry_run(args)
+    if args.revisar_entorno:
+        return revisar_entorno(args)
     return Orquestador(args).correr()
 
 
