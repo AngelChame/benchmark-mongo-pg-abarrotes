@@ -1,0 +1,158 @@
+{
+  "mongo_PROFILE_A_BASELINE": {
+    "perfil": {
+      "PROFILE": "PROFILE_A_BASELINE",
+      "CPUS": "4.0",
+      "MEM_LIMIT": "4096m"
+    },
+    "limites_reales": {
+      "memory_max": 4294967296,
+      "memory_swap_max": "0",
+      "cpu_max": "400000 100000"
+    },
+    "esperado": {
+      "memory_max": 4294967296,
+      "memory_swap_max": "0",
+      "cpu_max": "400000 100000"
+    },
+    "identidad": {
+      "motor": "mongo",
+      "version": "9.0.4",
+      "puerto": 27018,
+      "contenedor_id": "dee6864af9bb",
+      "hostname": "dee6864af9bb",
+      "imagen": "mongo:9.0.4@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058"
+    },
+    "coincide": true
+  },
+  "postgres_PROFILE_A_BASELINE": {
+    "perfil": {
+      "PROFILE": "PROFILE_A_BASELINE",
+      "CPUS": "4.0",
+      "MEM_LIMIT": "4096m"
+    },
+    "limites_reales": {
+      "memory_max": 4294967296,
+      "memory_swap_max": "0",
+      "cpu_max": "400000 100000"
+    },
+    "esperado": {
+      "memory_max": 4294967296,
+      "memory_swap_max": "0",
+      "cpu_max": "400000 100000"
+    },
+    "identidad": {
+      "motor": "postgres",
+      "version": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "puerto": 5432,
+      "contenedor_id": "90c65bcec73c",
+      "ip": "172.19.0.5",
+      "imagen": "postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81"
+    },
+    "coincide": true
+  },
+  "mongo_PROFILE_B_MEDIUM": {
+    "perfil": {
+      "PROFILE": "PROFILE_B_MEDIUM",
+      "CPUS": "2.0",
+      "MEM_LIMIT": "2048m"
+    },
+    "limites_reales": {
+      "memory_max": 2147483648,
+      "memory_swap_max": "0",
+      "cpu_max": "200000 100000"
+    },
+    "esperado": {
+      "memory_max": 2147483648,
+      "memory_swap_max": "0",
+      "cpu_max": "200000 100000"
+    },
+    "identidad": {
+      "motor": "mongo",
+      "version": "9.0.4",
+      "puerto": 27018,
+      "contenedor_id": "feb93bb14f1e",
+      "hostname": "feb93bb14f1e",
+      "imagen": "mongo:9.0.4@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058"
+    },
+    "coincide": true
+  },
+  "postgres_PROFILE_B_MEDIUM": {
+    "perfil": {
+      "PROFILE": "PROFILE_B_MEDIUM",
+      "CPUS": "2.0",
+      "MEM_LIMIT": "2048m"
+    },
+    "limites_reales": {
+      "memory_max": 2147483648,
+      "memory_swap_max": "0",
+      "cpu_max": "200000 100000"
+    },
+    "esperado": {
+      "memory_max": 2147483648,
+      "memory_swap_max": "0",
+      "cpu_max": "200000 100000"
+    },
+    "identidad": {
+      "motor": "postgres",
+      "version": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "puerto": 5432,
+      "contenedor_id": "a929296c208d",
+      "ip": "172.19.0.5",
+      "imagen": "postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81"
+    },
+    "coincide": true
+  },
+  "mongo_PROFILE_C_SEVERE": {
+    "perfil": {
+      "PROFILE": "PROFILE_C_SEVERE",
+      "CPUS": "1.0",
+      "MEM_LIMIT": "1024m"
+    },
+    "limites_reales": {
+      "memory_max": 1073741824,
+      "memory_swap_max": "0",
+      "cpu_max": "100000 100000"
+    },
+    "esperado": {
+      "memory_max": 1073741824,
+      "memory_swap_max": "0",
+      "cpu_max": "100000 100000"
+    },
+    "identidad": {
+      "motor": "mongo",
+      "version": "9.0.4",
+      "puerto": 27018,
+      "contenedor_id": "0631f9e05fca",
+      "hostname": "0631f9e05fca",
+      "imagen": "mongo:9.0.4@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058"
+    },
+    "coincide": true
+  },
+  "postgres_PROFILE_C_SEVERE": {
+    "perfil": {
+      "PROFILE": "PROFILE_C_SEVERE",
+      "CPUS": "1.0",
+      "MEM_LIMIT": "1024m"
+    },
+    "limites_reales": {
+      "memory_max": 1073741824,
+      "memory_swap_max": "0",
+      "cpu_max": "100000 100000"
+    },
+    "esperado": {
+      "memory_max": 1073741824,
+      "memory_swap_max": "0",
+      "cpu_max": "100000 100000"
+    },
+    "identidad": {
+      "motor": "postgres",
+      "version": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "puerto": 5432,
+      "contenedor_id": "b3d8abf061a6",
+      "ip": "172.19.0.5",
+      "imagen": "postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81"
+    },
+    "coincide": true
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "salida": "MemFree:         6160688 kB\nBuffers:           51032 kB\nCached:           850348 kB\nDROP_OK\nMemFree:         6706520 kB\nBuffers:            4860 kB\nCached:           374868 kB",
+  "funciona": true,
+  "cached_kb_antes": 850348,
+  "cached_kb_despues": 374868
+}

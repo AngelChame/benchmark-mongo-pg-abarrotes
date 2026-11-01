@@ -1,0 +1,94 @@
+{
+  "fecha_utc": "2026-11-01T05:59:47Z",
+  "host": {
+    "so": "Microsoft Windows 11 Home Single Language",
+    "version": "10.0.26200",
+    "build": "26200",
+    "arquitectura": "64 bits",
+    "cpu": "AMD Ryzen 5 8645HS w/ Radeon 760M Graphics",
+    "nucleos": 6,
+    "hilos": 12,
+    "mhz_max": 4301,
+    "ram_bytes": 16390729728,
+    "fabricante": "HP",
+    "modelo": "Victus by HP Gaming Laptop 15-fb2xxx",
+    "discos": [
+      "WD PC SN560 SDDPNQE-1T00-2006 (1024203640320 bytes)"
+    ],
+    "bateria": true
+  },
+  "windows_powercfg": {
+    "plan": "GUID de plan de energía: 381b4222-f694-41f0-9685-ff5bb260df2e  (Equilibrado)",
+    "ajustes_ac": {
+      "suspender_tras_s": 18000,
+      "hibernar_tras_s": 0,
+      "accion_tapa": null
+    },
+    "problemas": [
+      "suspender_tras_s = 18000 (debe ser 0 con la laptop conectada)"
+    ],
+    "no_comprobado": [
+      "accion_tapa"
+    ]
+  },
+  "servicio_mongodb_windows": "Running",
+  "wsl": {
+    "version": "Versión de WSL: 2.6.3.0\r\nVersión de kernel: 6.6.87.2-1\r\nVersión de WSLg: 1.0.71\r\nVersión de MSRDC: 1.2.6353\r\nVersión de Direct3D: 1.611.1-81528511\r\nVersión de DXCore: 10.0.26100.1-240331-1435.ge-release\r\nVersión de Windows: 10.0.26200.9711",
+    "distribuciones": "NAME              STATE           VERSION\r\n* docker-desktop    Running         2",
+    "wslconfig": null
+  },
+  "docker": {
+    "cliente": "29.9.2",
+    "servidor": "29.9.2",
+    "compose": "5.6.1",
+    "info": {
+      "ServerVersion": "29.9.2",
+      "OperatingSystem": "Docker Desktop",
+      "OSType": "linux",
+      "KernelVersion": "6.6.87.2-microsoft-standard-WSL2",
+      "Architecture": "x86_64",
+      "NCPU": 12,
+      "MemTotal": 7934787584,
+      "CgroupVersion": "2",
+      "CgroupDriver": "cgroupfs",
+      "Driver": "overlayfs",
+      "DockerRootDir": "/var/lib/docker",
+      "SwapLimit": true,
+      "MemoryLimit": true,
+      "CpuCfsPeriod": true,
+      "CpuCfsQuota": true
+    }
+  },
+  "vm_docker": "MemTotal:        7748816 kB\nMemFree:         6680688 kB\nMemAvailable:    6940572 kB\nSwapTotal:       2097152 kB\nSwapFree:        2096372 kB\n12\nLinux cb6ba1d44854 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 GNU/Linux",
+  "imagenes": {
+    "mongo:9.0.4": [
+      "mongo@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058"
+    ],
+    "postgres:18.6": [
+      "postgres@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81"
+    ],
+    "prom/prometheus:v3.15.1": [
+      "prom/prometheus@sha256:fa3302279710be2f21a8301ec17a8b4f2301fd829bd113839b3b6b02b6f191a2"
+    ],
+    "prom/node-exporter:v1.12.1": [
+      "prom/node-exporter@sha256:1b4e4438faca4dd7e001dd445d161a4a2091b0fededa84093b3a8dfeae1f1be0"
+    ],
+    "ghcr.io/google/cadvisor:v0.60.6": [
+      "ghcr.io/google/cadvisor@sha256:b8e7d1093144fd088f425ff003d75a4aa405de075db78dae3bc563730b1bd07a"
+    ]
+  },
+  "versiones_motor": {
+    "mongo": "9.0.4",
+    "postgres": "18.6"
+  },
+  "python": "3.12.10",
+  "paquetes_venv": [
+    "dnspython==2.9.1",
+    "psycopg==3.3.6",
+    "psycopg-binary==3.3.6",
+    "pymongo==4.19.0",
+    "typing_extensions==4.16.0",
+    "tzdata==2026.6"
+  ],
+  "commit_codigo": "ad5e6ddffa919ae1a2599e6038b52d70e62c78ac"
+}

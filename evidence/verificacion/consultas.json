@@ -1,0 +1,66 @@
+{
+  "perfil": "PROFILE_A_BASELINE",
+  "clientes": 1,
+  "comparacion": {
+    "q1_mismos_grupos": true,
+    "q1_grupos": 90,
+    "q1_dif_max_suma": 9.313225746154785e-10,
+    "q1_dif_max_promedio": 2.842170943040401e-14,
+    "q1_dentro_tolerancia": true,
+    "q1_conteos_exactos": true,
+    "q1_articulos_total": 674686,
+    "q2_identica_entre_motores": true,
+    "q2_relaxed_identica_entre_motores": true,
+    "q2_igual_entre_variantes": true,
+    "q2_filas": 1000,
+    "q2_primero": [
+      "VNT324763",
+      2732.63
+    ],
+    "todo_ok": true
+  },
+  "tiempos_s": {
+    "mongo": {
+      "Q1": 2.064,
+      "Q1_CONTEO": 1.052,
+      "Q2": 0.275,
+      "Q2_RELAXED": 0.261
+    },
+    "postgres": {
+      "Q1": 3.441,
+      "Q1_CONTEO": 2.188,
+      "Q2": 0.251,
+      "Q2_RELAXED": 0.167
+    }
+  },
+  "identidad": {
+    "mongo": {
+      "motor": "mongo",
+      "version": "9.0.4",
+      "puerto": 27018,
+      "contenedor_id": "4841cc5f1e3b",
+      "hostname": "4841cc5f1e3b",
+      "imagen": "mongo:9.0.4@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058",
+      "limites": {
+        "memory_max": 4294967296,
+        "memory_swap_max": "0",
+        "cpu_max": "400000 100000"
+      },
+      "perfil": "PROFILE_A_BASELINE"
+    },
+    "postgres": {
+      "motor": "postgres",
+      "version": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "puerto": 5432,
+      "contenedor_id": "e117b107beda",
+      "ip": "172.19.0.5",
+      "imagen": "postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81",
+      "limites": {
+        "memory_max": 4294967296,
+        "memory_swap_max": "0",
+        "cpu_max": "400000 100000"
+      },
+      "perfil": "PROFILE_A_BASELINE"
+    }
+  }
+}

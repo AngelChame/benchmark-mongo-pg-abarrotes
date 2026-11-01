@@ -1,0 +1,2 @@
+NAME              STATE           VERSION
+* docker-desktop    Running         2

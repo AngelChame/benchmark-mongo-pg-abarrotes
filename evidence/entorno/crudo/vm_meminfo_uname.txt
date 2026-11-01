@@ -1,0 +1,7 @@
+MemTotal:        7748816 kB
+MemFree:         6680688 kB
+MemAvailable:    6940572 kB
+SwapTotal:       2097152 kB
+SwapFree:        2096372 kB
+12
+Linux cb6ba1d44854 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 GNU/Linux

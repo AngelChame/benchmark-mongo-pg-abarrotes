@@ -1,0 +1,67 @@
+{
+  "dataset": {
+    "archivo": "data/ventas.ndjson",
+    "sha256": "59c35b366f6f5f05348f881cef87d41b4ae1597e065d1c4dbf80d9682ad6a8c1",
+    "bytes": 470582109,
+    "ventas": 500000,
+    "semilla": 20261101,
+    "python": "3.12.10",
+    "segundos_generacion": 16.5,
+    "tamano_medio_bytes": 940.2,
+    "tamano_min_bytes": 406,
+    "tamano_max_bytes": 2518,
+    "articulos_por_venta_media": 3.001,
+    "articulos_por_venta_distribucion": {
+      "1": 51682,
+      "2": 134502,
+      "3": 152563,
+      "4": 102196,
+      "5": 43881,
+      "6": 12480,
+      "7": 2390,
+      "8": 288,
+      "9": 18
+    },
+    "articulos_total": 1500640,
+    "fraccion_articulos_precio_mayor_50": 0.4496,
+    "tipo_pago": {
+      "EFECTIVO": 0.6003,
+      "FIADO": 0.1492,
+      "TRANSFERENCIA": 0.2505
+    },
+    "ventas_filtro_q2": 193203,
+    "niveles_anidamiento": 4,
+    "rango_fechas": [
+      "2025-01-01T00:00:00Z",
+      "2026-10-31T23:59:59Z"
+    ],
+    "proveedores": 30,
+    "productos_catalogo": 600
+  },
+  "mongo": {
+    "documentos": 500000,
+    "indices": [
+      "_id_",
+      "fecha_1",
+      "folio_1"
+    ],
+    "tamano_medio_bson_bytes": 984,
+    "tamano_datos_bytes": 492314413,
+    "items_por_venta_media": 3.00128
+  },
+  "postgres": {
+    "documentos": 500000,
+    "indices": [
+      "ventas_fecha_idx",
+      "ventas_pkey"
+    ],
+    "tamano_medio_jsonb_bytes": 1174.6,
+    "items_por_venta_media": 3.0013
+  },
+  "muestra_identica": {
+    "ids_distintos": 1998,
+    "iguales": 1998,
+    "encontrados_mongo": 1998,
+    "encontrados_postgres": 1998
+  }
+}
