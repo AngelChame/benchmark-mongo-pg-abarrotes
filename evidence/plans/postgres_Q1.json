@@ -1,0 +1,421 @@
+[
+  {
+    "Plan": {
+      "Node Type": "Aggregate",
+      "Strategy": "Sorted",
+      "Partial Mode": "Simple",
+      "Parallel Aware": false,
+      "Async Capable": false,
+      "Startup Cost": 315583.55,
+      "Total Cost": 3163411.15,
+      "Plan Rows": 16512672,
+      "Plan Width": 128,
+      "Actual Startup Time": 2403.855,
+      "Actual Total Time": 3588.112,
+      "Actual Rows": 90.0,
+      "Actual Loops": 1,
+      "Disabled": false,
+      "Output": [
+        "((ventas.data ->> 'tipo_pago'::text))",
+        "((((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text))",
+        "sum((((item.value ->> 'cantidad'::text))::numeric * ((item.value ->> 'precio_unitario'::text))::numeric))",
+        "avg((((item.value ->> 'cantidad'::text))::numeric * ((item.value ->> 'precio_unitario'::text))::numeric))"
+      ],
+      "Group Key": [
+        "((ventas.data ->> 'tipo_pago'::text))",
+        "((((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text))"
+      ],
+      "Shared Hit Blocks": 76,
+      "Shared Read Blocks": 80288,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 200877,
+      "Temp Written Blocks": 201090,
+      "Plans": [
+        {
+          "Node Type": "Incremental Sort",
+          "Parent Relationship": "Outer",
+          "Parallel Aware": false,
+          "Async Capable": false,
+          "Startup Cost": 315583.55,
+          "Total Cost": 2337777.55,
+          "Plan Rows": 16512672,
+          "Plan Width": 96,
+          "Actual Startup Time": 2397.894,
+          "Actual Total Time": 3410.385,
+          "Actual Rows": 674686.0,
+          "Actual Loops": 1,
+          "Disabled": false,
+          "Output": [
+            "((ventas.data ->> 'tipo_pago'::text))",
+            "((((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text))",
+            "item.value"
+          ],
+          "Sort Key": [
+            "((ventas.data ->> 'tipo_pago'::text))",
+            "((((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text))"
+          ],
+          "Presorted Key": [
+            "((ventas.data ->> 'tipo_pago'::text))"
+          ],
+          "Full-sort Groups": {
+            "Group Count": 3,
+            "Sort Methods Used": [
+              "quicksort"
+            ],
+            "Sort Space Memory": {
+              "Average Sort Space Used": 48,
+              "Peak Sort Space Used": 48
+            }
+          },
+          "Pre-sorted Groups": {
+            "Group Count": 3,
+            "Sort Methods Used": [
+              "external merge"
+            ],
+            "Sort Space Disk": {
+              "Average Sort Space Used": 141280,
+              "Peak Sort Space Used": 141280
+            }
+          },
+          "Shared Hit Blocks": 76,
+          "Shared Read Blocks": 80288,
+          "Shared Dirtied Blocks": 0,
+          "Shared Written Blocks": 0,
+          "Local Hit Blocks": 0,
+          "Local Read Blocks": 0,
+          "Local Dirtied Blocks": 0,
+          "Local Written Blocks": 0,
+          "Temp Read Blocks": 200877,
+          "Temp Written Blocks": 201090,
+          "Plans": [
+            {
+              "Node Type": "Nested Loop",
+              "Parent Relationship": "Outer",
+              "Parallel Aware": false,
+              "Async Capable": false,
+              "Join Type": "Inner",
+              "Startup Cost": 315579.94,
+              "Total Cost": 1704879.34,
+              "Plan Rows": 16512672,
+              "Plan Width": 96,
+              "Actual Startup Time": 986.991,
+              "Actual Total Time": 2473.971,
+              "Actual Rows": 674686.0,
+              "Actual Loops": 1,
+              "Disabled": false,
+              "Output": [
+                "(ventas.data ->> 'tipo_pago'::text)",
+                "(((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text)",
+                "item.value"
+              ],
+              "Inner Unique": false,
+              "Shared Hit Blocks": 76,
+              "Shared Read Blocks": 80288,
+              "Shared Dirtied Blocks": 0,
+              "Shared Written Blocks": 0,
+              "Local Hit Blocks": 0,
+              "Local Read Blocks": 0,
+              "Local Dirtied Blocks": 0,
+              "Local Written Blocks": 0,
+              "Temp Read Blocks": 146114,
+              "Temp Written Blocks": 146264,
+              "Plans": [
+                {
+                  "Node Type": "Gather Merge",
+                  "Parent Relationship": "Outer",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Startup Cost": 315579.94,
+                  "Total Cost": 373857.9,
+                  "Plan Rows": 500384,
+                  "Plan Width": 1172,
+                  "Actual Startup Time": 985.947,
+                  "Actual Total Time": 1621.611,
+                  "Actual Rows": 500000.0,
+                  "Actual Loops": 1,
+                  "Disabled": false,
+                  "Output": [
+                    "ventas.data"
+                  ],
+                  "Workers Planned": 2,
+                  "Workers Launched": 2,
+                  "Shared Hit Blocks": 76,
+                  "Shared Read Blocks": 80288,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 146114,
+                  "Temp Written Blocks": 146264,
+                  "Plans": [
+                    {
+                      "Node Type": "Sort",
+                      "Parent Relationship": "Outer",
+                      "Parallel Aware": false,
+                      "Async Capable": false,
+                      "Startup Cost": 314579.91,
+                      "Total Cost": 315101.15,
+                      "Plan Rows": 208493,
+                      "Plan Width": 1172,
+                      "Actual Startup Time": 968.882,
+                      "Actual Total Time": 1069.905,
+                      "Actual Rows": 166666.67,
+                      "Actual Loops": 3,
+                      "Disabled": false,
+                      "Output": [
+                        "ventas.data",
+                        "((ventas.data ->> 'tipo_pago'::text))"
+                      ],
+                      "Sort Key": [
+                        "((ventas.data ->> 'tipo_pago'::text))"
+                      ],
+                      "Sort Method": "external merge",
+                      "Sort Space Used": 186640,
+                      "Sort Space Type": "Disk",
+                      "Shared Hit Blocks": 76,
+                      "Shared Read Blocks": 80288,
+                      "Shared Dirtied Blocks": 0,
+                      "Shared Written Blocks": 0,
+                      "Local Hit Blocks": 0,
+                      "Local Read Blocks": 0,
+                      "Local Dirtied Blocks": 0,
+                      "Local Written Blocks": 0,
+                      "Temp Read Blocks": 146114,
+                      "Temp Written Blocks": 146264,
+                      "Workers": [
+                        {
+                          "Worker Number": 0,
+                          "Actual Startup Time": 963.88,
+                          "Actual Total Time": 1073.906,
+                          "Actual Rows": 170575.0,
+                          "Actual Loops": 1,
+                          "Sort Method": "external merge",
+                          "Sort Space Used": 199600,
+                          "Sort Space Type": "Disk",
+                          "JIT": {
+                            "Functions": 2,
+                            "Options": {
+                              "Inlining": true,
+                              "Optimization": true,
+                              "Expressions": true,
+                              "Deforming": true
+                            },
+                            "Timing": {
+                              "Generation": {
+                                "Deform": 0.038,
+                                "Total": 0.147
+                              },
+                              "Inlining": 51.257,
+                              "Optimization": 15.012,
+                              "Emission": 23.89,
+                              "Total": 90.307
+                            }
+                          },
+                          "Shared Hit Blocks": 38,
+                          "Shared Read Blocks": 27444,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 49897,
+                          "Temp Written Blocks": 49948
+                        },
+                        {
+                          "Worker Number": 1,
+                          "Actual Startup Time": 963.267,
+                          "Actual Total Time": 1071.649,
+                          "Actual Rows": 169568.0,
+                          "Actual Loops": 1,
+                          "Sort Method": "external merge",
+                          "Sort Space Used": 198264,
+                          "Sort Space Type": "Disk",
+                          "JIT": {
+                            "Functions": 2,
+                            "Options": {
+                              "Inlining": true,
+                              "Optimization": true,
+                              "Expressions": true,
+                              "Deforming": true
+                            },
+                            "Timing": {
+                              "Generation": {
+                                "Deform": 0.04,
+                                "Total": 0.186
+                              },
+                              "Inlining": 52.115,
+                              "Optimization": 14.132,
+                              "Emission": 23.88,
+                              "Total": 90.312
+                            }
+                          },
+                          "Shared Hit Blocks": 38,
+                          "Shared Read Blocks": 27228,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 49560,
+                          "Temp Written Blocks": 49611
+                        }
+                      ],
+                      "Plans": [
+                        {
+                          "Node Type": "Seq Scan",
+                          "Parent Relationship": "Outer",
+                          "Parallel Aware": true,
+                          "Async Capable": false,
+                          "Relation Name": "ventas",
+                          "Schema": "public",
+                          "Alias": "ventas",
+                          "Startup Cost": 0.0,
+                          "Total Cost": 82372.93,
+                          "Plan Rows": 208493,
+                          "Plan Width": 1172,
+                          "Actual Startup Time": 112.698,
+                          "Actual Total Time": 418.182,
+                          "Actual Rows": 166666.67,
+                          "Actual Loops": 3,
+                          "Disabled": false,
+                          "Output": [
+                            "ventas.data",
+                            "(ventas.data ->> 'tipo_pago'::text)"
+                          ],
+                          "Shared Hit Blocks": 0,
+                          "Shared Read Blocks": 80288,
+                          "Shared Dirtied Blocks": 0,
+                          "Shared Written Blocks": 0,
+                          "Local Hit Blocks": 0,
+                          "Local Read Blocks": 0,
+                          "Local Dirtied Blocks": 0,
+                          "Local Written Blocks": 0,
+                          "Temp Read Blocks": 0,
+                          "Temp Written Blocks": 0,
+                          "Workers": [
+                            {
+                              "Worker Number": 0,
+                              "Actual Startup Time": 90.896,
+                              "Actual Total Time": 377.832,
+                              "Actual Rows": 170575.0,
+                              "Actual Loops": 1,
+                              "Shared Hit Blocks": 0,
+                              "Shared Read Blocks": 27444,
+                              "Shared Dirtied Blocks": 0,
+                              "Shared Written Blocks": 0,
+                              "Local Hit Blocks": 0,
+                              "Local Read Blocks": 0,
+                              "Local Dirtied Blocks": 0,
+                              "Local Written Blocks": 0,
+                              "Temp Read Blocks": 0,
+                              "Temp Written Blocks": 0
+                            },
+                            {
+                              "Worker Number": 1,
+                              "Actual Startup Time": 90.897,
+                              "Actual Total Time": 417.975,
+                              "Actual Rows": 169568.0,
+                              "Actual Loops": 1,
+                              "Shared Hit Blocks": 0,
+                              "Shared Read Blocks": 27228,
+                              "Shared Dirtied Blocks": 0,
+                              "Shared Written Blocks": 0,
+                              "Local Hit Blocks": 0,
+                              "Local Read Blocks": 0,
+                              "Local Dirtied Blocks": 0,
+                              "Local Written Blocks": 0,
+                              "Temp Read Blocks": 0,
+                              "Temp Written Blocks": 0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Node Type": "Function Scan",
+                  "Parent Relationship": "Inner",
+                  "Parallel Aware": false,
+                  "Async Capable": false,
+                  "Function Name": "jsonb_array_elements",
+                  "Schema": "pg_catalog",
+                  "Alias": "item",
+                  "Startup Cost": 0.01,
+                  "Total Cost": 2.0,
+                  "Plan Rows": 33,
+                  "Plan Width": 32,
+                  "Actual Startup Time": 0.001,
+                  "Actual Total Time": 0.001,
+                  "Actual Rows": 1.35,
+                  "Actual Loops": 500000,
+                  "Disabled": false,
+                  "Output": [
+                    "item.value"
+                  ],
+                  "Function Call": "jsonb_array_elements((ventas.data -> 'items'::text))",
+                  "Filter": "(((item.value ->> 'precio_unitario'::text))::numeric > '50'::numeric)",
+                  "Rows Removed by Filter": 2,
+                  "Shared Hit Blocks": 0,
+                  "Shared Read Blocks": 0,
+                  "Shared Dirtied Blocks": 0,
+                  "Shared Written Blocks": 0,
+                  "Local Hit Blocks": 0,
+                  "Local Read Blocks": 0,
+                  "Local Dirtied Blocks": 0,
+                  "Local Written Blocks": 0,
+                  "Temp Read Blocks": 0,
+                  "Temp Written Blocks": 0
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "Settings": {},
+    "Planning": {
+      "Shared Hit Blocks": 175,
+      "Shared Read Blocks": 23,
+      "Shared Dirtied Blocks": 0,
+      "Shared Written Blocks": 0,
+      "Local Hit Blocks": 0,
+      "Local Read Blocks": 0,
+      "Local Dirtied Blocks": 0,
+      "Local Written Blocks": 0,
+      "Temp Read Blocks": 0,
+      "Temp Written Blocks": 0
+    },
+    "Planning Time": 3.859,
+    "Triggers": [],
+    "JIT": {
+      "Functions": 17,
+      "Options": {
+        "Inlining": true,
+        "Optimization": true,
+        "Expressions": true,
+        "Deforming": true
+      },
+      "Timing": {
+        "Generation": {
+          "Deform": 0.235,
+          "Total": 1.483
+        },
+        "Inlining": 167.528,
+        "Optimization": 85.972,
+        "Emission": 82.466,
+        "Total": 337.449
+      }
+    },
+    "Execution Time": 3838.834
+  }
+]

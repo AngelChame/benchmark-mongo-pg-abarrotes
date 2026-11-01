@@ -1,0 +1,206 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "benchmark.ventas",
+    "parsedQuery": {
+      "$and": [
+        {
+          "es_fiado": {
+            "$eq": false
+          }
+        },
+        {
+          "fecha": {
+            "$gte": "2026-01-01T00:00:00Z"
+          }
+        }
+      ]
+    },
+    "indexFilterSet": false,
+    "queryHash": "D32E3CBF",
+    "planCacheShapeHash": "D32E3CBF",
+    "planCacheKey": "C0152774",
+    "optimizationTimeMillis": 0,
+    "optimizationTimeMicros": 197,
+    "optimizedPipeline": true,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "SORT",
+      "sortPattern": {
+        "total": -1,
+        "folio": 1
+      },
+      "memLimit": 104857600,
+      "limitAmount": 1000,
+      "type": "simple",
+      "inputStage": {
+        "stage": "FETCH",
+        "filter": {
+          "es_fiado": {
+            "$eq": false
+          }
+        },
+        "nss": "benchmark.ventas",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nss": "benchmark.ventas",
+          "keyPattern": {
+            "fecha": 1
+          },
+          "indexName": "fecha_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "fecha": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "fecha": [
+              "[\"2026-01-01T00:00:00Z\", {})"
+            ]
+          }
+        }
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 1000,
+    "executionTimeMillis": 266,
+    "executionTimeMicros": 266395,
+    "totalKeysExamined": 227094,
+    "totalDocsExamined": 227094,
+    "executionStages": {
+      "isCached": false,
+      "stage": "SORT",
+      "nReturned": 1000,
+      "executionTimeMillisEstimate": 266,
+      "works": 228096,
+      "advanced": 1000,
+      "needTime": 227095,
+      "needYield": 0,
+      "saveState": 15,
+      "restoreState": 15,
+      "isEOF": 1,
+      "sortPattern": {
+        "total": -1,
+        "folio": 1
+      },
+      "memLimit": 104857600,
+      "limitAmount": 1000,
+      "type": "simple",
+      "totalDataSizeSorted": 1598598,
+      "usedDisk": false,
+      "spills": 0,
+      "spilledRecords": 0,
+      "spilledBytes": 0,
+      "spilledDataStorageSize": 0,
+      "peakTrackedMemBytes": 1600108,
+      "inputStage": {
+        "stage": "FETCH",
+        "filter": {
+          "es_fiado": {
+            "$eq": false
+          }
+        },
+        "nReturned": 193203,
+        "executionTimeMillisEstimate": 243,
+        "works": 227095,
+        "advanced": 193203,
+        "needTime": 33891,
+        "needYield": 0,
+        "saveState": 15,
+        "restoreState": 15,
+        "isEOF": 1,
+        "nss": "benchmark.ventas",
+        "docsExamined": 227094,
+        "alreadyHasObj": 0,
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nReturned": 227094,
+          "executionTimeMillisEstimate": 37,
+          "works": 227095,
+          "advanced": 227094,
+          "needTime": 0,
+          "needYield": 0,
+          "saveState": 15,
+          "restoreState": 15,
+          "isEOF": 1,
+          "nss": "benchmark.ventas",
+          "keyPattern": {
+            "fecha": 1
+          },
+          "indexName": "fecha_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "fecha": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "fecha": [
+              "[\"2026-01-01T00:00:00Z\", {})"
+            ]
+          },
+          "keysExamined": 227094,
+          "seeks": 1,
+          "dupsTested": 0,
+          "dupsDropped": 0,
+          "peakTrackedMemBytes": 0
+        }
+      }
+    }
+  },
+  "queryShapeHash": "19C9BCB21C375E9549343CE57170565BB0B4A11D1BB5FA76C8E21B122566BE8B",
+  "peakTrackedMemBytes": 1600108,
+  "command": {
+    "aggregate": "ventas",
+    "pipeline": [
+      {
+        "$match": {
+          "es_fiado": false,
+          "fecha": {
+            "$gte": "2026-01-01T00:00:00Z"
+          }
+        }
+      },
+      {
+        "$sort": {
+          "total": -1,
+          "folio": 1
+        }
+      },
+      {
+        "$limit": 1000
+      }
+    ],
+    "cursor": {},
+    "allowDiskUse": false,
+    "$db": "benchmark"
+  },
+  "serverInfo": {
+    "host": "bf7779f353dd",
+    "port": 27017,
+    "version": "9.0.4",
+    "gitVersion": "64ade602b836c9adeffba7fa038c887ffab56196"
+  },
+  "serverParameters": {
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

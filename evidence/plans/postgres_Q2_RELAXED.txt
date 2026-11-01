@@ -1,0 +1,33 @@
+Limit  (cost=48308.72..48425.18 rows=1000 width=1208) (actual time=127.250..135.915 rows=1000.00 loops=1)
+  Output: data, (((data ->> 'total'::text))::numeric), (((data ->> 'folio'::text))::integer)
+  Buffers: shared hit=4433 read=37597
+  ->  Gather Merge  (cost=48308.72..61421.21 rows=112586 width=1208) (actual time=127.249..135.809 rows=1000.00 loops=1)
+        Output: data, (((data ->> 'total'::text))::numeric), (((data ->> 'folio'::text))::integer)
+        Workers Planned: 2
+        Workers Launched: 2
+        Buffers: shared hit=4433 read=37597
+        ->  Sort  (cost=47308.69..47425.97 rows=46911 width=1208) (actual time=114.668..114.735 rows=353.00 loops=3)
+              Output: data, (((data ->> 'total'::text))::numeric), (((data ->> 'folio'::text))::integer)
+              Sort Key: (((ventas.data ->> 'total'::text))::numeric) DESC, (((ventas.data ->> 'folio'::text))::integer)
+              Sort Method: top-N heapsort  Memory: 3064kB
+              Buffers: shared hit=4433 read=37597
+              Worker 0:  actual time=108.875..108.940 rows=323.00 loops=1
+                Sort Method: top-N heapsort  Memory: 3051kB
+                Buffers: shared hit=1287 read=10502
+              Worker 1:  actual time=108.611..108.680 rows=300.00 loops=1
+                Sort Method: top-N heapsort  Memory: 3078kB
+                Buffers: shared hit=1338 read=10294
+              ->  Parallel Index Scan using ventas_fecha_idx on public.ventas  (cost=0.42..44736.61 rows=46911 width=1208) (actual time=0.064..98.883 rows=64401.00 loops=3)
+                    Output: data, ((data ->> 'total'::text))::numeric, ((data ->> 'folio'::text))::integer
+                    Index Cond: ((ventas.data ->> 'fecha'::text) >= '2026-01-01T00:00:00Z'::text)
+                    Filter: (NOT ((ventas.data ->> 'es_fiado'::text))::boolean)
+                    Rows Removed by Filter: 11297
+                    Index Searches: 1
+                    Buffers: shared hit=4410 read=37592
+                    Worker 0:  actual time=0.054..93.833 rows=54089.00 loops=1
+                      Buffers: shared hit=1276 read=10499
+                    Worker 1:  actual time=0.043..93.224 rows=53211.00 loops=1
+                      Buffers: shared hit=1326 read=10292
+Settings: work_mem = '64MB'
+Planning Time: 0.094 ms
+Execution Time: 135.993 ms

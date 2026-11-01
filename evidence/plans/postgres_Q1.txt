@@ -1,0 +1,56 @@
+GroupAggregate  (cost=315583.55..3163411.15 rows=16512672 width=128) (actual time=1971.048..3137.176 rows=90.00 loops=1)
+  Output: ((ventas.data ->> 'tipo_pago'::text)), ((((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text)), sum((((item.value ->> 'cantidad'::text))::numeric * ((item.value ->> 'precio_unitario'::text))::numeric)), avg((((item.value ->> 'cantidad'::text))::numeric * ((item.value ->> 'precio_unitario'::text))::numeric))
+  Group Key: ((ventas.data ->> 'tipo_pago'::text)), ((((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text))
+  Buffers: shared hit=358 read=80006, temp read=200883 written=201096
+  ->  Incremental Sort  (cost=315583.55..2337777.55 rows=16512672 width=96) (actual time=1964.481..2961.771 rows=674686.00 loops=1)
+        Output: ((ventas.data ->> 'tipo_pago'::text)), ((((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text)), item.value
+        Sort Key: ((ventas.data ->> 'tipo_pago'::text)), ((((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text))
+        Presorted Key: ((ventas.data ->> 'tipo_pago'::text))
+        Full-sort Groups: 3  Sort Method: quicksort  Average Memory: 48kB  Peak Memory: 48kB
+        Pre-sorted Groups: 3  Sort Method: external merge  Average Disk: 141280kB  Peak Disk: 141280kB
+        Buffers: shared hit=358 read=80006, temp read=200883 written=201096
+        ->  Nested Loop  (cost=315579.94..1704879.34 rows=16512672 width=96) (actual time=598.971..2044.690 rows=674686.00 loops=1)
+              Output: (ventas.data ->> 'tipo_pago'::text), (((item.value -> 'producto'::text) -> 'proveedor'::text) ->> 'id'::text), item.value
+              Buffers: shared hit=358 read=80006, temp read=146119 written=146269
+              ->  Gather Merge  (cost=315579.94..373857.90 rows=500384 width=1172) (actual time=598.939..1225.777 rows=500000.00 loops=1)
+                    Output: ventas.data
+                    Workers Planned: 2
+                    Workers Launched: 2
+                    Buffers: shared hit=358 read=80006, temp read=146119 written=146269
+                    ->  Sort  (cost=314579.91..315101.15 rows=208493 width=1172) (actual time=581.662..683.489 rows=166666.67 loops=3)
+                          Output: ventas.data, ((ventas.data ->> 'tipo_pago'::text))
+                          Sort Key: ((ventas.data ->> 'tipo_pago'::text))
+                          Sort Method: external merge  Disk: 190536kB
+                          Buffers: shared hit=358 read=80006, temp read=146119 written=146269
+                          Worker 0:  actual time=577.525..689.115 rows=172950.00 loops=1
+                            Sort Method: external merge  Disk: 202128kB
+                            JIT:
+                              Functions: 2
+                              Options: Inlining true, Optimization true, Expressions true, Deforming true
+                              Timing: Generation 0.208 ms (Deform 0.053 ms), Inlining 44.316 ms, Optimization 6.235 ms, Emission 3.074 ms, Total 53.833 ms
+                            Buffers: shared hit=160 read=27620, temp read=50525 written=50577
+                          Worker 1:  actual time=572.828..680.704 rows=164085.00 loops=1
+                            Sort Method: external merge  Disk: 191872kB
+                            JIT:
+                              Functions: 2
+                              Options: Inlining true, Optimization true, Expressions true, Deforming true
+                              Timing: Generation 0.178 ms (Deform 0.037 ms), Inlining 45.693 ms, Optimization 6.415 ms, Emission 3.026 ms, Total 55.312 ms
+                            Buffers: shared hit=138 read=26294, temp read=47967 written=48016
+                          ->  Parallel Seq Scan on public.ventas  (cost=0.00..82372.93 rows=208493 width=1172) (actual time=63.795..141.757 rows=166666.67 loops=3)
+                                Output: ventas.data, (ventas.data ->> 'tipo_pago'::text)
+                                Buffers: shared hit=282 read=80006
+                                Worker 0:  actual time=53.979..131.157 rows=172950.00 loops=1
+                                  Buffers: shared hit=122 read=27620
+                                Worker 1:  actual time=55.398..134.710 rows=164085.00 loops=1
+                                  Buffers: shared hit=100 read=26294
+              ->  Function Scan on pg_catalog.jsonb_array_elements item  (cost=0.01..2.00 rows=33 width=32) (actual time=0.001..0.001 rows=1.35 loops=500000)
+                    Output: item.value
+                    Function Call: jsonb_array_elements((ventas.data -> 'items'::text))
+                    Filter: (((item.value ->> 'precio_unitario'::text))::numeric > '50'::numeric)
+                    Rows Removed by Filter: 2
+Planning Time: 0.099 ms
+JIT:
+  Functions: 17
+  Options: Inlining true, Optimization true, Expressions true, Deforming true
+  Timing: Generation 0.852 ms (Deform 0.215 ms), Inlining 103.028 ms, Optimization 53.647 ms, Emission 33.979 ms, Total 191.506 ms
+Execution Time: 3211.518 ms

@@ -1,0 +1,32 @@
+Limit  (cost=48308.72..48425.18 rows=1000 width=1208) (actual time=129.122..141.044 rows=1000.00 loops=1)
+  Output: data, (((data ->> 'total'::text))::numeric), (((data ->> 'folio'::text))::integer)
+  Buffers: shared hit=4463 read=37592 written=3
+  ->  Gather Merge  (cost=48308.72..61421.21 rows=112586 width=1208) (actual time=129.120..140.988 rows=1000.00 loops=1)
+        Output: data, (((data ->> 'total'::text))::numeric), (((data ->> 'folio'::text))::integer)
+        Workers Planned: 2
+        Workers Launched: 2
+        Buffers: shared hit=4463 read=37592 written=3
+        ->  Sort  (cost=47308.69..47425.97 rows=46911 width=1208) (actual time=115.382..115.442 rows=355.00 loops=3)
+              Output: data, (((data ->> 'total'::text))::numeric), (((data ->> 'folio'::text))::integer)
+              Sort Key: (((ventas.data ->> 'total'::text))::numeric) DESC, (((ventas.data ->> 'folio'::text))::integer)
+              Sort Method: top-N heapsort  Memory: 3070kB
+              Buffers: shared hit=4463 read=37592 written=3
+              Worker 0:  actual time=108.697..108.762 rows=316.00 loops=1
+                Sort Method: top-N heapsort  Memory: 3045kB
+                Buffers: shared hit=1318 read=10826 written=1
+              Worker 1:  actual time=108.842..108.892 rows=310.00 loops=1
+                Sort Method: top-N heapsort  Memory: 3078kB
+                Buffers: shared hit=1461 read=10606 written=1
+              ->  Parallel Index Scan using ventas_fecha_idx on public.ventas  (cost=0.42..44736.61 rows=46911 width=1208) (actual time=0.133..99.700 rows=64401.00 loops=3)
+                    Output: data, ((data ->> 'total'::text))::numeric, ((data ->> 'folio'::text))::integer
+                    Index Cond: ((ventas.data ->> 'fecha'::text) >= '2026-01-01T00:00:00Z'::text)
+                    Filter: (NOT ((ventas.data ->> 'es_fiado'::text))::boolean)
+                    Rows Removed by Filter: 11297
+                    Index Searches: 1
+                    Buffers: shared hit=4435 read=37592 written=3
+                    Worker 0:  actual time=0.198..93.446 rows=55534.00 loops=1
+                      Buffers: shared hit=1304 read=10826 written=1
+                    Worker 1:  actual time=0.105..94.007 rows=55098.00 loops=1
+                      Buffers: shared hit=1447 read=10606 written=1
+Planning Time: 0.094 ms
+Execution Time: 141.114 ms

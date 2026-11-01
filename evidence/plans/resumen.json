@@ -1,0 +1,165 @@
+{
+  "fecha_utc": "2026-11-01T05:08:53Z",
+  "perfil": "PROFILE_A_BASELINE",
+  "planes": {
+    "mongo_Q1": {
+      "usedDisk": false,
+      "spills": 0,
+      "totalDocsExamined": 500000,
+      "etapas_pipeline": [
+        "$cursor",
+        "$unwind",
+        "$match",
+        "$project",
+        "$group"
+      ],
+      "etapas_ejecucion": [
+        "COLLSCAN",
+        "PROJECTION_SIMPLE"
+      ],
+      "sort_bytes_max": 0
+    },
+    "mongo_Q2": {
+      "usedDisk": false,
+      "spills": 0,
+      "totalDocsExamined": 227094,
+      "etapas_pipeline": [],
+      "etapas_ejecucion": [
+        "FETCH",
+        "IXSCAN",
+        "SORT"
+      ],
+      "sort_bytes_max": 1598598
+    },
+    "mongo_Q2_RELAXED": {
+      "usedDisk": false,
+      "spills": 0,
+      "totalDocsExamined": 227094,
+      "etapas_pipeline": [],
+      "etapas_ejecucion": [
+        "FETCH",
+        "IXSCAN",
+        "SORT"
+      ],
+      "sort_bytes_max": 1598598
+    },
+    "postgres_Q1": {
+      "sort_method": [
+        "external merge"
+      ],
+      "sort_space_type": [
+        "Disk"
+      ],
+      "temp_written_blocks": 201090,
+      "nodos": [
+        "Aggregate",
+        "Function Scan",
+        "Gather Merge",
+        "Incremental Sort",
+        "Nested Loop",
+        "Seq Scan",
+        "Sort"
+      ],
+      "workers_launched": 2,
+      "execution_time_ms": 3838.834,
+      "work_mem_sesion": "4MB",
+      "temp_files_delta": 6,
+      "temp_bytes_delta": 840851456
+    },
+    "postgres_Q1_WM64": {
+      "sort_method": [
+        "external merge"
+      ],
+      "sort_space_type": [
+        "Disk"
+      ],
+      "temp_written_blocks": 98246,
+      "nodos": [
+        "Aggregate",
+        "Function Scan",
+        "Gather Merge",
+        "Incremental Sort",
+        "Nested Loop",
+        "Seq Scan",
+        "Sort"
+      ],
+      "workers_launched": 2,
+      "execution_time_ms": 3356.551,
+      "work_mem_sesion": "64MB",
+      "temp_files_delta": 5,
+      "temp_bytes_delta": 804732928
+    },
+    "postgres_Q2": {
+      "sort_method": [
+        "top-N heapsort"
+      ],
+      "sort_space_type": [
+        "Memory"
+      ],
+      "temp_written_blocks": 0,
+      "nodos": [
+        "Gather Merge",
+        "Index Scan",
+        "Limit",
+        "Sort"
+      ],
+      "workers_launched": 2,
+      "execution_time_ms": 185.133,
+      "work_mem_sesion": "4MB",
+      "temp_files_delta": 0,
+      "temp_bytes_delta": 0
+    },
+    "postgres_Q2_RELAXED": {
+      "sort_method": [
+        "top-N heapsort"
+      ],
+      "sort_space_type": [
+        "Memory"
+      ],
+      "temp_written_blocks": 0,
+      "nodos": [
+        "Gather Merge",
+        "Index Scan",
+        "Limit",
+        "Sort"
+      ],
+      "workers_launched": 2,
+      "execution_time_ms": 146.296,
+      "work_mem_sesion": "64MB",
+      "temp_files_delta": 0,
+      "temp_bytes_delta": 0
+    }
+  },
+  "identidad": {
+    "mongo": {
+      "motor": "mongo",
+      "version": "9.0.4",
+      "puerto": 27018,
+      "contenedor_id": "bf7779f353dd",
+      "hostname": "bf7779f353dd",
+      "imagen": "mongo:9.0.4@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058",
+      "limites": {
+        "memory_max": 4294967296,
+        "memory_swap_max": "0",
+        "cpu_max": "400000 100000"
+      },
+      "perfil": "PROFILE_A_BASELINE"
+    },
+    "postgres": {
+      "motor": "postgres",
+      "version": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "puerto": 5432,
+      "contenedor_id": "d27455caaeb0",
+      "ip": "172.19.0.5",
+      "imagen": "postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81",
+      "limites": {
+        "memory_max": 4294967296,
+        "memory_swap_max": "0",
+        "cpu_max": "400000 100000"
+      },
+      "perfil": "PROFILE_A_BASELINE"
+    }
+  },
+  "work_mem_nueva_sesion": "4MB",
+  "pg_db_role_setting_filas": 0
+}
