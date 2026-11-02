@@ -685,4 +685,9 @@ python analysis/consolidar.py                   # tablas y figuras de este repor
 \item \cod{evidence/plans/}, \cod{evidence/verificacion/}, \cod{evidence/entorno/}.
 \end{itemize}
 
+Los manifiestos SHA-256 de \cod{results/manifiestos/} verifican con \cod{sha256sum -c} en
+un clon del repositorio, salvo cuatro archivos que el orquestador actualizó después de
+hacer el respaldo de la ronda 3: \cod{bitacora.log}, \cod{estado.txt}, \cod{resumen.md} y
+\cod{orquestador\_matriz.out}.
+
 \end{document}
