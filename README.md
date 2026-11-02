@@ -27,7 +27,7 @@ Medición de latencia, rendimiento y huella de recursos de MongoDB 9.0.4 y Postg
 
 ## Cómo reproducirlo
 
-Requisitos: Docker con cgroups v2 (los resultados se obtuvieron con Docker Desktop sobre WSL2 en Windows), Python 3.12, Git Bash para `run_benchmarks.sh`, y libres en `127.0.0.1` los puertos que publica `docker-compose.yml`: 27018 (MongoDB), 5432 (PostgreSQL), 9090 (Prometheus), 8080 (cAdvisor) y 9100 (Node Exporter). Instalar dependencias con `pip install -r requirements.txt`.
+Requisitos: Docker con cgroups v2 (los resultados se obtuvieron con Docker Desktop sobre WSL2 en Windows), Python 3.12, Git Bash para `run_benchmarks.sh`, y libres en `127.0.0.1` los puertos que publica `docker-compose.yml`: 27018 (MongoDB), 5432 (PostgreSQL), 9090 (Prometheus), 8080 (cAdvisor) y 9100 (Node Exporter). Crear el entorno en `.venv` (lo exige `run_benchmarks.sh`): `python -m venv .venv` y `.venv/Scripts/python -m pip install -r requirements.txt` (en Linux, `.venv/bin/python`); los comandos `python …` de abajo se ejecutan con ese entorno activado.
 
 Desde la raíz del repositorio:
 
