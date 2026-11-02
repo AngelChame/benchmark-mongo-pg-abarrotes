@@ -11,7 +11,7 @@ Escribe en report/generado/:
   cifras.json           las mismas cifras en JSON, para citarlas en el texto
   tabla_rendimiento.tex tabla LaTeX (longtable): estados, QPS y percentiles
   tabla_recursos.tex    tabla LaTeX (longtable): throttling, memoria y temporales
-  huella.csv, tabla_huella.tex  M3 (definición propuesta): CPU y RSS por 1 000 documentos
+  huella.csv, tabla_huella.tex  M3 (definición adoptada): CPU y RSS por 1 000 documentos
   tabla_planes.tex      planes de Q1 y Q2 lado a lado (lee evidence/plans)
   fig_p99_concurrencia.pdf, fig_throttling_qps.pdf, fig_rss.pdf
 
@@ -166,7 +166,7 @@ def docs_por_consulta(planes: Path) -> dict:
 
 
 def huella(corridas: list[dict], docs: dict) -> list[dict]:
-    """M3 (definición propuesta): CPU y RSS por cada 1 000 documentos procesados."""
+    """M3 (definición adoptada): CPU y RSS por cada 1 000 documentos procesados."""
     celdas = {}
     for c in corridas:
         celdas.setdefault((c["engine"], c["profile"], c["query_id"], c["concurrency"]), []).append(c)
@@ -219,16 +219,18 @@ def tabla_huella(filas: list[dict]) -> str:
         (H("Docs. por", "consulta"), "r", lambda f: fmt(f["docs_por_consulta"], 0)),
         (H("CPU en la", "ventana (s)"), "r", lambda f: fmt(f["cpu_s_mediana"], 0)),
         (H("ms de CPU por", "1\\,000 docs."), "r", lambda f: nc(f["cpu_ms_por_kdoc"], 1) + marca(f)),
-        (H("RSS máx.", "(MiB)"), "r", lambda f: fmt(f["rss_mb_mediana"], 0)),
+        (H("RSS mediana", "(MiB)"), "r", lambda f: fmt(f["rss_mb_mediana"], 0)),
         (H("MiB de RSS por", "1\\,000 docs./s"), "r", lambda f: nc(f["rss_mb_por_kdoc_s"], 1) + marca(f)),
     ]
-    nota = ("Definición propuesta, pendiente de confirmación. Q2R: \\texttt{Q2\\_RELAXED}. "
+    nota = ("Definición adoptada en este reporte (el enunciado no la precisa). "
+            "Q2R: \\texttt{Q2\\_RELAXED}. "
             "Documentos procesados = consultas ok de la ventana $\\times$ documentos examinados "
             "por consulta según el plan (perfil A, 1 cliente; se asume constante entre perfiles y "
             "concurrencias). CPU: delta de \\texttt{usage\\_usec} de \\texttt{cpu.stat} en la "
             "ventana de 300 s (todas las CPU del contenedor; incluye las consultas en vuelo "
-            "canceladas al cierre y no incluye el cliente). RSS máx.: \\texttt{max\\_rss\\_mb} del "
-            "CSV. Mediana de las 3 rondas por celda (también la RSS). n/c: sin consultas ok, no "
+            "canceladas al cierre y no incluye el cliente). RSS mediana: mediana entre las 3 rondas "
+            "del \\texttt{max\\_rss\\_mb} del CSV (RSS máxima de cada ventana); la tabla de recursos "
+            "muestra en cambio el máximo entre rondas. Mediana de las 3 rondas por celda. n/c: sin consultas ok, no "
             "se puede calcular. $^{*}$ celda con OOM: el CPU incluye los reinicios y la "
             "recuperación del motor. $^{\\dagger}$ menos de 10 consultas ok en alguna ronda: el "
             "CPU de las consultas en vuelo pesa mucho en el cociente.")
@@ -598,7 +600,7 @@ def main() -> int:
         celdas, COL_REC, "Recursos por celda (ventana de 300 s)", "tab:recursos", nota_rec),
         encoding="utf-8")
 
-    # M3 (definición propuesta) y planes lado a lado, desde evidence/plans.
+    # M3 (definición adoptada) y planes lado a lado, desde evidence/plans.
     planes = RAIZ / "evidence" / "plans"
     filas_huella = huella(corridas, docs_por_consulta(planes))
     with (a.out / "huella.csv").open("w", encoding="utf-8", newline="") as f:

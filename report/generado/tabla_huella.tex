@@ -1,18 +1,18 @@
 \begin{longtable}{llcrrrrrrr}
 \caption{Huella de CPU y memoria por cada 1\,000 documentos procesados (M3)}\label{tab:huella}\\
 \toprule
- & Motor & Perfil & $c$ & \begin{tabular}[b]{@{}c@{}}Consultas ok\\(mediana)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Docs. por\\consulta\end{tabular} & \begin{tabular}[b]{@{}c@{}}CPU en la\\ventana (s)\end{tabular} & \begin{tabular}[b]{@{}c@{}}ms de CPU por\\1\,000 docs.\end{tabular} & \begin{tabular}[b]{@{}c@{}}RSS máx.\\(MiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}MiB de RSS por\\1\,000 docs./s\end{tabular} \\
+ & Motor & Perfil & $c$ & \begin{tabular}[b]{@{}c@{}}Consultas ok\\(mediana)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Docs. por\\consulta\end{tabular} & \begin{tabular}[b]{@{}c@{}}CPU en la\\ventana (s)\end{tabular} & \begin{tabular}[b]{@{}c@{}}ms de CPU por\\1\,000 docs.\end{tabular} & \begin{tabular}[b]{@{}c@{}}RSS mediana\\(MiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}MiB de RSS por\\1\,000 docs./s\end{tabular} \\
 \midrule
 \endfirsthead
 \toprule
- & Motor & Perfil & $c$ & \begin{tabular}[b]{@{}c@{}}Consultas ok\\(mediana)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Docs. por\\consulta\end{tabular} & \begin{tabular}[b]{@{}c@{}}CPU en la\\ventana (s)\end{tabular} & \begin{tabular}[b]{@{}c@{}}ms de CPU por\\1\,000 docs.\end{tabular} & \begin{tabular}[b]{@{}c@{}}RSS máx.\\(MiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}MiB de RSS por\\1\,000 docs./s\end{tabular} \\
+ & Motor & Perfil & $c$ & \begin{tabular}[b]{@{}c@{}}Consultas ok\\(mediana)\end{tabular} & \begin{tabular}[b]{@{}c@{}}Docs. por\\consulta\end{tabular} & \begin{tabular}[b]{@{}c@{}}CPU en la\\ventana (s)\end{tabular} & \begin{tabular}[b]{@{}c@{}}ms de CPU por\\1\,000 docs.\end{tabular} & \begin{tabular}[b]{@{}c@{}}RSS mediana\\(MiB)\end{tabular} & \begin{tabular}[b]{@{}c@{}}MiB de RSS por\\1\,000 docs./s\end{tabular} \\
 \midrule
 \endhead
 \midrule
 \multicolumn{10}{r}{\footnotesize continúa}\\
 \endfoot
 \bottomrule
-\multicolumn{10}{p{0.95\linewidth}}{\footnotesize Definición propuesta, pendiente de confirmación. Q2R: \texttt{Q2\_RELAXED}. Documentos procesados = consultas ok de la ventana $\times$ documentos examinados por consulta según el plan (perfil A, 1 cliente; se asume constante entre perfiles y concurrencias). CPU: delta de \texttt{usage\_usec} de \texttt{cpu.stat} en la ventana de 300 s (todas las CPU del contenedor; incluye las consultas en vuelo canceladas al cierre y no incluye el cliente). RSS máx.: \texttt{max\_rss\_mb} del CSV. Mediana de las 3 rondas por celda (también la RSS). n/c: sin consultas ok, no se puede calcular. $^{*}$ celda con OOM: el CPU incluye los reinicios y la recuperación del motor. $^{\dagger}$ menos de 10 consultas ok en alguna ronda: el CPU de las consultas en vuelo pesa mucho en el cociente.}\\
+\multicolumn{10}{p{0.95\linewidth}}{\footnotesize Definición adoptada en este reporte (el enunciado no la precisa). Q2R: \texttt{Q2\_RELAXED}. Documentos procesados = consultas ok de la ventana $\times$ documentos examinados por consulta según el plan (perfil A, 1 cliente; se asume constante entre perfiles y concurrencias). CPU: delta de \texttt{usage\_usec} de \texttt{cpu.stat} en la ventana de 300 s (todas las CPU del contenedor; incluye las consultas en vuelo canceladas al cierre y no incluye el cliente). RSS mediana: mediana entre las 3 rondas del \texttt{max\_rss\_mb} del CSV (RSS máxima de cada ventana); la tabla de recursos muestra en cambio el máximo entre rondas. Mediana de las 3 rondas por celda. n/c: sin consultas ok, no se puede calcular. $^{*}$ celda con OOM: el CPU incluye los reinicios y la recuperación del motor. $^{\dagger}$ menos de 10 consultas ok en alguna ronda: el CPU de las consultas en vuelo pesa mucho en el cociente.}\\
 \endlastfoot
 Q1 & MongoDB & A & 1 & 232 & 500\,000 & 332 & 2{,}9 & 737 & 1{,}9 \\
 Q1 & MongoDB & A & 10 & 517 & 500\,000 & 1\,200 & 4{,}6 & 815 & 0{,}9 \\
