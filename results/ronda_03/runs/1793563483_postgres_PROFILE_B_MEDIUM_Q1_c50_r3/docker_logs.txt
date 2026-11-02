@@ -1,0 +1,151 @@
+# docker logs --tail 200 bench-postgres (2026-11-01T20:11:49Z)
+2026-11-01T20:03:21.235760173Z 
+2026-11-01T20:03:21.235796512Z PostgreSQL Database directory appears to contain a database; Skipping initialization
+2026-11-01T20:03:21.235799548Z 
+2026-11-01T20:03:21.323037087Z 2026-11-01 20:03:21.322 UTC [1] LOG:  starting PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-11-01T20:03:21.323853921Z 2026-11-01 20:03:21.323 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-11-01T20:03:21.323860103Z 2026-11-01 20:03:21.323 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-11-01T20:03:21.326443880Z 2026-11-01 20:03:21.326 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-11-01T20:03:21.332539107Z 2026-11-01 20:03:21.332 UTC [32] LOG:  database system was shut down at 2026-11-01 19:55:59 UTC
+2026-11-01T20:03:21.342634035Z 2026-11-01 20:03:21.342 UTC [1] LOG:  database system is ready to accept connections
+2026-11-01T20:06:09.843901245Z 2026-11-01 20:06:09.842 UTC [1] LOG:  client backend (PID 78) was terminated by signal 9: Killed
+2026-11-01T20:06:09.844752885Z 2026-11-01 20:06:09.842 UTC [1] DETAIL:  Failed process was running: SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T20:06:09.844763224Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T20:06:09.844766952Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T20:06:09.844770839Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T20:06:09.844774095Z 	FROM ventas,
+2026-11-01T20:06:09.844777542Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T20:06:09.844781128Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T20:06:09.844784745Z 	GROUP BY 1, 2
+2026-11-01T20:06:09.844787851Z 2026-11-01 20:06:09.843 UTC [1] LOG:  terminating any other active server processes
+2026-11-01T20:06:10.238872119Z 2026-11-01 20:06:10.238 UTC [307] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.239579155Z 2026-11-01 20:06:10.239 UTC [306] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.239602018Z 2026-11-01 20:06:10.239 UTC [304] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.245632520Z 2026-11-01 20:06:10.243 UTC [308] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.245681383Z 2026-11-01 20:06:10.243 UTC [309] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.248205425Z 2026-11-01 20:06:10.248 UTC [305] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.256250745Z 2026-11-01 20:06:10.256 UTC [310] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.343511674Z 2026-11-01 20:06:10.343 UTC [311] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.347235829Z 2026-11-01 20:06:10.346 UTC [315] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.347423285Z 2026-11-01 20:06:10.346 UTC [312] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.354170210Z 2026-11-01 20:06:10.353 UTC [313] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.354453108Z 2026-11-01 20:06:10.354 UTC [314] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.445360169Z 2026-11-01 20:06:10.441 UTC [316] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.446662116Z 2026-11-01 20:06:10.445 UTC [317] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.446685009Z 2026-11-01 20:06:10.445 UTC [324] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.446689548Z 2026-11-01 20:06:10.445 UTC [318] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.446693135Z 2026-11-01 20:06:10.446 UTC [320] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.446696651Z 2026-11-01 20:06:10.446 UTC [319] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.446779529Z 2026-11-01 20:06:10.446 UTC [322] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.448301594Z 2026-11-01 20:06:10.447 UTC [323] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.448398539Z 2026-11-01 20:06:10.447 UTC [326] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.448874414Z 2026-11-01 20:06:10.448 UTC [321] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.449472792Z 2026-11-01 20:06:10.449 UTC [325] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.450279477Z 2026-11-01 20:06:10.450 UTC [329] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.450841697Z 2026-11-01 20:06:10.450 UTC [327] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.451867268Z 2026-11-01 20:06:10.451 UTC [331] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.453750411Z 2026-11-01 20:06:10.452 UTC [330] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.453810325Z 2026-11-01 20:06:10.453 UTC [328] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.455341377Z 2026-11-01 20:06:10.455 UTC [332] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.541272431Z 2026-11-01 20:06:10.541 UTC [339] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:10.547236496Z 2026-11-01 20:06:10.547 UTC [1] LOG:  all server processes terminated; reinitializing
+2026-11-01T20:06:11.109637168Z 2026-11-01 20:06:11.109 UTC [343] LOG:  database system was interrupted; last known up at 2026-11-01 20:03:21 UTC
+2026-11-01T20:06:11.111197226Z 2026-11-01 20:06:11.111 UTC [347] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.111564214Z 2026-11-01 20:06:11.111 UTC [346] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.112601001Z 2026-11-01 20:06:11.112 UTC [348] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.113270416Z 2026-11-01 20:06:11.113 UTC [349] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.114525127Z 2026-11-01 20:06:11.114 UTC [350] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.116117606Z 2026-11-01 20:06:11.115 UTC [351] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.116946793Z 2026-11-01 20:06:11.116 UTC [352] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.117809414Z 2026-11-01 20:06:11.117 UTC [353] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.118341381Z 2026-11-01 20:06:11.118 UTC [354] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.118603144Z 2026-11-01 20:06:11.118 UTC [355] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.119239675Z 2026-11-01 20:06:11.119 UTC [356] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.120292875Z 2026-11-01 20:06:11.120 UTC [357] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.121237616Z 2026-11-01 20:06:11.121 UTC [358] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.121509017Z 2026-11-01 20:06:11.121 UTC [359] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.122233210Z 2026-11-01 20:06:11.122 UTC [360] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.244964782Z 2026-11-01 20:06:11.244 UTC [363] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.259521680Z 2026-11-01 20:06:11.259 UTC [367] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.268514483Z 2026-11-01 20:06:11.268 UTC [366] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.268536916Z 2026-11-01 20:06:11.268 UTC [362] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.268540593Z 2026-11-01 20:06:11.268 UTC [365] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.268542917Z 2026-11-01 20:06:11.268 UTC [364] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.268545823Z 2026-11-01 20:06:11.268 UTC [361] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.348227577Z 2026-11-01 20:06:11.348 UTC [368] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.350678540Z 2026-11-01 20:06:11.350 UTC [370] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.359948115Z 2026-11-01 20:06:11.359 UTC [369] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.376649597Z 2026-11-01 20:06:11.376 UTC [372] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.376681207Z 2026-11-01 20:06:11.376 UTC [371] FATAL:  the database system is in recovery mode
+2026-11-01T20:06:11.382330885Z 2026-11-01 20:06:11.382 UTC [343] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-11-01T20:06:11.385680563Z 2026-11-01 20:06:11.385 UTC [343] LOG:  redo starts at 0/744AEC98
+2026-11-01T20:06:11.385694630Z 2026-11-01 20:06:11.385 UTC [343] LOG:  invalid record length at 0/744AECD0: expected at least 24, got 0
+2026-11-01T20:06:11.385697275Z 2026-11-01 20:06:11.385 UTC [343] LOG:  redo done at 0/744AEC98 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-11-01T20:06:11.389483913Z 2026-11-01 20:06:11.389 UTC [344] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-11-01T20:06:11.397835917Z 2026-11-01 20:06:11.397 UTC [344] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.002 s, total=0.010 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/744AECD0, redo lsn=0/744AECD0
+2026-11-01T20:06:11.400325117Z 2026-11-01 20:06:11.400 UTC [1] LOG:  database system is ready to accept connections
+2026-11-01T20:10:44.927274204Z 2026-11-01 20:10:44.925 UTC [1] LOG:  client backend (PID 429) was terminated by signal 9: Killed
+2026-11-01T20:10:44.927320052Z 2026-11-01 20:10:44.925 UTC [1] DETAIL:  Failed process was running: SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T20:10:44.927324410Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T20:10:44.927328328Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T20:10:44.927350089Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T20:10:44.927355560Z 	FROM ventas,
+2026-11-01T20:10:44.927359718Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T20:10:44.927362974Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T20:10:44.927366782Z 	GROUP BY 1, 2
+2026-11-01T20:10:44.927369898Z 2026-11-01 20:10:44.925 UTC [1] LOG:  terminating any other active server processes
+2026-11-01T20:10:45.337362773Z 2026-11-01 20:10:45.336 UTC [721] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.337392931Z 2026-11-01 20:10:45.337 UTC [724] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.338826591Z 2026-11-01 20:10:45.338 UTC [726] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.338860786Z 2026-11-01 20:10:45.338 UTC [722] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.338865155Z 2026-11-01 20:10:45.338 UTC [723] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.339042525Z 2026-11-01 20:10:45.338 UTC [725] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.429634021Z 2026-11-01 20:10:45.429 UTC [727] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.433504176Z 2026-11-01 20:10:45.433 UTC [729] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.434235581Z 2026-11-01 20:10:45.434 UTC [728] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.526536424Z 2026-11-01 20:10:45.526 UTC [730] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.528492873Z 2026-11-01 20:10:45.528 UTC [731] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.538101106Z 2026-11-01 20:10:45.536 UTC [732] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.538137626Z 2026-11-01 20:10:45.536 UTC [735] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.538142335Z 2026-11-01 20:10:45.536 UTC [738] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.540651880Z 2026-11-01 20:10:45.540 UTC [739] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.542051458Z 2026-11-01 20:10:45.541 UTC [741] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.624704560Z 2026-11-01 20:10:45.624 UTC [734] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.624768553Z 2026-11-01 20:10:45.624 UTC [737] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.624773523Z 2026-11-01 20:10:45.624 UTC [736] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.624776338Z 2026-11-01 20:10:45.624 UTC [733] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.624961278Z 2026-11-01 20:10:45.624 UTC [740] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.628538090Z 2026-11-01 20:10:45.628 UTC [742] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.628770650Z 2026-11-01 20:10:45.628 UTC [743] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.629944250Z 2026-11-01 20:10:45.629 UTC [744] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.632297592Z 2026-11-01 20:10:45.632 UTC [745] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.633561519Z 2026-11-01 20:10:45.633 UTC [747] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.638892594Z 2026-11-01 20:10:45.638 UTC [752] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:45.647038622Z 2026-11-01 20:10:45.646 UTC [1] LOG:  all server processes terminated; reinitializing
+2026-11-01T20:10:46.240320885Z 2026-11-01 20:10:46.240 UTC [756] LOG:  database system was interrupted; last known up at 2026-11-01 20:06:11 UTC
+2026-11-01T20:10:46.241975488Z 2026-11-01 20:10:46.241 UTC [760] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.242538035Z 2026-11-01 20:10:46.242 UTC [759] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.243201183Z 2026-11-01 20:10:46.243 UTC [761] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.243864306Z 2026-11-01 20:10:46.243 UTC [762] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.244677088Z 2026-11-01 20:10:46.244 UTC [763] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.246019216Z 2026-11-01 20:10:46.245 UTC [765] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.246375751Z 2026-11-01 20:10:46.246 UTC [764] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.246885891Z 2026-11-01 20:10:46.246 UTC [766] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.247351505Z 2026-11-01 20:10:46.247 UTC [768] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.247720975Z 2026-11-01 20:10:46.247 UTC [769] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.247726085Z 2026-11-01 20:10:46.247 UTC [767] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.249490404Z 2026-11-01 20:10:46.249 UTC [771] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.249656874Z 2026-11-01 20:10:46.249 UTC [770] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.250145833Z 2026-11-01 20:10:46.249 UTC [772] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.250613552Z 2026-11-01 20:10:46.250 UTC [773] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.251692694Z 2026-11-01 20:10:46.251 UTC [774] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.252476530Z 2026-11-01 20:10:46.252 UTC [776] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.252483634Z 2026-11-01 20:10:46.252 UTC [775] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.253341712Z 2026-11-01 20:10:46.253 UTC [777] FATAL:  the database system is in recovery mode
+2026-11-01T20:10:46.508288398Z 2026-11-01 20:10:46.508 UTC [756] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-11-01T20:10:46.511612955Z 2026-11-01 20:10:46.511 UTC [756] LOG:  redo starts at 0/744AED48
+2026-11-01T20:10:46.511625729Z 2026-11-01 20:10:46.511 UTC [756] LOG:  invalid record length at 0/744AED80: expected at least 24, got 0
+2026-11-01T20:10:46.511628525Z 2026-11-01 20:10:46.511 UTC [756] LOG:  redo done at 0/744AED48 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-11-01T20:10:46.515464764Z 2026-11-01 20:10:46.515 UTC [757] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-11-01T20:10:46.523883506Z 2026-11-01 20:10:46.523 UTC [757] LOG:  checkpoint complete: wrote 0 buffers (0.0%), wrote 3 SLRU buffers; 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.001 s, total=0.010 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/744AED80, redo lsn=0/744AED80
+2026-11-01T20:10:46.526740314Z 2026-11-01 20:10:46.526 UTC [1] LOG:  database system is ready to accept connections

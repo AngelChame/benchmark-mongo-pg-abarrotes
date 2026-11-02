@@ -1,0 +1,168 @@
+{
+  "run_id": "1793515033_mongo_PROFILE_C_SEVERE_Q1_c50_r1",
+  "run_number": 1,
+  "intento": 1,
+  "fila_csv": {
+    "timestamp_epoch": 1793515033,
+    "engine": "mongo",
+    "profile": "PROFILE_C_SEVERE",
+    "query_id": "Q1",
+    "concurrency": 50,
+    "throughput_qps": 0.26,
+    "latency_p50_ms": 118393.477,
+    "latency_p95_ms": 130795.874,
+    "latency_p99_ms": 137192.846,
+    "cpu_throttled_seconds": 3219.336,
+    "max_rss_mb": 682.1,
+    "disk_spill": false,
+    "status": "ok",
+    "run_number": 1
+  },
+  "motivos_error": [],
+  "descartada": null,
+  "serie_1s_muestras": 200,
+  "archivos": [
+    "meta.json",
+    "latencias.csv",
+    "serie_1s.csv"
+  ],
+  "precondiciones": {
+    "corriente": true,
+    "mongodb_windows": "Stopped",
+    "libre_windows_gb": 395.4,
+    "libre_vm_gb": null,
+    "libre_efectivo_gb": 395.4,
+    "min_libre_gb": 60.0
+  },
+  "precondiciones_tras_recrear": {
+    "corriente": true,
+    "mongodb_windows": "Stopped",
+    "libre_windows_gb": 395.4,
+    "libre_vm_gb": 1013.4,
+    "libre_efectivo_gb": 395.4,
+    "min_libre_gb": 60.0
+  },
+  "identidad": {
+    "motor": "mongo",
+    "version": "9.0.4",
+    "puerto": 27018,
+    "contenedor_id": "ba66c2b2097b",
+    "hostname": "ba66c2b2097b",
+    "imagen": "mongo:9.0.4@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058",
+    "limites": {
+      "memory_max": 1073741824,
+      "memory_swap_max": "0",
+      "cpu_max": "100000 100000"
+    },
+    "perfil": "PROFILE_C_SEVERE"
+  },
+  "ventana": {
+    "t_inicio_calentamiento": 1793514973.209307,
+    "t_inicio_medicion": 1793515033.209307,
+    "t_fin_medicion": 1793515333.209307,
+    "t_fin_recoleccion": 1793515342.5163372,
+    "calentamiento_s": 60.0,
+    "medicion_s": 300.0,
+    "enfriamiento_s": 60.0,
+    "timeout_s": 300.0
+  },
+  "variante": {},
+  "consultas": {
+    "medidas_ok": 78,
+    "medidas_total": 78,
+    "calentamiento": 50,
+    "en_vuelo_canceladas": 50,
+    "errores_por_tipo": {},
+    "clientes_que_reportaron": 50,
+    "cancelaciones_enviadas": 44
+  },
+  "temporales": {
+    "bytes": 0,
+    "eventos": 0,
+    "nota": "PostgreSQL: pg_stat_database.temp_bytes; Mongo: spillToDiskBytes + group.spilledDataStorageSize; desde el inicio de la medición hasta el fin de la recolección"
+  },
+  "cgroup": {
+    "inicio_medicion": {
+      "usage_usec": 67925733,
+      "user_usec": 64454698,
+      "system_usec": 3471035,
+      "nr_periods": 811,
+      "nr_throttled": 664,
+      "throttled_usec": 689229567,
+      "nr_bursts": 0,
+      "burst_usec": 0,
+      "low": 0,
+      "high": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0,
+      "oom_group_kill": 0,
+      "memory_peak": 845643776
+    },
+    "fin_medicion": {
+      "usage_usec": 364146609,
+      "user_usec": 354112715,
+      "system_usec": 10033893,
+      "nr_periods": 3773,
+      "nr_throttled": 3626,
+      "throttled_usec": 3908565938,
+      "nr_bursts": 0,
+      "burst_usec": 0,
+      "low": 0,
+      "high": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0,
+      "oom_group_kill": 0,
+      "memory_peak": 1012248576
+    },
+    "final": {
+      "usage_usec": 369483974,
+      "user_usec": 359247319,
+      "system_usec": 10236654,
+      "nr_periods": 3847,
+      "nr_throttled": 3679,
+      "throttled_usec": 3966420090,
+      "nr_bursts": 0,
+      "burst_usec": 0,
+      "low": 0,
+      "high": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0,
+      "oom_group_kill": 0,
+      "memory_peak": 1012248576
+    },
+    "oom_kill_delta": 0
+  },
+  "prometheus": {
+    "max_rss_bytes": 715231232.0,
+    "throttled_increase_s": 3260.7069738196724
+  },
+  "contenedor_estado": {
+    "Running": true,
+    "OOMKilled": false,
+    "ExitCode": 0,
+    "StartedAt": "2026-11-01T06:35:50.989987368Z",
+    "FinishedAt": "0001-01-01T00:00:00Z"
+  },
+  "corriente_desconexiones": [],
+  "eventos": [
+    [
+      1793514958.2029748,
+      "flush de caché"
+    ],
+    [
+      1793515040.1215703,
+      "inicio de medición"
+    ],
+    [
+      1793515335.3198745,
+      "fin de medición"
+    ],
+    [
+      1793515342.6720517,
+      "enfriamiento"
+    ]
+  ]
+}

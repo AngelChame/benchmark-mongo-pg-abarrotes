@@ -1,0 +1,234 @@
+{
+  "ronda": 2,
+  "semilla": 20261101,
+  "celdas": [
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q2",
+      "concurrency": 1
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q2_RELAXED",
+      "concurrency": 50
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q2",
+      "concurrency": 1
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q1",
+      "concurrency": 1
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q1",
+      "concurrency": 10
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q2",
+      "concurrency": 10
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q1",
+      "concurrency": 1
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q1",
+      "concurrency": 1
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q1",
+      "concurrency": 50
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q2",
+      "concurrency": 1
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q1",
+      "concurrency": 50
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q2",
+      "concurrency": 10
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q2",
+      "concurrency": 1
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q1",
+      "concurrency": 1
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q1",
+      "concurrency": 1
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q2_RELAXED",
+      "concurrency": 50
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q1",
+      "concurrency": 50
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q2",
+      "concurrency": 50
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q1",
+      "concurrency": 10
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q2",
+      "concurrency": 50
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q1",
+      "concurrency": 10
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q1",
+      "concurrency": 50
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q2",
+      "concurrency": 10
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q1",
+      "concurrency": 1
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q2",
+      "concurrency": 50
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q2",
+      "concurrency": 1
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q2",
+      "concurrency": 50
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q2",
+      "concurrency": 10
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q1",
+      "concurrency": 10
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q2",
+      "concurrency": 50
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q2",
+      "concurrency": 50
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q1",
+      "concurrency": 10
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q2",
+      "concurrency": 10
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q2",
+      "concurrency": 1
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q1",
+      "concurrency": 50
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q2",
+      "concurrency": 10
+    },
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_C_SEVERE",
+      "query_id": "Q1",
+      "concurrency": 10
+    },
+    {
+      "engine": "postgres",
+      "profile": "PROFILE_B_MEDIUM",
+      "query_id": "Q1",
+      "concurrency": 50
+    }
+  ]
+}

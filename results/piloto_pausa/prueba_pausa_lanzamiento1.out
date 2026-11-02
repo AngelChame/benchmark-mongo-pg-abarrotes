@@ -1,0 +1,13 @@
+[2026-11-01 00:30:53 CST] arranque del orquestador: rondas=3 celdas=1 semilla=20261101 limite=None respaldo=C:\benchmark-respaldo ntfy=no
+[2026-11-01 00:30:53 CST] respaldo validado: C:\benchmark-respaldo
+[2026-11-01 00:31:10 CST] revisión de entorno (arranque): OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+[2026-11-01 00:31:11 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c1 r1 intento 1
+[2026-11-01 00:31:52 CST] ronda terminada: ronda 1
+[2026-11-01 00:31:52 CST] respaldo: C:\benchmark-respaldo\20261101T063152Z_piloto_pausa_ronda_01 (42 archivos); copia verificada
+[2026-11-01 00:31:52 CST] pausa: archivo C:\Users\chapp\proyectos\benchmark\results\piloto_pausa\PAUSAR
+[2026-11-01 00:32:52 CST] reanudar: se borró PAUSAR; revisando el entorno
+[2026-11-01 00:33:09 CST] revisión de entorno (reanudar): OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+[2026-11-01 00:33:09 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c1 r2 intento 1
+[2026-11-01 00:33:51 CST] ronda terminada: ronda 2
+[2026-11-01 00:33:51 CST] respaldo: C:\benchmark-respaldo\20261101T063351Z_piloto_pausa_ronda_02 (49 archivos); copia verificada
+[2026-11-01 00:33:51 CST] fin del orquestador: detenido por DETENER (entre corridas)

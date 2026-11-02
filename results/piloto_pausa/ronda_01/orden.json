@@ -1,0 +1,12 @@
+{
+  "ronda": 1,
+  "semilla": 20261101,
+  "celdas": [
+    {
+      "engine": "mongo",
+      "profile": "PROFILE_A_BASELINE",
+      "query_id": "Q2",
+      "concurrency": 1
+    }
+  ]
+}

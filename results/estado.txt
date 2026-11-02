@@ -1,0 +1,15 @@
+Actualizado: 2026-11-01 16:09:53 CST
+Estado: terminado
+Carpeta de resultados: C:\Users\chapp\proyectos\benchmark\results
+Hora límite: 2026-11-01 21:00 CST
+Duración estimada por corrida: 8.5 min
+Ronda 1: 38/38 con fila, 0 con reintento pendiente, 0 agotadas
+Ronda 2: 38/38 con fila, 0 con reintento pendiente, 0 agotadas
+Ronda 3: 38/38 con fila, 0 con reintento pendiente, 0 agotadas
+Corridas restantes: 0; caben antes de la hora límite: ~34
+Última corrida: 1793570626_mongo_PROFILE_A_BASELINE_Q2_c1_r3 status=ok descartada=None duración=7.3 min (2026-11-01 16:09:49 CST)
+AVISO: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+
+Pausar entre corridas:  crear el archivo C:\Users\chapp\proyectos\benchmark\results\PAUSAR
+Reanudar:               borrar C:\Users\chapp\proyectos\benchmark\results\PAUSAR
+Detener entre corridas: crear el archivo C:\Users\chapp\proyectos\benchmark\results\DETENER

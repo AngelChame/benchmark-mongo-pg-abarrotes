@@ -1,0 +1,7 @@
+[2026-11-01 00:33:52 CST] arranque del orquestador: rondas=3 celdas=1 semilla=20261101 limite=None respaldo=C:\benchmark-respaldo ntfy=no
+[2026-11-01 00:33:52 CST] respaldo validado: C:\benchmark-respaldo
+[2026-11-01 00:34:09 CST] revisión de entorno (arranque): OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+[2026-11-01 00:34:09 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c1 r3 intento 1
+[2026-11-01 00:34:50 CST] ronda terminada: ronda 3
+[2026-11-01 00:34:51 CST] respaldo: C:\benchmark-respaldo\20261101T063450Z_piloto_pausa_ronda_03 (56 archivos); copia verificada
+[2026-11-01 00:34:51 CST] fin del orquestador: terminado

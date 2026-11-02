@@ -1,0 +1,105 @@
+cliente,t_inicio_epoch,t_fin_epoch,latencia_ms,fase,estado,detalle
+0,1793549332.1049938,1793549430.7733164,98668.323,calentamiento,ok,
+0,1793549430.7733164,1793549604.7993903,174026.074,medicion,ok,
+0,1793549604.7993903,1793549693.3062797,88506.889,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+1,1793549332.104462,1793549580.7527542,248648.292,calentamiento,ok,
+1,1793549580.7527542,1793549693.6285434,112875.789,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+2,1793549332.1049938,1793549592.4094005,260304.407,calentamiento,ok,
+2,1793549592.4094005,1793549693.3046749,100895.274,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+3,1793549332.1049938,1793549599.8164127,267711.419,calentamiento,ok,
+3,1793549599.8164127,1793549693.6444137,93828.001,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+4,1793549332.104462,1793549602.8907526,270786.291,calentamiento,ok,
+4,1793549602.8907526,1793549693.7056146,90814.862,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+5,1793549332.1049938,1793549593.0047722,260899.778,calentamiento,ok,
+5,1793549593.0047722,1793549693.4041588,100399.387,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+6,1793549332.1049938,1793549592.630534,260525.54,calentamiento,ok,
+6,1793549592.630534,1793549693.4041588,100773.625,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+7,1793549332.1049938,1793549589.9789958,257874.002,calentamiento,ok,
+7,1793549589.9789958,1793549693.6285434,103649.548,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+8,1793549332.1049938,1793549606.650157,274545.163,calentamiento,ok,
+8,1793549606.650157,1793549693.606936,86956.779,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+9,1793549332.1049938,1793549592.2369802,260131.986,calentamiento,ok,
+9,1793549592.2369802,1793549693.526493,101289.513,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+10,1793549332.1049938,1793549590.9170718,258812.078,calentamiento,ok,
+10,1793549590.9170718,1793549693.6444137,102727.342,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+11,1793549332.1055536,1793549580.7383382,248632.785,calentamiento,ok,
+11,1793549580.7383382,1793549693.4041588,112665.821,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+12,1793549332.104462,1793549572.6880443,240583.582,calentamiento,ok,
+12,1793549572.6880443,1793549692.9536686,120265.624,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+13,1793549332.1049938,1793549595.478968,263373.974,calentamiento,ok,
+13,1793549595.478968,1793549693.6198964,98140.929,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+14,1793549332.104462,1793549597.1309109,265026.449,calentamiento,ok,
+14,1793549597.1309109,1793549693.7585683,96627.657,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+15,1793549332.1049938,1793549599.9182734,267813.28,calentamiento,ok,
+15,1793549599.9182734,1793549693.7056146,93787.341,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+16,1793549332.104462,1793549596.827842,264723.38,calentamiento,ok,
+16,1793549596.827842,1793549693.7056146,96877.773,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+17,1793549332.1049938,1793549495.0832872,162978.293,calentamiento,ok,
+17,1793549495.0832872,1793549675.0290408,179945.754,medicion,ok,
+17,1793549675.0290408,1793549694.0010304,18971.99,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+18,1793549332.1049938,1793549595.4330797,263328.086,calentamiento,ok,
+18,1793549595.4330797,1793549693.1083512,97675.272,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+19,1793549332.104462,1793549597.4430313,265338.569,calentamiento,ok,
+19,1793549597.4430313,1793549693.5090027,96065.971,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+20,1793549332.1049938,1793549592.6315727,260526.579,calentamiento,ok,
+20,1793549592.6315727,1793549693.4041588,100772.586,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+21,1793549332.104462,1793549591.8343012,259729.839,calentamiento,ok,
+21,1793549591.8343012,1793549693.651311,101817.01,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+22,1793549332.1049938,1793549606.8102775,274705.284,calentamiento,ok,
+22,1793549606.8102775,1793549693.4106488,86600.371,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+23,1793549332.104462,1793549584.9858923,252881.43,calentamiento,ok,
+23,1793549584.9858923,1793549693.2192512,108233.359,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+24,1793549332.1055536,1793549597.7113414,265605.788,calentamiento,ok,
+24,1793549597.7113414,1793549693.9018216,96190.48,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+25,1793549332.1049938,1793549595.362171,263257.177,calentamiento,ok,
+25,1793549595.362171,1793549693.4041588,98041.988,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+26,1793549332.1049938,1793549600.7683606,268663.367,calentamiento,ok,
+26,1793549600.7683606,1793549693.6012044,92832.844,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+27,1793549332.1049938,1793549464.0159771,131910.983,calentamiento,ok,
+27,1793549464.0159771,1793549671.7933958,207777.419,medicion,ok,
+27,1793549671.7933958,1793549693.597728,21804.332,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+28,1793549332.104462,1793549561.5804052,229475.943,calentamiento,ok,
+28,1793549561.5804052,1793549692.9520833,131371.678,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+29,1793549332.1049938,1793549592.515627,260410.633,calentamiento,ok,
+29,1793549592.515627,1793549693.421677,100906.05,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+30,1793549332.104462,1793549590.4243803,258319.918,calentamiento,ok,
+30,1793549590.4243803,1793549693.3279142,102903.534,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+31,1793549332.104462,1793549585.0205126,252916.051,calentamiento,ok,
+31,1793549585.0205126,1793549693.5127265,108492.214,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+32,1793549332.1049938,1793549586.2621446,254157.151,calentamiento,ok,
+32,1793549586.2621446,1793549693.2070646,106944.92,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+33,1793549332.104462,1793549593.183015,261078.553,calentamiento,ok,
+33,1793549593.183015,1793549693.6444137,100461.399,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+34,1793549332.104462,1793549594.3033693,262198.907,calentamiento,ok,
+34,1793549594.3033693,1793549693.329003,99025.634,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+35,1793549332.104462,1793549592.4576583,260353.196,calentamiento,ok,
+35,1793549592.4576583,1793549693.421677,100964.019,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+36,1793549332.1049938,1793549588.4304507,256325.457,calentamiento,ok,
+36,1793549588.4304507,1793549693.7056146,105275.164,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+37,1793549332.1049938,1793549579.6400387,247535.045,calentamiento,ok,
+37,1793549579.6400387,1793549693.3046749,113664.636,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+38,1793549332.1049938,1793549591.7366812,259631.687,calentamiento,ok,
+38,1793549591.7366812,1793549693.9018216,102165.14,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+39,1793549332.1049938,1793549464.216805,132111.811,calentamiento,ok,
+39,1793549464.216805,1793549675.220229,211003.424,medicion,ok,
+39,1793549675.220229,1793549693.5883217,18368.093,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+40,1793549332.1049938,1793549597.7700624,265665.069,calentamiento,ok,
+40,1793549597.7700624,1793549693.2155766,95445.514,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+41,1793549332.1049938,1793549591.7653046,259660.311,calentamiento,ok,
+41,1793549591.7653046,1793549693.5090027,101743.698,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+42,1793549332.104462,1793549589.7080774,257603.616,calentamiento,ok,
+42,1793549589.7080774,1793549693.5090027,103800.925,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+43,1793549332.104462,1793549598.6623507,266557.889,calentamiento,ok,
+43,1793549598.6623507,1793549693.5205643,94858.214,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+44,1793549332.1049938,1793549592.6676857,260562.692,calentamiento,ok,
+44,1793549592.6676857,1793549693.6017807,100934.095,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+45,1793549332.1049938,1793549587.2405186,255135.525,calentamiento,ok,
+45,1793549587.2405186,1793549693.6005614,106360.043,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+46,1793549332.1055536,1793549596.3201659,264214.612,calentamiento,ok,
+46,1793549596.3201659,1793549693.3141246,96993.959,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+47,1793549332.104462,1793549587.4713638,255366.902,calentamiento,ok,
+47,1793549587.4713638,1793549693.9217122,106450.348,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+48,1793549332.1049938,1793549597.3969014,265291.908,calentamiento,ok,
+48,1793549597.3969014,1793549693.6449578,96248.056,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')
+49,1793549332.104462,1793549605.2655425,273161.081,calentamiento,ok,
+49,1793549605.2655425,1793549693.651311,88385.768,en_vuelo,timeout_o_cancelada,QueryCanceled('canceling statement due to user request')

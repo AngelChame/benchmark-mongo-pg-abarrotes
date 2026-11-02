@@ -1,0 +1,12 @@
+2026-11-01T06:35:31Z | arranque del orquestador | rondas=1 celdas=3 semilla=20261101 limite=None respaldo=C:\benchmark-respaldo ntfy=no
+2026-11-01T06:35:31Z | respaldo validado | C:\benchmark-respaldo
+2026-11-01T06:35:49Z | revisión de entorno (arranque) | OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+2026-11-01T06:35:49Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c50 r1 intento 1
+2026-11-01T06:43:22Z | corrida terminada | 1793515033_mongo_PROFILE_C_SEVERE_Q1_c50_r1 status=ok
+2026-11-01T06:43:22Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c1 r1 intento 1
+2026-11-01T06:50:39Z | corrida terminada | 1793515477_mongo_PROFILE_A_BASELINE_Q2_c1_r1 status=ok
+2026-11-01T06:50:40Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c50 r1 intento 1
+2026-11-01T06:58:14Z | corrida terminada | 1793515923_postgres_PROFILE_C_SEVERE_Q1_c50_r1 status=oom
+2026-11-01T06:58:14Z | ronda terminada | ronda 1
+2026-11-01T06:58:14Z | respaldo | C:\benchmark-respaldo\20261101T065814Z_piloto_ronda_01 (48 archivos); copia verificada
+2026-11-01T06:58:14Z | fin del orquestador | terminado

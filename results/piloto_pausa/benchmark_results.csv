@@ -1,0 +1,4 @@
+timestamp_epoch,engine,profile,query_id,concurrency,run_number,throughput_qps,latency_p50_ms,latency_p95_ms,latency_p99_ms,cpu_throttled_seconds,max_rss_mb,disk_spill,status
+1793514689,mongo,PROFILE_A_BASELINE,Q2,1,1,4.0667,239.38,258.447,271.325,0.0,365.1,false,ok
+1793514808,mongo,PROFILE_A_BASELINE,Q2,1,2,4.0,244.304,254.487,288.633,0.0,470.1,false,ok
+1793514868,mongo,PROFILE_A_BASELINE,Q2,1,3,4.0,242.979,258.485,279.439,0.0,433.3,false,ok

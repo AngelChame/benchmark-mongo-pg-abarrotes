@@ -1,0 +1,201 @@
+# docker logs --tail 200 bench-postgres (2026-11-01T10:06:48Z)
+2026-11-01T10:05:44.522045847Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522047631Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522049404Z 2026-11-01 10:05:44.520 UTC [411] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522051178Z 2026-11-01 10:05:44.520 UTC [411] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522053232Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522055125Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522056838Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522058431Z 	FROM ventas,
+2026-11-01T10:05:44.522059844Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522061277Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522062950Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522064343Z 2026-11-01 10:05:44.520 UTC [362] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522065755Z 2026-11-01 10:05:44.520 UTC [362] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522067188Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522072869Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522074372Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522075814Z 	FROM ventas,
+2026-11-01T10:05:44.522077247Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522078660Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522080113Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522081515Z 2026-11-01 10:05:44.520 UTC [403] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522084631Z 2026-11-01 10:05:44.520 UTC [403] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522086084Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522087587Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522089000Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522090532Z 	FROM ventas,
+2026-11-01T10:05:44.522091935Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522093358Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522094770Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522096283Z 2026-11-01 10:05:44.520 UTC [404] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522097776Z 2026-11-01 10:05:44.520 UTC [404] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522099209Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522100622Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522103046Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522104589Z 	FROM ventas,
+2026-11-01T10:05:44.522106102Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522107515Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522108988Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522110470Z 2026-11-01 10:05:44.519 UTC [595] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522111903Z 2026-11-01 10:05:44.519 UTC [595] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522113356Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522114789Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522116301Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522117854Z 	FROM ventas,
+2026-11-01T10:05:44.522119387Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522120810Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522122453Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522123856Z 2026-11-01 10:05:44.520 UTC [373] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522125379Z 2026-11-01 10:05:44.520 UTC [373] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522126801Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522128324Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522129857Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522131370Z 	FROM ventas,
+2026-11-01T10:05:44.522132843Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522134316Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522135788Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522137191Z 2026-11-01 10:05:44.520 UTC [380] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522142201Z 2026-11-01 10:05:44.520 UTC [380] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522143774Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522145226Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522146689Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522148152Z 	FROM ventas,
+2026-11-01T10:05:44.522149665Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522151098Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522152510Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522154063Z 2026-11-01 10:05:44.520 UTC [412] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522155526Z 2026-11-01 10:05:44.520 UTC [412] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522156989Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522158401Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522159874Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522161377Z 	FROM ventas,
+2026-11-01T10:05:44.522162790Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522164263Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522165675Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522167118Z 2026-11-01 10:05:44.520 UTC [397] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522168551Z 2026-11-01 10:05:44.520 UTC [397] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522170034Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522171466Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522172969Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522174432Z 	FROM ventas,
+2026-11-01T10:05:44.522175845Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522177277Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522178680Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522180093Z 2026-11-01 10:05:44.520 UTC [416] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522181525Z 2026-11-01 10:05:44.520 UTC [416] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522182988Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522184401Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522185824Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522187306Z 	FROM ventas,
+2026-11-01T10:05:44.522188729Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522190182Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522191675Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522193077Z 2026-11-01 10:05:44.520 UTC [381] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522194510Z 2026-11-01 10:05:44.520 UTC [381] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522196073Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522197506Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522198989Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522200471Z 	FROM ventas,
+2026-11-01T10:05:44.522201894Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522206763Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522208266Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522209719Z 2026-11-01 10:05:44.520 UTC [361] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522211142Z 2026-11-01 10:05:44.520 UTC [361] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522212845Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522214658Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522216512Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522218315Z 	FROM ventas,
+2026-11-01T10:05:44.522220119Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522221902Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522223736Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522225559Z 2026-11-01 10:05:44.520 UTC [366] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522227302Z 2026-11-01 10:05:44.520 UTC [366] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522229036Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522230919Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522233444Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522235478Z 	FROM ventas,
+2026-11-01T10:05:44.522237321Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522239225Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522241139Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522243072Z 2026-11-01 10:05:44.520 UTC [409] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522244986Z 2026-11-01 10:05:44.520 UTC [409] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522246870Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522248713Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522250757Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522252400Z 	FROM ventas,
+2026-11-01T10:05:44.522253863Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522255276Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522256698Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522258161Z 2026-11-01 10:05:44.520 UTC [379] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522259584Z 2026-11-01 10:05:44.520 UTC [379] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522261057Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522262489Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522263912Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522265385Z 	FROM ventas,
+2026-11-01T10:05:44.522266828Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522268290Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522269733Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522271126Z 2026-11-01 10:05:44.520 UTC [414] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522272548Z 2026-11-01 10:05:44.520 UTC [414] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522274863Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522276265Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522277758Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522283670Z 	FROM ventas,
+2026-11-01T10:05:44.522285162Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522286595Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522287998Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522289420Z 2026-11-01 10:05:44.520 UTC [417] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522290873Z 2026-11-01 10:05:44.520 UTC [417] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522292336Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522293749Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522295181Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522296614Z 	FROM ventas,
+2026-11-01T10:05:44.522298047Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522299450Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522301093Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522302716Z 2026-11-01 10:05:44.519 UTC [585] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522304148Z 2026-11-01 10:05:44.519 UTC [585] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522305581Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522307014Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522308467Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522309889Z 	FROM ventas,
+2026-11-01T10:05:44.522311322Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522312745Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522314147Z 	GROUP BY 1, 2
+2026-11-01T10:05:44.522316121Z 2026-11-01 10:05:44.520 UTC [365] ERROR:  canceling statement due to user request
+2026-11-01T10:05:44.522317925Z 2026-11-01 10:05:44.520 UTC [365] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:44.522321241Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:44.522323525Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:44.522325459Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:44.522327383Z 	FROM ventas,
+2026-11-01T10:05:44.522329467Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:44.522331711Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:44.522333604Z 	GROUP BY 1, 2
+2026-11-01T10:05:45.091612494Z 2026-11-01 10:05:45.091 UTC [669] LOG:  could not send data to client: Broken pipe
+2026-11-01T10:05:45.091643724Z 2026-11-01 10:05:45.091 UTC [669] FATAL:  connection to client lost
+2026-11-01T10:05:45.594889514Z 2026-11-01 10:05:45.594 UTC [1] LOG:  background worker "parallel worker" (PID 586) exited with exit code 1
+2026-11-01T10:05:45.594922627Z 2026-11-01 10:05:45.594 UTC [1] LOG:  background worker "parallel worker" (PID 595) exited with exit code 1
+2026-11-01T10:05:45.603712546Z 2026-11-01 10:05:45.603 UTC [1] LOG:  background worker "parallel worker" (PID 584) exited with exit code 1
+2026-11-01T10:05:45.689491227Z 2026-11-01 10:05:45.689 UTC [1] LOG:  background worker "parallel worker" (PID 587) exited with exit code 1
+2026-11-01T10:05:45.698099897Z 2026-11-01 10:05:45.697 UTC [1] LOG:  background worker "parallel worker" (PID 585) exited with exit code 1
+2026-11-01T10:05:45.698824278Z 2026-11-01 10:05:45.698 UTC [1] LOG:  background worker "parallel worker" (PID 596) exited with exit code 1
+2026-11-01T10:05:45.702412816Z 2026-11-01 10:05:45.702 UTC [378] ERROR:  canceling statement due to user request
+2026-11-01T10:05:45.702441922Z 2026-11-01 10:05:45.702 UTC [378] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:45.702461990Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:45.702464865Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:45.702467921Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:45.702470446Z 	FROM ventas,
+2026-11-01T10:05:45.702473742Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:45.702476698Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:45.702479503Z 	GROUP BY 1, 2
+2026-11-01T10:05:45.702738745Z 2026-11-01 10:05:45.702 UTC [625] ERROR:  canceling statement due to user request
+2026-11-01T10:05:45.702747582Z 2026-11-01 10:05:45.702 UTC [625] STATEMENT:  SELECT data->>'tipo_pago'                                         AS tipo_pago,
+2026-11-01T10:05:45.702750016Z 	       item->'producto'->'proveedor'->>'id'                       AS proveedor_id,
+2026-11-01T10:05:45.702751920Z 	       SUM((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS suma_subtotal,
+2026-11-01T10:05:45.702757080Z 	       AVG((item->>'cantidad')::numeric * (item->>'precio_unitario')::numeric) AS promedio_subtotal
+2026-11-01T10:05:45.702759013Z 	FROM ventas,
+2026-11-01T10:05:45.702761137Z 	     jsonb_array_elements(data->'items') AS item
+2026-11-01T10:05:45.702763081Z 	WHERE (item->>'precio_unitario')::numeric > 50
+2026-11-01T10:05:45.702764955Z 	GROUP BY 1, 2
+2026-11-01T10:05:45.788295180Z 2026-11-01 10:05:45.788 UTC [1] LOG:  background worker "parallel worker" (PID 625) exited with exit code 1

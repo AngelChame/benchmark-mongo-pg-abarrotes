@@ -1,0 +1,179 @@
+{
+  "run_id": "1793537849_postgres_PROFILE_C_SEVERE_Q1_c50_r2",
+  "run_number": 2,
+  "intento": 1,
+  "fila_csv": {
+    "timestamp_epoch": 1793537849,
+    "engine": "postgres",
+    "profile": "PROFILE_C_SEVERE",
+    "query_id": "Q1",
+    "concurrency": 50,
+    "throughput_qps": 0.0,
+    "latency_p50_ms": null,
+    "latency_p95_ms": null,
+    "latency_p99_ms": null,
+    "cpu_throttled_seconds": 2623.895,
+    "max_rss_mb": 965.9,
+    "disk_spill": null,
+    "status": "oom",
+    "run_number": 2
+  },
+  "motivos_error": [
+    "latency_p50_ms: ninguna consulta exitosa en la ventana de medición",
+    "latency_p95_ms: ninguna consulta exitosa en la ventana de medición",
+    "latency_p99_ms: ninguna consulta exitosa en la ventana de medición",
+    "disk_spill: no se pudo medir"
+  ],
+  "descartada": null,
+  "serie_1s_muestras": 217,
+  "archivos": [
+    "meta.json",
+    "latencias.csv",
+    "serie_1s.csv",
+    "docker_logs.txt"
+  ],
+  "precondiciones": {
+    "corriente": true,
+    "mongodb_windows": "Stopped",
+    "libre_windows_gb": 332.1,
+    "libre_vm_gb": 1013.0,
+    "libre_efectivo_gb": 332.1,
+    "min_libre_gb": 60.0
+  },
+  "precondiciones_tras_recrear": {
+    "corriente": true,
+    "mongodb_windows": "Stopped",
+    "libre_windows_gb": 332.1,
+    "libre_vm_gb": 1013.0,
+    "libre_efectivo_gb": 332.1,
+    "min_libre_gb": 60.0
+  },
+  "identidad": {
+    "motor": "postgres",
+    "version": "18.6 (Debian 18.6-1.pgdg13+2)",
+    "puerto": 5432,
+    "contenedor_id": "ae34ce64ffb9",
+    "ip": "172.19.0.5",
+    "imagen": "postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81",
+    "limites": {
+      "memory_max": 1073741824,
+      "memory_swap_max": "0",
+      "cpu_max": "100000 100000"
+    },
+    "perfil": "PROFILE_C_SEVERE"
+  },
+  "ventana": {
+    "t_inicio_calentamiento": 1793537789.816642,
+    "t_inicio_medicion": 1793537849.816642,
+    "t_fin_medicion": 1793538149.816642,
+    "t_fin_recoleccion": 1793538159.065654,
+    "calentamiento_s": 60,
+    "medicion_s": 300,
+    "enfriamiento_s": 60,
+    "timeout_s": 300.0
+  },
+  "variante": {},
+  "consultas": {
+    "medidas_ok": 0,
+    "medidas_total": 4540,
+    "calentamiento": 792,
+    "en_vuelo_canceladas": 50,
+    "errores_por_tipo": {
+      "conexion": 5332
+    },
+    "clientes_que_reportaron": 50,
+    "cancelaciones_enviadas": -1
+  },
+  "temporales": {
+    "bytes": null,
+    "eventos": null,
+    "no_medido": "no se pudieron leer los contadores del motor (¿en recuperación tras OOM?)",
+    "escritura_disco_vm_bytes": 111151270.28509507,
+    "nota_escritura_disco_vm": "Node Exporter, todos los dispositivos de la VM, ventana de medición; comprobación cruzada, no exclusiva del motor",
+    "nota": "PostgreSQL: pg_stat_database.temp_bytes; Mongo: spillToDiskBytes + group.spilledDataStorageSize; desde el inicio de la medición hasta el fin de la recolección"
+  },
+  "cgroup": {
+    "inicio_medicion": {
+      "usage_usec": 59321143,
+      "user_usec": 13945611,
+      "system_usec": 45375532,
+      "nr_periods": 672,
+      "nr_throttled": 552,
+      "throttled_usec": 560596382,
+      "nr_bursts": 0,
+      "burst_usec": 0,
+      "low": 0,
+      "high": 0,
+      "max": 37696,
+      "oom": 97,
+      "oom_kill": 6,
+      "oom_group_kill": 0,
+      "memory_peak": 1073745920
+    },
+    "fin_medicion": {
+      "usage_usec": 335677514,
+      "user_usec": 87862780,
+      "system_usec": 247814734,
+      "nr_periods": 3694,
+      "nr_throttled": 3133,
+      "throttled_usec": 3184491069,
+      "nr_bursts": 0,
+      "burst_usec": 0,
+      "low": 0,
+      "high": 0,
+      "max": 189282,
+      "oom": 940,
+      "oom_kill": 41,
+      "oom_group_kill": 0,
+      "memory_peak": 1074008064
+    },
+    "final": {
+      "usage_usec": 336017821,
+      "user_usec": 87920089,
+      "system_usec": 248097732,
+      "nr_periods": 3705,
+      "nr_throttled": 3135,
+      "throttled_usec": 3185315687,
+      "nr_bursts": 0,
+      "burst_usec": 0,
+      "low": 0,
+      "high": 0,
+      "max": 189282,
+      "oom": 940,
+      "oom_kill": 41,
+      "oom_group_kill": 0,
+      "memory_peak": 1074008064
+    },
+    "oom_kill_delta": 35
+  },
+  "prometheus": {
+    "max_rss_bytes": 1012830208.0,
+    "throttled_increase_s": 2583.6231481357922
+  },
+  "contenedor_estado": {
+    "Running": true,
+    "OOMKilled": true,
+    "ExitCode": 0,
+    "StartedAt": "2026-11-01T12:56:07.713662397Z",
+    "FinishedAt": "0001-01-01T00:00:00Z"
+  },
+  "corriente_desconexiones": [],
+  "eventos": [
+    [
+      1793537774.816642,
+      "flush de caché"
+    ],
+    [
+      1793537852.0464642,
+      "inicio de medición"
+    ],
+    [
+      1793538155.624615,
+      "fin de medición"
+    ],
+    [
+      1793538159.2379959,
+      "enfriamiento"
+    ]
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "run_id": "1793561256_mongo_PROFILE_A_BASELINE_Q2_c10_r3",
+  "run_number": 3,
+  "intento": 1,
+  "fila_csv": {
+    "timestamp_epoch": 1793561256,
+    "engine": "mongo",
+    "profile": "PROFILE_A_BASELINE",
+    "query_id": "Q2",
+    "concurrency": 10,
+    "throughput_qps": 10.6033,
+    "latency_p50_ms": 912.123,
+    "latency_p95_ms": 1089.739,
+    "latency_p99_ms": 1116.25,
+    "cpu_throttled_seconds": 1733.795,
+    "max_rss_mb": 551.9,
+    "disk_spill": false,
+    "status": "ok",
+    "run_number": 3
+  },
+  "motivos_error": [],
+  "descartada": null,
+  "serie_1s_muestras": 301,
+  "archivos": [
+    "meta.json",
+    "latencias.csv",
+    "serie_1s.csv"
+  ],
+  "precondiciones": {
+    "corriente": true,
+    "mongodb_windows": "Stopped",
+    "libre_windows_gb": 327.6,
+    "libre_vm_gb": 1012.9,
+    "libre_efectivo_gb": 327.6,
+    "min_libre_gb": 60.0
+  },
+  "precondiciones_tras_recrear": {
+    "corriente": true,
+    "mongodb_windows": "Stopped",
+    "libre_windows_gb": 327.6,
+    "libre_vm_gb": 1012.9,
+    "libre_efectivo_gb": 327.6,
+    "min_libre_gb": 60.0
+  },
+  "identidad": {
+    "motor": "mongo",
+    "version": "9.0.4",
+    "puerto": 27018,
+    "contenedor_id": "293b786c04a2",
+    "hostname": "293b786c04a2",
+    "imagen": "mongo:9.0.4@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058",
+    "limites": {
+      "memory_max": 4294967296,
+      "memory_swap_max": "0",
+      "cpu_max": "400000 100000"
+    },
+    "perfil": "PROFILE_A_BASELINE"
+  },
+  "ventana": {
+    "t_inicio_calentamiento": 1793561196.322307,
+    "t_inicio_medicion": 1793561256.322307,
+    "t_fin_medicion": 1793561556.322307,
+    "t_fin_recoleccion": 1793561559.0930612,
+    "calentamiento_s": 60,
+    "medicion_s": 300,
+    "enfriamiento_s": 60,
+    "timeout_s": 300.0
+  },
+  "variante": {
+    "allowDiskUse": false
+  },
+  "consultas": {
+    "medidas_ok": 3181,
+    "medidas_total": 3181,
+    "calentamiento": 667,
+    "en_vuelo_canceladas": 10,
+    "errores_por_tipo": {},
+    "clientes_que_reportaron": 10,
+    "cancelaciones_enviadas": 3
+  },
+  "temporales": {
+    "bytes": 0,
+    "eventos": 0,
+    "no_medido": null,
+    "escritura_disco_vm_bytes": 25156393.04456017,
+    "nota_escritura_disco_vm": "Node Exporter, todos los dispositivos de la VM, ventana de medición; comprobación cruzada, no exclusiva del motor",
+    "nota": "PostgreSQL: pg_stat_database.temp_bytes; Mongo: spillToDiskBytes + group.spilledDataStorageSize; desde el inicio de la medición hasta el fin de la recolección"
+  },
+  "cgroup": {
+    "inicio_medicion": {
+      "usage_usec": 242620729,
+      "user_usec": 237758650,
+      "system_usec": 4862078,
+      "nr_periods": 698,
+      "nr_throttled": 601,
+      "throttled_usec": 342412311,
+      "nr_bursts": 0,
+      "burst_usec": 0,
+      "low": 0,
+      "high": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0,
+      "oom_group_kill": 0,
+      "memory_peak": 751460352
+    },
+    "fin_medicion": {
+      "usage_usec": 1442318542,
+      "user_usec": 1418900073,
+      "system_usec": 23418468,
+      "nr_periods": 3697,
+      "nr_throttled": 3600,
+      "throttled_usec": 2076206839,
+      "nr_bursts": 0,
+      "burst_usec": 0,
+      "low": 0,
+      "high": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0,
+      "oom_group_kill": 0,
+      "memory_peak": 796311552
+    },
+    "final": {
+      "usage_usec": 1442897510,
+      "user_usec": 1419440967,
+      "system_usec": 23456542,
+      "nr_periods": 3717,
+      "nr_throttled": 3602,
+      "throttled_usec": 2076573311,
+      "nr_bursts": 0,
+      "burst_usec": 0,
+      "low": 0,
+      "high": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0,
+      "oom_group_kill": 0,
+      "memory_peak": 796311552
+    },
+    "oom_kill_delta": 0
+  },
+  "prometheus": {
+    "max_rss_bytes": 578760704.0,
+    "throttled_increase_s": 1734.24076011064
+  },
+  "contenedor_estado": {
+    "Running": true,
+    "OOMKilled": false,
+    "ExitCode": 0,
+    "StartedAt": "2026-11-01T19:26:22.114015822Z",
+    "FinishedAt": "0001-01-01T00:00:00Z"
+  },
+  "corriente_desconexiones": [],
+  "eventos": [
+    [
+      1793561189.322307,
+      "flush de caché"
+    ],
+    [
+      1793561256.7361374,
+      "inicio de medición"
+    ],
+    [
+      1793561556.4727662,
+      "fin de medición"
+    ],
+    [
+      1793561559.249358,
+      "enfriamiento"
+    ]
+  ]
+}

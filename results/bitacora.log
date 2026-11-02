@@ -1,0 +1,241 @@
+2026-11-01T07:15:52Z | arranque del orquestador | rondas=3 celdas=38 semilla=20261101 limite=2026-11-01 21:00:00-06:00 respaldo=C:\benchmark-respaldo ntfy=no
+2026-11-01T07:15:52Z | respaldo validado | C:\benchmark-respaldo
+2026-11-01T07:16:09Z | revisión de entorno (arranque) | OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+2026-11-01T07:16:10Z | inicio corrida | mongo PROFILE_A_BASELINE Q1 c10 r1 intento 1
+2026-11-01T07:23:28Z | corrida terminada | 1793517445_mongo_PROFILE_A_BASELINE_Q1_c10_r1 status=ok
+2026-11-01T07:23:29Z | inicio corrida | mongo PROFILE_C_SEVERE Q2 c1 r1 intento 1
+2026-11-01T07:30:46Z | corrida terminada | 1793517883_mongo_PROFILE_C_SEVERE_Q2_c1_r1 status=ok
+2026-11-01T07:30:46Z | inicio corrida | postgres PROFILE_B_MEDIUM Q1 c10 r1 intento 1
+2026-11-01T07:38:05Z | corrida terminada | 1793518322_postgres_PROFILE_B_MEDIUM_Q1_c10_r1 status=spill
+2026-11-01T07:38:06Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c1 r1 intento 1
+2026-11-01T07:45:23Z | corrida terminada | 1793518760_postgres_PROFILE_C_SEVERE_Q1_c1_r1 status=spill
+2026-11-01T07:45:23Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c1 r1 intento 1
+2026-11-01T07:52:40Z | corrida terminada | 1793519197_mongo_PROFILE_C_SEVERE_Q1_c1_r1 status=ok
+2026-11-01T07:52:40Z | inicio corrida | mongo PROFILE_C_SEVERE Q2 c50 r1 intento 1
+2026-11-01T08:00:14Z | corrida terminada | 1793519644_mongo_PROFILE_C_SEVERE_Q2_c50_r1 status=ok
+2026-11-01T08:00:14Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c50 r1 intento 1
+2026-11-01T08:07:43Z | corrida terminada | 1793520098_mongo_PROFILE_A_BASELINE_Q2_c50_r1 status=ok
+2026-11-01T08:07:43Z | inicio corrida | postgres PROFILE_A_BASELINE Q2 c1 r1 intento 1
+2026-11-01T08:15:00Z | corrida terminada | 1793520537_postgres_PROFILE_A_BASELINE_Q2_c1_r1 status=ok
+2026-11-01T08:15:00Z | inicio corrida | postgres PROFILE_A_BASELINE Q1 c10 r1 intento 1
+2026-11-01T08:22:19Z | corrida terminada | 1793520976_postgres_PROFILE_A_BASELINE_Q1_c10_r1 status=spill
+2026-11-01T08:22:19Z | inicio corrida | mongo PROFILE_A_BASELINE Q1 c1 r1 intento 1
+2026-11-01T08:29:37Z | corrida terminada | 1793521414_mongo_PROFILE_A_BASELINE_Q1_c1_r1 status=ok
+2026-11-01T08:29:37Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c50 r1 intento 1
+2026-11-01T08:37:46Z | corrida terminada | 1793521861_postgres_PROFILE_C_SEVERE_Q1_c50_r1 status=oom
+2026-11-01T08:37:46Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c10 r1 intento 1
+2026-11-01T08:45:05Z | corrida terminada | 1793522342_mongo_PROFILE_A_BASELINE_Q2_c10_r1 status=ok
+2026-11-01T08:45:06Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c50 r1 intento 1
+2026-11-01T08:52:39Z | corrida terminada | 1793522789_mongo_PROFILE_C_SEVERE_Q1_c50_r1 status=ok
+2026-11-01T08:52:40Z | inicio corrida | mongo PROFILE_B_MEDIUM Q2 c50 r1 intento 1
+2026-11-01T09:00:09Z | corrida terminada | 1793523243_mongo_PROFILE_B_MEDIUM_Q2_c50_r1 status=ok
+2026-11-01T09:00:09Z | inicio corrida | postgres PROFILE_A_BASELINE Q1 c50 r1 intento 1
+2026-11-01T09:07:31Z | corrida terminada | 1793523693_postgres_PROFILE_A_BASELINE_Q1_c50_r1 status=spill
+2026-11-01T09:07:31Z | inicio corrida | mongo PROFILE_B_MEDIUM Q1 c10 r1 intento 1
+2026-11-01T09:14:51Z | corrida terminada | 1793524127_mongo_PROFILE_B_MEDIUM_Q1_c10_r1 status=ok
+2026-11-01T09:14:51Z | inicio corrida | mongo PROFILE_C_SEVERE Q2 c10 r1 intento 1
+2026-11-01T09:22:11Z | corrida terminada | 1793524567_mongo_PROFILE_C_SEVERE_Q2_c10_r1 status=ok
+2026-11-01T09:22:11Z | inicio corrida | postgres PROFILE_B_MEDIUM Q2 c1 r1 intento 1
+2026-11-01T09:29:28Z | corrida terminada | 1793525005_postgres_PROFILE_B_MEDIUM_Q2_c1_r1 status=ok
+2026-11-01T09:29:28Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c1 r1 intento 1
+2026-11-01T09:36:45Z | corrida terminada | 1793525442_mongo_PROFILE_A_BASELINE_Q2_c1_r1 status=ok
+2026-11-01T09:36:45Z | inicio corrida | postgres PROFILE_A_BASELINE Q2 c50 r1 intento 1
+2026-11-01T09:44:13Z | corrida terminada | 1793525889_postgres_PROFILE_A_BASELINE_Q2_c50_r1 status=ok
+2026-11-01T09:44:13Z | inicio corrida | mongo PROFILE_A_BASELINE Q1 c50 r1 intento 1
+2026-11-01T09:51:42Z | corrida terminada | 1793526337_mongo_PROFILE_A_BASELINE_Q1_c50_r1 status=ok
+2026-11-01T09:51:42Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c10 r1 intento 1
+2026-11-01T09:59:01Z | corrida terminada | 1793526778_mongo_PROFILE_C_SEVERE_Q1_c10_r1 status=ok
+2026-11-01T09:59:02Z | inicio corrida | postgres PROFILE_B_MEDIUM Q1 c50 r1 intento 1
+2026-11-01T10:06:48Z | corrida terminada | 1793527226_postgres_PROFILE_B_MEDIUM_Q1_c50_r1 status=oom
+2026-11-01T10:06:48Z | inicio corrida | postgres PROFILE_B_MEDIUM Q1 c1 r1 intento 1
+2026-11-01T10:14:05Z | corrida terminada | 1793527682_postgres_PROFILE_B_MEDIUM_Q1_c1_r1 status=spill
+2026-11-01T10:14:05Z | inicio corrida | postgres PROFILE_C_SEVERE Q2_RELAXED c50 r1 intento 1
+2026-11-01T10:21:36Z | corrida terminada | 1793528129_postgres_PROFILE_C_SEVERE_Q2_RELAXED_c50_r1 status=ok
+2026-11-01T10:21:36Z | inicio corrida | mongo PROFILE_B_MEDIUM Q2 c10 r1 intento 1
+2026-11-01T10:28:56Z | corrida terminada | 1793528572_mongo_PROFILE_B_MEDIUM_Q2_c10_r1 status=ok
+2026-11-01T10:28:56Z | inicio corrida | postgres PROFILE_A_BASELINE Q1 c1 r1 intento 1
+2026-11-01T10:36:13Z | corrida terminada | 1793529010_postgres_PROFILE_A_BASELINE_Q1_c1_r1 status=spill
+2026-11-01T10:36:13Z | inicio corrida | postgres PROFILE_B_MEDIUM Q2 c50 r1 intento 1
+2026-11-01T10:43:41Z | corrida terminada | 1793529457_postgres_PROFILE_B_MEDIUM_Q2_c50_r1 status=ok
+2026-11-01T10:43:42Z | inicio corrida | postgres PROFILE_A_BASELINE Q2 c10 r1 intento 1
+2026-11-01T10:51:00Z | corrida terminada | 1793529897_postgres_PROFILE_A_BASELINE_Q2_c10_r1 status=ok
+2026-11-01T10:51:01Z | inicio corrida | mongo PROFILE_B_MEDIUM Q1 c1 r1 intento 1
+2026-11-01T10:58:18Z | corrida terminada | 1793530335_mongo_PROFILE_B_MEDIUM_Q1_c1_r1 status=ok
+2026-11-01T10:58:19Z | inicio corrida | mongo PROFILE_B_MEDIUM Q2 c1 r1 intento 1
+2026-11-01T11:05:35Z | corrida terminada | 1793530772_mongo_PROFILE_B_MEDIUM_Q2_c1_r1 status=ok
+2026-11-01T11:05:36Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c10 r1 intento 1
+2026-11-01T11:12:56Z | corrida terminada | 1793531211_postgres_PROFILE_C_SEVERE_Q1_c10_r1 status=spill
+2026-11-01T11:12:56Z | inicio corrida | mongo PROFILE_C_SEVERE Q2_RELAXED c50 r1 intento 1
+2026-11-01T11:20:30Z | corrida terminada | 1793531660_mongo_PROFILE_C_SEVERE_Q2_RELAXED_c50_r1 status=ok
+2026-11-01T11:20:30Z | inicio corrida | postgres PROFILE_C_SEVERE Q2 c10 r1 intento 1
+2026-11-01T11:27:49Z | corrida terminada | 1793532106_postgres_PROFILE_C_SEVERE_Q2_c10_r1 status=ok
+2026-11-01T11:27:49Z | inicio corrida | postgres PROFILE_C_SEVERE Q2 c50 r1 intento 1
+2026-11-01T11:35:19Z | corrida terminada | 1793532553_postgres_PROFILE_C_SEVERE_Q2_c50_r1 status=ok
+2026-11-01T11:35:19Z | inicio corrida | postgres PROFILE_B_MEDIUM Q2 c10 r1 intento 1
+2026-11-01T11:42:38Z | corrida terminada | 1793532995_postgres_PROFILE_B_MEDIUM_Q2_c10_r1 status=ok
+2026-11-01T11:42:39Z | inicio corrida | mongo PROFILE_B_MEDIUM Q1 c50 r1 intento 1
+2026-11-01T11:50:09Z | corrida terminada | 1793533443_mongo_PROFILE_B_MEDIUM_Q1_c50_r1 status=ok
+2026-11-01T11:50:09Z | inicio corrida | postgres PROFILE_C_SEVERE Q2 c1 r1 intento 1
+2026-11-01T11:57:26Z | corrida terminada | 1793533883_postgres_PROFILE_C_SEVERE_Q2_c1_r1 status=ok
+2026-11-01T11:57:26Z | ronda terminada | ronda 1
+2026-11-01T11:57:28Z | respaldo | C:\benchmark-respaldo\20261101T115726Z_results_ronda_01 (204 archivos); copia verificada
+2026-11-01T11:57:28Z | inicio corrida | postgres PROFILE_C_SEVERE Q2 c1 r2 intento 1
+2026-11-01T12:04:45Z | corrida terminada | 1793534322_postgres_PROFILE_C_SEVERE_Q2_c1_r2 status=ok
+2026-11-01T12:04:45Z | inicio corrida | mongo PROFILE_C_SEVERE Q2_RELAXED c50 r2 intento 1
+2026-11-01T12:12:18Z | corrida terminada | 1793534769_mongo_PROFILE_C_SEVERE_Q2_RELAXED_c50_r2 status=ok
+2026-11-01T12:12:19Z | inicio corrida | postgres PROFILE_A_BASELINE Q2 c1 r2 intento 1
+2026-11-01T12:19:35Z | corrida terminada | 1793535213_postgres_PROFILE_A_BASELINE_Q2_c1_r2 status=ok
+2026-11-01T12:19:35Z | inicio corrida | mongo PROFILE_B_MEDIUM Q1 c1 r2 intento 1
+2026-11-01T12:26:53Z | corrida terminada | 1793535650_mongo_PROFILE_B_MEDIUM_Q1_c1_r2 status=ok
+2026-11-01T12:26:53Z | inicio corrida | mongo PROFILE_A_BASELINE Q1 c10 r2 intento 1
+2026-11-01T12:34:12Z | corrida terminada | 1793536089_mongo_PROFILE_A_BASELINE_Q1_c10_r2 status=ok
+2026-11-01T12:34:13Z | inicio corrida | postgres PROFILE_B_MEDIUM Q2 c10 r2 intento 1
+2026-11-01T12:41:31Z | corrida terminada | 1793536528_postgres_PROFILE_B_MEDIUM_Q2_c10_r2 status=ok
+2026-11-01T12:41:32Z | inicio corrida | postgres PROFILE_B_MEDIUM Q1 c1 r2 intento 1
+2026-11-01T12:48:48Z | corrida terminada | 1793536966_postgres_PROFILE_B_MEDIUM_Q1_c1_r2 status=spill
+2026-11-01T12:48:49Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c1 r2 intento 1
+2026-11-01T12:56:05Z | corrida terminada | 1793537403_postgres_PROFILE_C_SEVERE_Q1_c1_r2 status=spill
+2026-11-01T12:56:06Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c50 r2 intento 1
+2026-11-01T13:03:39Z | corrida terminada | 1793537849_postgres_PROFILE_C_SEVERE_Q1_c50_r2 status=oom
+2026-11-01T13:03:39Z | inicio corrida | postgres PROFILE_B_MEDIUM Q2 c1 r2 intento 1
+2026-11-01T13:10:56Z | corrida terminada | 1793538293_postgres_PROFILE_B_MEDIUM_Q2_c1_r2 status=ok
+2026-11-01T13:10:56Z | inicio corrida | mongo PROFILE_B_MEDIUM Q1 c50 r2 intento 1
+2026-11-01T13:18:26Z | corrida terminada | 1793538740_mongo_PROFILE_B_MEDIUM_Q1_c50_r2 status=ok
+2026-11-01T13:18:26Z | inicio corrida | postgres PROFILE_C_SEVERE Q2 c10 r2 intento 1
+2026-11-01T13:25:47Z | corrida terminada | 1793539182_postgres_PROFILE_C_SEVERE_Q2_c10_r2 status=ok
+2026-11-01T13:25:47Z | inicio corrida | mongo PROFILE_C_SEVERE Q2 c1 r2 intento 1
+2026-11-01T13:33:04Z | corrida terminada | 1793539621_mongo_PROFILE_C_SEVERE_Q2_c1_r2 status=ok
+2026-11-01T13:33:05Z | inicio corrida | postgres PROFILE_A_BASELINE Q1 c1 r2 intento 1
+2026-11-01T13:40:21Z | corrida terminada | 1793540058_postgres_PROFILE_A_BASELINE_Q1_c1_r2 status=spill
+2026-11-01T13:40:21Z | inicio corrida | mongo PROFILE_A_BASELINE Q1 c1 r2 intento 1
+2026-11-01T13:47:39Z | corrida terminada | 1793540496_mongo_PROFILE_A_BASELINE_Q1_c1_r2 status=ok
+2026-11-01T13:47:39Z | inicio corrida | postgres PROFILE_C_SEVERE Q2_RELAXED c50 r2 intento 1
+2026-11-01T13:55:10Z | corrida terminada | 1793540943_postgres_PROFILE_C_SEVERE_Q2_RELAXED_c50_r2 status=ok
+2026-11-01T13:55:10Z | inicio corrida | mongo PROFILE_A_BASELINE Q1 c50 r2 intento 1
+2026-11-01T14:02:39Z | corrida terminada | 1793541394_mongo_PROFILE_A_BASELINE_Q1_c50_r2 status=ok
+2026-11-01T14:02:39Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c50 r2 intento 1
+2026-11-01T14:10:07Z | corrida terminada | 1793541843_mongo_PROFILE_A_BASELINE_Q2_c50_r2 status=ok
+2026-11-01T14:10:08Z | inicio corrida | mongo PROFILE_B_MEDIUM Q1 c10 r2 intento 1
+2026-11-01T14:17:27Z | corrida terminada | 1793542284_mongo_PROFILE_B_MEDIUM_Q1_c10_r2 status=ok
+2026-11-01T14:17:27Z | inicio corrida | postgres PROFILE_C_SEVERE Q2 c50 r2 intento 1
+2026-11-01T14:24:55Z | corrida terminada | 1793542731_postgres_PROFILE_C_SEVERE_Q2_c50_r2 status=ok
+2026-11-01T14:24:56Z | inicio corrida | postgres PROFILE_B_MEDIUM Q1 c10 r2 intento 1
+2026-11-01T14:32:15Z | corrida terminada | 1793543172_postgres_PROFILE_B_MEDIUM_Q1_c10_r2 status=spill
+2026-11-01T14:32:16Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c50 r2 intento 1
+2026-11-01T14:39:53Z | corrida terminada | 1793543620_mongo_PROFILE_C_SEVERE_Q1_c50_r2 status=ok
+2026-11-01T14:39:53Z | inicio corrida | postgres PROFILE_A_BASELINE Q2 c10 r2 intento 1
+2026-11-01T14:47:11Z | corrida terminada | 1793544069_postgres_PROFILE_A_BASELINE_Q2_c10_r2 status=ok
+2026-11-01T14:47:12Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c1 r2 intento 1
+2026-11-01T14:54:29Z | corrida terminada | 1793544506_mongo_PROFILE_C_SEVERE_Q1_c1_r2 status=ok
+2026-11-01T14:54:30Z | inicio corrida | postgres PROFILE_B_MEDIUM Q2 c50 r2 intento 1
+2026-11-01T15:01:58Z | corrida terminada | 1793544953_postgres_PROFILE_B_MEDIUM_Q2_c50_r2 status=ok
+2026-11-01T15:01:59Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c1 r2 intento 1
+2026-11-01T15:09:16Z | corrida terminada | 1793545393_mongo_PROFILE_A_BASELINE_Q2_c1_r2 status=ok
+2026-11-01T15:09:16Z | inicio corrida | postgres PROFILE_A_BASELINE Q2 c50 r2 intento 1
+2026-11-01T15:16:44Z | corrida terminada | 1793545840_postgres_PROFILE_A_BASELINE_Q2_c50_r2 status=ok
+2026-11-01T15:16:44Z | inicio corrida | mongo PROFILE_B_MEDIUM Q2 c10 r2 intento 1
+2026-11-01T15:24:04Z | corrida terminada | 1793546280_mongo_PROFILE_B_MEDIUM_Q2_c10_r2 status=ok
+2026-11-01T15:24:04Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c10 r2 intento 1
+2026-11-01T15:31:24Z | corrida terminada | 1793546720_postgres_PROFILE_C_SEVERE_Q1_c10_r2 status=spill
+2026-11-01T15:31:24Z | inicio corrida | mongo PROFILE_C_SEVERE Q2 c50 r2 intento 1
+2026-11-01T15:38:58Z | corrida terminada | 1793547169_mongo_PROFILE_C_SEVERE_Q2_c50_r2 status=ok
+2026-11-01T15:38:58Z | inicio corrida | mongo PROFILE_B_MEDIUM Q2 c50 r2 intento 1
+2026-11-01T15:46:28Z | corrida terminada | 1793547622_mongo_PROFILE_B_MEDIUM_Q2_c50_r2 status=ok
+2026-11-01T15:46:29Z | inicio corrida | postgres PROFILE_A_BASELINE Q1 c10 r2 intento 1
+2026-11-01T15:53:50Z | corrida terminada | 1793548065_postgres_PROFILE_A_BASELINE_Q1_c10_r2 status=spill
+2026-11-01T15:53:50Z | inicio corrida | mongo PROFILE_C_SEVERE Q2 c10 r2 intento 1
+2026-11-01T16:01:10Z | corrida terminada | 1793548507_mongo_PROFILE_C_SEVERE_Q2_c10_r2 status=ok
+2026-11-01T16:01:11Z | inicio corrida | mongo PROFILE_B_MEDIUM Q2 c1 r2 intento 1
+2026-11-01T16:08:27Z | corrida terminada | 1793548945_mongo_PROFILE_B_MEDIUM_Q2_c1_r2 status=ok
+2026-11-01T16:08:28Z | inicio corrida | postgres PROFILE_A_BASELINE Q1 c50 r2 intento 1
+2026-11-01T16:15:56Z | corrida terminada | 1793549392_postgres_PROFILE_A_BASELINE_Q1_c50_r2 status=spill
+2026-11-01T16:15:56Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c10 r2 intento 1
+2026-11-01T16:23:16Z | corrida terminada | 1793549833_mongo_PROFILE_A_BASELINE_Q2_c10_r2 status=ok
+2026-11-01T16:23:16Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c10 r2 intento 1
+2026-11-01T16:30:37Z | corrida terminada | 1793550272_mongo_PROFILE_C_SEVERE_Q1_c10_r2 status=ok
+2026-11-01T16:30:37Z | inicio corrida | postgres PROFILE_B_MEDIUM Q1 c50 r2 intento 1
+2026-11-01T16:38:05Z | corrida terminada | 1793550721_postgres_PROFILE_B_MEDIUM_Q1_c50_r2 status=oom
+2026-11-01T16:38:06Z | ronda terminada | ronda 2
+2026-11-01T16:38:09Z | respaldo | C:\benchmark-respaldo\20261101T163806Z_results_ronda_02 (323 archivos); copia verificada
+2026-11-01T16:38:10Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c1 r3 intento 1
+2026-11-01T16:45:26Z | corrida terminada | 1793551164_postgres_PROFILE_C_SEVERE_Q1_c1_r3 status=spill
+2026-11-01T16:45:27Z | inicio corrida | mongo PROFILE_B_MEDIUM Q1 c10 r3 intento 1
+2026-11-01T16:52:46Z | corrida terminada | 1793551603_mongo_PROFILE_B_MEDIUM_Q1_c10_r3 status=ok
+2026-11-01T16:52:47Z | inicio corrida | mongo PROFILE_B_MEDIUM Q1 c1 r3 intento 1
+2026-11-01T17:00:04Z | corrida terminada | 1793552041_mongo_PROFILE_B_MEDIUM_Q1_c1_r3 status=ok
+2026-11-01T17:00:04Z | inicio corrida | postgres PROFILE_A_BASELINE Q2 c10 r3 intento 1
+2026-11-01T17:07:23Z | corrida terminada | 1793552480_postgres_PROFILE_A_BASELINE_Q2_c10_r3 status=ok
+2026-11-01T17:07:23Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c50 r3 intento 1
+2026-11-01T17:14:52Z | corrida terminada | 1793552928_mongo_PROFILE_A_BASELINE_Q2_c50_r3 status=ok
+2026-11-01T17:14:52Z | inicio corrida | postgres PROFILE_B_MEDIUM Q2 c50 r3 intento 1
+2026-11-01T17:22:21Z | corrida terminada | 1793553376_postgres_PROFILE_B_MEDIUM_Q2_c50_r3 status=ok
+2026-11-01T17:22:21Z | inicio corrida | postgres PROFILE_B_MEDIUM Q2 c10 r3 intento 1
+2026-11-01T17:29:40Z | corrida terminada | 1793553817_postgres_PROFILE_B_MEDIUM_Q2_c10_r3 status=ok
+2026-11-01T17:29:41Z | inicio corrida | postgres PROFILE_A_BASELINE Q1 c50 r3 intento 1
+2026-11-01T17:37:08Z | corrida terminada | 1793554264_postgres_PROFILE_A_BASELINE_Q1_c50_r3 status=spill
+2026-11-01T17:37:09Z | inicio corrida | postgres PROFILE_A_BASELINE Q1 c10 r3 intento 1
+2026-11-01T17:44:29Z | corrida terminada | 1793554705_postgres_PROFILE_A_BASELINE_Q1_c10_r3 status=spill
+2026-11-01T17:44:29Z | inicio corrida | postgres PROFILE_A_BASELINE Q2 c50 r3 intento 1
+2026-11-01T17:51:57Z | corrida terminada | 1793555153_postgres_PROFILE_A_BASELINE_Q2_c50_r3 status=ok
+2026-11-01T17:51:58Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c50 r3 intento 1
+2026-11-01T17:59:35Z | corrida terminada | 1793555602_mongo_PROFILE_C_SEVERE_Q1_c50_r3 status=ok
+2026-11-01T17:59:35Z | pausa | archivo C:\Users\chapp\proyectos\benchmark\results\PAUSAR
+2026-11-01T18:49:12Z | reanudar | se borró PAUSAR; revisando el entorno
+2026-11-01T18:49:30Z | revisión de entorno (reanudar) | OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+2026-11-01T18:49:30Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c1 r3 intento 1
+2026-11-01T18:56:48Z | corrida terminada | 1793559045_mongo_PROFILE_C_SEVERE_Q1_c1_r3 status=ok
+2026-11-01T18:56:48Z | inicio corrida | mongo PROFILE_C_SEVERE Q2 c10 r3 intento 1
+2026-11-01T19:04:08Z | corrida terminada | 1793559484_mongo_PROFILE_C_SEVERE_Q2_c10_r3 status=ok
+2026-11-01T19:04:08Z | inicio corrida | mongo PROFILE_C_SEVERE Q2_RELAXED c50 r3 intento 1
+2026-11-01T19:11:42Z | corrida terminada | 1793559932_mongo_PROFILE_C_SEVERE_Q2_RELAXED_c50_r3 status=ok
+2026-11-01T19:11:42Z | inicio corrida | postgres PROFILE_A_BASELINE Q1 c1 r3 intento 1
+2026-11-01T19:18:59Z | corrida terminada | 1793560376_postgres_PROFILE_A_BASELINE_Q1_c1_r3 status=spill
+2026-11-01T19:19:00Z | inicio corrida | mongo PROFILE_A_BASELINE Q1 c10 r3 intento 1
+2026-11-01T19:26:19Z | corrida terminada | 1793560816_mongo_PROFILE_A_BASELINE_Q1_c10_r3 status=ok
+2026-11-01T19:26:20Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c10 r3 intento 1
+2026-11-01T19:33:39Z | corrida terminada | 1793561256_mongo_PROFILE_A_BASELINE_Q2_c10_r3 status=ok
+2026-11-01T19:33:39Z | inicio corrida | mongo PROFILE_B_MEDIUM Q2 c50 r3 intento 1
+2026-11-01T19:41:09Z | corrida terminada | 1793561704_mongo_PROFILE_B_MEDIUM_Q2_c50_r3 status=ok
+2026-11-01T19:41:09Z | inicio corrida | postgres PROFILE_C_SEVERE Q2 c50 r3 intento 1
+2026-11-01T19:48:41Z | corrida terminada | 1793562153_postgres_PROFILE_C_SEVERE_Q2_c50_r3 status=ok
+2026-11-01T19:48:41Z | inicio corrida | postgres PROFILE_C_SEVERE Q2 c1 r3 intento 1
+2026-11-01T19:55:58Z | corrida terminada | 1793562595_postgres_PROFILE_C_SEVERE_Q2_c1_r3 status=ok
+2026-11-01T19:55:58Z | inicio corrida | mongo PROFILE_C_SEVERE Q1 c10 r3 intento 1
+2026-11-01T20:03:18Z | corrida terminada | 1793563034_mongo_PROFILE_C_SEVERE_Q1_c10_r3 status=ok
+2026-11-01T20:03:19Z | inicio corrida | postgres PROFILE_B_MEDIUM Q1 c50 r3 intento 1
+2026-11-01T20:11:49Z | corrida terminada | 1793563483_postgres_PROFILE_B_MEDIUM_Q1_c50_r3 status=oom
+2026-11-01T20:11:50Z | inicio corrida | mongo PROFILE_B_MEDIUM Q1 c50 r3 intento 1
+2026-11-01T20:19:20Z | corrida terminada | 1793563994_mongo_PROFILE_B_MEDIUM_Q1_c50_r3 status=ok
+2026-11-01T20:19:20Z | inicio corrida | postgres PROFILE_A_BASELINE Q2 c1 r3 intento 1
+2026-11-01T20:26:37Z | corrida terminada | 1793564435_postgres_PROFILE_A_BASELINE_Q2_c1_r3 status=ok
+2026-11-01T20:26:38Z | inicio corrida | mongo PROFILE_C_SEVERE Q2 c50 r3 intento 1
+2026-11-01T20:34:10Z | corrida terminada | 1793564882_mongo_PROFILE_C_SEVERE_Q2_c50_r3 status=ok
+2026-11-01T20:34:11Z | inicio corrida | mongo PROFILE_B_MEDIUM Q2 c1 r3 intento 1
+2026-11-01T20:41:27Z | corrida terminada | 1793565325_mongo_PROFILE_B_MEDIUM_Q2_c1_r3 status=ok
+2026-11-01T20:41:28Z | inicio corrida | mongo PROFILE_A_BASELINE Q1 c50 r3 intento 1
+2026-11-01T20:48:56Z | corrida terminada | 1793565772_mongo_PROFILE_A_BASELINE_Q1_c50_r3 status=ok
+2026-11-01T20:48:56Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c10 r3 intento 1
+2026-11-01T20:56:17Z | corrida terminada | 1793566213_postgres_PROFILE_C_SEVERE_Q1_c10_r3 status=spill
+2026-11-01T20:56:17Z | inicio corrida | postgres PROFILE_B_MEDIUM Q2 c1 r3 intento 1
+2026-11-01T21:03:34Z | corrida terminada | 1793566651_postgres_PROFILE_B_MEDIUM_Q2_c1_r3 status=ok
+2026-11-01T21:03:34Z | inicio corrida | mongo PROFILE_C_SEVERE Q2 c1 r3 intento 1
+2026-11-01T21:10:52Z | corrida terminada | 1793567089_mongo_PROFILE_C_SEVERE_Q2_c1_r3 status=ok
+2026-11-01T21:10:52Z | inicio corrida | mongo PROFILE_A_BASELINE Q1 c1 r3 intento 1
+2026-11-01T21:18:09Z | corrida terminada | 1793567526_mongo_PROFILE_A_BASELINE_Q1_c1_r3 status=ok
+2026-11-01T21:18:10Z | inicio corrida | postgres PROFILE_B_MEDIUM Q1 c10 r3 intento 1
+2026-11-01T21:25:29Z | corrida terminada | 1793567965_postgres_PROFILE_B_MEDIUM_Q1_c10_r3 status=spill
+2026-11-01T21:25:30Z | inicio corrida | postgres PROFILE_C_SEVERE Q1 c50 r3 intento 1
+2026-11-01T21:33:02Z | corrida terminada | 1793568413_postgres_PROFILE_C_SEVERE_Q1_c50_r3 status=oom
+2026-11-01T21:33:02Z | inicio corrida | postgres PROFILE_C_SEVERE Q2 c10 r3 intento 1
+2026-11-01T21:40:22Z | corrida terminada | 1793568858_postgres_PROFILE_C_SEVERE_Q2_c10_r3 status=ok
+2026-11-01T21:40:22Z | inicio corrida | postgres PROFILE_B_MEDIUM Q1 c1 r3 intento 1
+2026-11-01T21:47:39Z | corrida terminada | 1793569296_postgres_PROFILE_B_MEDIUM_Q1_c1_r3 status=spill
+2026-11-01T21:47:39Z | inicio corrida | postgres PROFILE_C_SEVERE Q2_RELAXED c50 r3 intento 1
+2026-11-01T21:55:11Z | corrida terminada | 1793569743_postgres_PROFILE_C_SEVERE_Q2_RELAXED_c50_r3 status=ok
+2026-11-01T21:55:11Z | inicio corrida | mongo PROFILE_B_MEDIUM Q2 c10 r3 intento 1
+2026-11-01T22:02:31Z | corrida terminada | 1793570188_mongo_PROFILE_B_MEDIUM_Q2_c10_r3 status=ok
+2026-11-01T22:02:32Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c1 r3 intento 1
+2026-11-01T22:09:49Z | corrida terminada | 1793570626_mongo_PROFILE_A_BASELINE_Q2_c1_r3 status=ok
+2026-11-01T22:09:49Z | ronda terminada | ronda 3
+2026-11-01T22:09:53Z | respaldo | C:\benchmark-respaldo\20261101T220949Z_results_ronda_03 (443 archivos); copia verificada
+2026-11-01T22:09:53Z | fin del orquestador | terminado

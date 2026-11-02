@@ -1,0 +1,14 @@
+Actualizado: 2026-11-01 00:34:51 CST
+Estado: terminado
+Carpeta de resultados: C:\Users\chapp\proyectos\benchmark\results\piloto_pausa
+Hora límite: sin límite
+Duración estimada por corrida: 0.9 min
+Ronda 1: 1/1 con fila, 0 con reintento pendiente, 0 agotadas
+Ronda 2: 1/1 con fila, 0 con reintento pendiente, 0 agotadas
+Ronda 3: 1/1 con fila, 0 con reintento pendiente, 0 agotadas
+Última corrida: 1793514868_mongo_PROFILE_A_BASELINE_Q2_c1_r3 status=ok descartada=None duración=0.7 min (2026-11-01 00:34:50 CST)
+AVISO: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+
+Pausar entre corridas:  crear el archivo C:\Users\chapp\proyectos\benchmark\results\piloto_pausa\PAUSAR
+Reanudar:               borrar C:\Users\chapp\proyectos\benchmark\results\piloto_pausa\PAUSAR
+Detener entre corridas: crear el archivo C:\Users\chapp\proyectos\benchmark\results\piloto_pausa\DETENER

@@ -1,0 +1,80 @@
+{
+  "momento": "arranque",
+  "avisos": [
+    "No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)"
+  ],
+  "suspension": {
+    "valores": {
+      "suspender_tras_s": 0,
+      "hibernar_tras_s": 0,
+      "accion_tapa": null
+    },
+    "problemas": [],
+    "no_comprobado": [
+      "accion_tapa"
+    ],
+    "comandos_correccion": [
+      "powercfg /change standby-timeout-ac 0",
+      "powercfg /change hibernate-timeout-ac 0",
+      "powercfg /setacvalueindex SCHEME_CURRENT SUB_BUTTONS LIDACTION 0",
+      "powercfg /setactive SCHEME_CURRENT"
+    ]
+  },
+  "plan_energia": "GUID de plan de energía: 381b4222-f694-41f0-9685-ff5bb260df2e  (Equilibrado)",
+  "modo_energia": {
+    "plan_guid": "381b4222-f694-41f0-9685-ff5bb260df2e",
+    "modo_ac_guid": "ded574b5-45a0-4f42-8737-46345c09c238",
+    "modo_ac": "Máximo rendimiento",
+    "maximo_rendimiento": true
+  },
+  "mongo": {
+    "identidad": {
+      "motor": "mongo",
+      "version": "9.0.4",
+      "puerto": 27018,
+      "contenedor_id": "74cb88326576",
+      "hostname": "74cb88326576",
+      "imagen": "mongo:9.0.4@sha256:452bdaf2127b8ff851e31410a267809b9829eded219979f2210e7c7efb85a058",
+      "limites": {
+        "memory_max": 1073741824,
+        "memory_swap_max": "0",
+        "cpu_max": "100000 100000"
+      },
+      "perfil": "PROFILE_C_SEVERE"
+    },
+    "precondiciones": {
+      "corriente": true,
+      "mongodb_windows": "Stopped",
+      "libre_windows_gb": 395.4,
+      "libre_vm_gb": 1013.4,
+      "libre_efectivo_gb": 395.4,
+      "min_libre_gb": 60.0
+    },
+    "documentos": 500000
+  },
+  "postgres": {
+    "identidad": {
+      "motor": "postgres",
+      "version": "18.6 (Debian 18.6-1.pgdg13+2)",
+      "puerto": 5432,
+      "contenedor_id": "9dedecf6c309",
+      "ip": "172.19.0.5",
+      "imagen": "postgres:18.6@sha256:3a4264520e121176619f54ff867d12774bc81e95e7b84db58d63bccdb6144b81",
+      "limites": {
+        "memory_max": 1073741824,
+        "memory_swap_max": "0",
+        "cpu_max": "100000 100000"
+      },
+      "perfil": "PROFILE_C_SEVERE"
+    },
+    "precondiciones": {
+      "corriente": true,
+      "mongodb_windows": "Stopped",
+      "libre_windows_gb": 395.4,
+      "libre_vm_gb": 1013.4,
+      "libre_efectivo_gb": 395.4,
+      "min_libre_gb": 60.0
+    },
+    "documentos": 500000
+  }
+}

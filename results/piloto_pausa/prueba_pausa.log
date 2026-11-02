@@ -1,0 +1,20 @@
+2026-11-01 00:30:53 CST | == INICIO de la prueba de pausa
+2026-11-01 00:30:53 CST | lanzamiento 1: C:\Users\chapp\proyectos\benchmark\.venv\Scripts\python.exe C:\Users\chapp\proyectos\benchmark\runner\orquestador.py --results-dir C:\Users\chapp\proyectos\benchmark\results\piloto_pausa --rondas 3 --celdas mongo:A:Q2:1 --warmup 5 --measure 15 --cooldown 5 --respaldo C:\benchmark-respaldo
+2026-11-01 00:31:11 CST | OK: ronda 1 corriendo (18 s)
+2026-11-01 00:31:11 CST | PAUSAR creado durante la ronda 1
+2026-11-01 00:31:53 CST | OK: estado 'en pausa' (42 s)
+2026-11-01 00:31:53 CST | OK: 1 fila en el CSV al entrar en pausa
+2026-11-01 00:32:38 CST | OK: 45 s en pausa sin iniciar corridas
+2026-11-01 00:32:38 CST | PAUSAR borrado
+2026-11-01 00:32:52 CST | OK: bitácora 'reanudar' (14 s)
+2026-11-01 00:33:10 CST | OK: revisión de entorno al reanudar (18 s)
+2026-11-01 00:33:10 CST | OK: ronda 2 corriendo (0 s)
+2026-11-01 00:33:10 CST | DETENER creado durante la ronda 2
+2026-11-01 00:33:52 CST | OK: el orquestador termina solo (42 s)
+2026-11-01 00:33:52 CST | OK: detenido con las rondas 1 y 2 terminadas; DETENER borrado
+2026-11-01 00:33:52 CST | lanzamiento 2: C:\Users\chapp\proyectos\benchmark\.venv\Scripts\python.exe C:\Users\chapp\proyectos\benchmark\runner\orquestador.py --results-dir C:\Users\chapp\proyectos\benchmark\results\piloto_pausa --rondas 3 --celdas mongo:A:Q2:1 --warmup 5 --measure 15 --cooldown 5 --respaldo C:\benchmark-respaldo
+2026-11-01 00:34:52 CST | OK: el relanzamiento termina (60 s)
+2026-11-01 00:34:52 CST | OK: el relanzamiento corrió solo la ronda 3; CSV con rondas 1, 2 y 3 sin duplicados
+2026-11-01 00:34:52 CST | OK: sin descartes
+2026-11-01 00:34:52 CST | OK: respaldos ['20261101T063152Z_piloto_pausa_ronda_01', '20261101T063351Z_piloto_pausa_ronda_02', '20261101T063450Z_piloto_pausa_ronda_03'] con manifiesto SHA-256 verificado
+2026-11-01 00:34:52 CST | == RESULTADO: PASA

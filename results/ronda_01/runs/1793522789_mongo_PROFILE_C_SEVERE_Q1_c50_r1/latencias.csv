@@ -1,0 +1,180 @@
+cliente,t_inicio_epoch,t_fin_epoch,latencia_ms,fase,estado,detalle
+0,1793522729.9767435,1793522848.8378081,118861.065,calentamiento,ok,
+0,1793522848.8378081,1793522953.2299948,104392.187,medicion,ok,
+0,1793522953.2299948,1793523070.2254772,116995.482,medicion,ok,
+0,1793523070.2254772,1793523094.9275835,24702.106,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+1,1793522729.9767435,1793522846.9375365,116960.793,calentamiento,ok,
+1,1793522846.9375365,1793522976.7291298,129791.593,medicion,ok,
+1,1793522976.7291298,1793523096.919945,120190.815,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+2,1793522729.9772544,1793522847.636626,117659.372,calentamiento,ok,
+2,1793522847.636626,1793522969.8317459,122195.12,medicion,ok,
+2,1793522969.8317459,1793523094.725605,124893.859,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+3,1793522729.9772544,1793522847.4341764,117456.922,calentamiento,ok,
+3,1793522847.4341764,1793522960.1334388,112699.262,medicion,ok,
+3,1793522960.1334388,1793523086.6261406,126492.702,medicion,ok,
+3,1793523086.6261406,1793523094.725605,8099.464,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+4,1793522729.9767435,1793522852.2351148,122258.371,calentamiento,ok,
+4,1793522852.2351148,1793522971.4284203,119193.305,medicion,ok,
+4,1793522971.4284203,1793523085.628715,114200.295,medicion,ok,
+4,1793523085.628715,1793523094.725605,9096.89,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+5,1793522729.9767435,1793522847.1354134,117158.67,calentamiento,ok,
+5,1793522847.1354134,1793522965.336086,118200.673,medicion,ok,
+5,1793522965.336086,1793523079.3264277,113990.342,medicion,ok,
+5,1793523079.3264277,1793523095.7253888,16398.961,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+6,1793522729.9767435,1793522850.037304,120060.56,calentamiento,ok,
+6,1793522850.037304,1793522966.529223,116491.919,medicion,ok,
+6,1793522966.529223,1793523074.225982,107696.759,medicion,ok,
+6,1793523074.225982,1793523095.4273734,21201.391,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+7,1793522729.9772544,1793522851.1367557,121159.501,calentamiento,ok,
+7,1793522851.1367557,1793522965.8308969,114694.141,medicion,ok,
+7,1793522965.8308969,1793523078.626207,112795.31,medicion,ok,
+7,1793523078.626207,1793523096.8244674,18198.26,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+8,1793522729.9767435,1793522846.4374464,116460.703,calentamiento,ok,
+8,1793522846.4374464,1793522984.5330727,138095.626,medicion,ok,
+8,1793522984.5330727,1793523096.425788,111892.715,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+9,1793522729.9772544,1793522848.3344617,118357.207,calentamiento,ok,
+9,1793522848.3344617,1793522964.5330737,116198.612,medicion,ok,
+9,1793522964.5330737,1793523083.8277154,119294.642,medicion,ok,
+9,1793523083.8277154,1793523096.7246459,12896.93,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+10,1793522729.9772544,1793522851.0362391,121058.985,calentamiento,ok,
+10,1793522851.0362391,1793522976.9319053,125895.666,medicion,ok,
+10,1793522976.9319053,1793523095.3253877,118393.482,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+11,1793522729.9767435,1793522848.2355704,118258.827,calentamiento,ok,
+11,1793522848.2355704,1793522957.3301277,109094.557,medicion,ok,
+11,1793522957.3301277,1793523078.8263583,121496.231,medicion,ok,
+11,1793523078.8269174,1793523096.0242894,17197.372,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+12,1793522729.9772544,1793522854.2340813,124256.827,calentamiento,ok,
+12,1793522854.2340813,1793522961.1336217,106899.54,medicion,ok,
+12,1793522961.1336217,1793523086.3269038,125193.282,medicion,ok,
+12,1793523086.3269038,1793523094.6251295,8298.226,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+13,1793522729.9772544,1793522850.1399977,120162.743,calentamiento,ok,
+13,1793522850.1399977,1793522980.9299743,130789.977,medicion,ok,
+13,1793522980.9299743,1793523094.9275835,113997.609,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+14,1793522729.9772544,1793522847.8369305,117859.676,calentamiento,ok,
+14,1793522847.8369305,1793522977.2305925,129393.662,medicion,ok,
+14,1793522977.2305925,1793523096.1269011,118896.309,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+15,1793522729.9772544,1793522846.8378441,116860.59,calentamiento,ok,
+15,1793522846.8378441,1793522954.7298346,107891.99,medicion,ok,
+15,1793522954.7298346,1793523070.0260441,115296.21,medicion,ok,
+15,1793523070.0260441,1793523095.5243034,25498.259,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+16,1793522729.9772544,1793522849.240905,119263.651,calentamiento,ok,
+16,1793522849.240905,1793522975.4297378,126188.833,medicion,ok,
+16,1793522975.4297378,1793523094.6251295,119195.392,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+17,1793522729.9767435,1793522848.2361054,118259.362,calentamiento,ok,
+17,1793522848.2361054,1793522972.0323882,123796.283,medicion,ok,
+17,1793522972.0323882,1793523088.4270086,116394.62,medicion,ok,
+17,1793523088.4270086,1793523096.919945,8492.936,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+18,1793522729.9772544,1793522846.938507,116961.253,calentamiento,ok,
+18,1793522846.938507,1793522958.331451,111392.944,medicion,ok,
+18,1793522958.331451,1793523081.3282037,122996.753,medicion,ok,
+18,1793523081.3282037,1793523094.8258264,13497.623,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+19,1793522729.9772544,1793522846.8378441,116860.59,calentamiento,ok,
+19,1793522846.8378441,1793522963.728726,116890.882,medicion,ok,
+19,1793522963.728726,1793523079.6260946,115897.369,medicion,ok,
+19,1793523079.6260946,1793523094.526371,14900.276,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+20,1793522729.9772544,1793522849.3376563,119360.402,calentamiento,ok,
+20,1793522849.3376563,1793522972.8260841,123488.428,medicion,ok,
+20,1793522972.8260841,1793523095.3248408,122498.757,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+21,1793522729.9767435,1793522846.6350605,116658.317,calentamiento,ok,
+21,1793522846.6350605,1793522969.3298364,122694.776,medicion,ok,
+21,1793522969.3298364,1793523090.1271281,120797.292,en_vuelo,ok,
+22,1793522729.9772544,1793522849.4374642,119460.21,calentamiento,ok,
+22,1793522849.4374642,1793522971.1284754,121691.011,medicion,ok,
+22,1793522971.1284754,1793523091.0249393,119896.464,en_vuelo,ok,
+23,1793522729.9767435,1793522850.4347575,120458.014,calentamiento,ok,
+23,1793522850.4347575,1793522962.6323302,112197.573,medicion,ok,
+23,1793522962.6323302,1793523081.3282037,118695.873,medicion,ok,
+23,1793523081.3282037,1793523096.9194276,15591.224,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+24,1793522729.9772544,1793522849.636481,119659.227,calentamiento,ok,
+24,1793522849.636481,1793522969.4320903,119795.609,medicion,ok,
+24,1793522969.4320903,1793523092.6265476,123194.457,en_vuelo,ok,
+25,1793522729.9767435,1793522846.8378441,116861.101,calentamiento,ok,
+25,1793522846.8378441,1793522963.1326518,116294.808,medicion,ok,
+25,1793522963.1326518,1793523092.6276045,129494.953,en_vuelo,ok,
+26,1793522729.9772544,1793522852.235649,122258.395,calentamiento,ok,
+26,1793522852.235649,1793522965.4311988,113195.55,medicion,ok,
+26,1793522965.4311988,1793523073.9247477,108493.549,medicion,ok,
+26,1793523073.9247477,1793523096.525952,22601.204,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+27,1793522729.9767435,1793522850.836142,120859.399,calentamiento,ok,
+27,1793522850.836142,1793522978.629838,127793.696,medicion,ok,
+27,1793522978.629838,1793523083.9254074,105295.569,medicion,ok,
+27,1793523083.9254074,1793523095.7253888,11799.981,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+28,1793522729.9772544,1793522846.8339095,116856.655,calentamiento,ok,
+28,1793522846.8339095,1793522966.130496,119296.587,medicion,ok,
+28,1793522966.130496,1793523081.527157,115396.661,medicion,ok,
+28,1793523081.527157,1793523096.9236128,15396.456,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+29,1793522729.9772544,1793522850.2341125,120256.858,calentamiento,ok,
+29,1793522850.2341125,1793522982.6278925,132393.78,medicion,ok,
+29,1793522982.6278925,1793523096.820405,114192.513,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+30,1793522729.9767435,1793522847.037094,117060.351,calentamiento,ok,
+30,1793522847.037094,1793522969.9315963,122894.502,medicion,ok,
+30,1793522969.9315963,1793523095.927698,125996.102,en_vuelo,ok,
+31,1793522729.9767435,1793522850.934181,120957.438,calentamiento,ok,
+31,1793522850.934181,1793522965.93238,114998.199,medicion,ok,
+31,1793522965.93238,1793523085.527019,119594.639,medicion,ok,
+31,1793523085.527019,1793523096.919945,11392.926,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+32,1793522729.9772544,1793522847.8361375,117858.883,calentamiento,ok,
+32,1793522847.8361375,1793522968.3248024,120488.665,medicion,ok,
+32,1793522968.3248024,1793523084.8267267,116501.924,medicion,ok,
+32,1793523084.8267267,1793523096.2235,11396.773,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+33,1793522729.9772544,1793522849.0362644,119059.01,calentamiento,ok,
+33,1793522849.0362644,1793522957.8293526,108793.088,medicion,ok,
+33,1793522957.8293526,1793523078.2260568,120396.704,medicion,ok,
+33,1793523078.2260568,1793523096.8276598,18601.603,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+34,1793522729.9772544,1793522847.037094,117059.84,calentamiento,ok,
+34,1793522847.037094,1793522952.032222,104995.128,medicion,ok,
+34,1793522952.032222,1793523069.5280974,117495.875,medicion,ok,
+34,1793523069.5280974,1793523096.8227024,27294.605,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+35,1793522729.9767435,1793522851.1367557,121160.012,calentamiento,ok,
+35,1793522851.1367557,1793522974.2287285,123091.973,medicion,ok,
+35,1793522974.2287285,1793523096.024826,121796.098,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+36,1793522729.9767435,1793522849.0352292,119058.486,calentamiento,ok,
+36,1793522849.0352292,1793522973.1299596,124094.73,medicion,ok,
+36,1793522973.1299596,1793523096.8276598,123697.7,en_vuelo,ok,
+37,1793522729.9767435,1793522847.4341764,117457.433,calentamiento,ok,
+37,1793522847.4341764,1793522974.6301138,127195.937,medicion,ok,
+37,1793522974.6301138,1793523091.4277635,116797.65,en_vuelo,ok,
+38,1793522729.9767435,1793522852.335156,122358.413,calentamiento,ok,
+38,1793522852.335156,1793522956.5297244,104194.568,medicion,ok,
+38,1793522956.5297244,1793523057.7273629,101197.639,medicion,ok,
+38,1793523057.7273629,1793523095.9271634,38199.8,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+39,1793522729.9772544,1793522847.837438,117860.184,calentamiento,ok,
+39,1793522847.837438,1793522961.93033,114092.892,medicion,ok,
+39,1793522961.93033,1793523092.5268114,130596.481,en_vuelo,ok,
+40,1793522729.9772544,1793522848.3344617,118357.207,calentamiento,ok,
+40,1793522848.3344617,1793522963.8309445,115496.483,medicion,ok,
+40,1793522963.8309445,1793523080.0273461,116196.402,medicion,ok,
+40,1793523080.0273461,1793523096.425063,16397.717,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+41,1793522729.9772544,1793522848.0344315,118057.177,calentamiento,ok,
+41,1793522848.0344315,1793522966.1316395,118097.208,medicion,ok,
+41,1793522966.1316395,1793523078.5239506,112392.311,medicion,ok,
+41,1793523078.5239506,1793523095.125457,16601.506,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+42,1793522729.9772544,1793522850.539091,120561.837,calentamiento,ok,
+42,1793522850.539091,1793522974.9321797,124393.089,medicion,ok,
+42,1793522974.9321797,1793523090.2246087,115292.429,en_vuelo,ok,
+43,1793522729.9767435,1793522849.4352307,119458.487,calentamiento,ok,
+43,1793522849.4352307,1793522977.4320693,127996.839,medicion,ok,
+43,1793522977.4320693,1793523092.5274043,115095.335,en_vuelo,ok,
+44,1793522729.9772544,1793522852.3377845,122360.53,calentamiento,ok,
+44,1793522852.3377845,1793522973.632512,121294.728,medicion,ok,
+44,1793522973.632512,1793523094.7341871,121101.675,en_vuelo,ok,
+45,1793522729.9772544,1793522849.6375473,119660.293,calentamiento,ok,
+45,1793522849.6375473,1793522973.2295187,123591.971,medicion,ok,
+45,1793522973.2295187,1793523081.626578,108397.059,medicion,ok,
+45,1793523081.626578,1793523096.6274586,15000.88,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+46,1793522729.9767435,1793522850.836142,120859.399,calentamiento,ok,
+46,1793522850.836142,1793522980.5248694,129688.727,medicion,ok,
+46,1793522980.5248694,1793523086.1247985,105599.929,medicion,ok,
+46,1793523086.1247985,1793523094.725605,8600.806,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+47,1793522729.9767435,1793522847.8351414,117858.398,calentamiento,ok,
+47,1793522847.8351414,1793522954.0331678,106198.026,medicion,ok,
+47,1793522954.0331678,1793523073.628627,119595.459,medicion,ok,
+47,1793523073.628627,1793523094.6245341,20995.907,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+48,1793522729.9767435,1793522847.4356341,117458.891,calentamiento,ok,
+48,1793522847.4356341,1793522956.830026,109394.392,medicion,ok,
+48,1793522956.830026,1793523074.325752,117495.726,medicion,ok,
+48,1793523074.325752,1793523096.922568,22596.816,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"
+49,1793522729.9767435,1793522851.0362391,121059.496,calentamiento,ok,
+49,1793522851.0362391,1793522960.4300015,109393.762,medicion,ok,
+49,1793522960.4300015,1793523068.6266844,108196.683,medicion,ok,
+49,1793523068.6266844,1793523094.525033,25898.349,en_vuelo,error:OperationFailure,"OperationFailure(""Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted, full error: {'ok': 0.0, 'errmsg': 'Executor error during aggregate command on namespace: benchmark.ventas :: caused by :: operation was interrupted', 'code': 11601, 'co"

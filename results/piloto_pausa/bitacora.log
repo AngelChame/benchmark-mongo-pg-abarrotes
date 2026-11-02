@@ -1,0 +1,23 @@
+2026-11-01T06:30:53Z | arranque del orquestador | rondas=3 celdas=1 semilla=20261101 limite=None respaldo=C:\benchmark-respaldo ntfy=no
+2026-11-01T06:30:53Z | respaldo validado | C:\benchmark-respaldo
+2026-11-01T06:31:10Z | revisión de entorno (arranque) | OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+2026-11-01T06:31:11Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c1 r1 intento 1
+2026-11-01T06:31:52Z | corrida terminada | 1793514689_mongo_PROFILE_A_BASELINE_Q2_c1_r1 status=ok
+2026-11-01T06:31:52Z | ronda terminada | ronda 1
+2026-11-01T06:31:52Z | respaldo | C:\benchmark-respaldo\20261101T063152Z_piloto_pausa_ronda_01 (42 archivos); copia verificada
+2026-11-01T06:31:52Z | pausa | archivo C:\Users\chapp\proyectos\benchmark\results\piloto_pausa\PAUSAR
+2026-11-01T06:32:52Z | reanudar | se borró PAUSAR; revisando el entorno
+2026-11-01T06:33:09Z | revisión de entorno (reanudar) | OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+2026-11-01T06:33:09Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c1 r2 intento 1
+2026-11-01T06:33:51Z | corrida terminada | 1793514808_mongo_PROFILE_A_BASELINE_Q2_c1_r2 status=ok
+2026-11-01T06:33:51Z | ronda terminada | ronda 2
+2026-11-01T06:33:51Z | respaldo | C:\benchmark-respaldo\20261101T063351Z_piloto_pausa_ronda_02 (49 archivos); copia verificada
+2026-11-01T06:33:51Z | fin del orquestador | detenido por DETENER (entre corridas)
+2026-11-01T06:33:52Z | arranque del orquestador | rondas=3 celdas=1 semilla=20261101 limite=None respaldo=C:\benchmark-respaldo ntfy=no
+2026-11-01T06:33:52Z | respaldo validado | C:\benchmark-respaldo
+2026-11-01T06:34:09Z | revisión de entorno (arranque) | OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+2026-11-01T06:34:09Z | inicio corrida | mongo PROFILE_A_BASELINE Q2 c1 r3 intento 1
+2026-11-01T06:34:50Z | corrida terminada | 1793514868_mongo_PROFILE_A_BASELINE_Q2_c1_r3 status=ok
+2026-11-01T06:34:50Z | ronda terminada | ronda 3
+2026-11-01T06:34:51Z | respaldo | C:\benchmark-respaldo\20261101T063450Z_piloto_pausa_ronda_03 (56 archivos); copia verificada
+2026-11-01T06:34:51Z | fin del orquestador | terminado

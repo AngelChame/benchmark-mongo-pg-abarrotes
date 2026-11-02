@@ -1,0 +1,12 @@
+Actualizado: 2026-11-01 00:58:14 CST
+Estado: terminado
+Carpeta de resultados: C:\Users\chapp\proyectos\benchmark\results\piloto
+Hora límite: sin límite
+Duración estimada por corrida: 7.6 min
+Ronda 1: 3/3 con fila, 0 con reintento pendiente, 0 agotadas
+Última corrida: 1793515923_postgres_PROFILE_C_SEVERE_Q1_c50_r1 status=oom descartada=None duración=7.6 min (2026-11-01 00:58:14 CST)
+AVISO: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+
+Pausar entre corridas:  crear el archivo C:\Users\chapp\proyectos\benchmark\results\piloto\PAUSAR
+Reanudar:               borrar C:\Users\chapp\proyectos\benchmark\results\piloto\PAUSAR
+Detener entre corridas: crear el archivo C:\Users\chapp\proyectos\benchmark\results\piloto\DETENER

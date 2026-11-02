@@ -1,0 +1,127 @@
+[2026-11-01 01:15:52 CST] arranque del orquestador: rondas=3 celdas=38 semilla=20261101 limite=2026-11-01 21:00:00-06:00 respaldo=C:\benchmark-respaldo ntfy=no
+[2026-11-01 01:15:52 CST] respaldo validado: C:\benchmark-respaldo
+[2026-11-01 01:16:09 CST] revisión de entorno (arranque): OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+[2026-11-01 01:16:10 CST] inicio corrida: mongo PROFILE_A_BASELINE Q1 c10 r1 intento 1
+[2026-11-01 01:23:29 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2 c1 r1 intento 1
+[2026-11-01 01:30:46 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q1 c10 r1 intento 1
+[2026-11-01 01:38:06 CST] inicio corrida: postgres PROFILE_C_SEVERE Q1 c1 r1 intento 1
+[2026-11-01 01:45:23 CST] inicio corrida: mongo PROFILE_C_SEVERE Q1 c1 r1 intento 1
+[2026-11-01 01:52:40 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2 c50 r1 intento 1
+[2026-11-01 02:00:14 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c50 r1 intento 1
+[2026-11-01 02:07:43 CST] inicio corrida: postgres PROFILE_A_BASELINE Q2 c1 r1 intento 1
+[2026-11-01 02:15:00 CST] inicio corrida: postgres PROFILE_A_BASELINE Q1 c10 r1 intento 1
+[2026-11-01 02:22:19 CST] inicio corrida: mongo PROFILE_A_BASELINE Q1 c1 r1 intento 1
+[2026-11-01 02:29:37 CST] inicio corrida: postgres PROFILE_C_SEVERE Q1 c50 r1 intento 1
+[2026-11-01 02:37:46 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c10 r1 intento 1
+[2026-11-01 02:45:06 CST] inicio corrida: mongo PROFILE_C_SEVERE Q1 c50 r1 intento 1
+[2026-11-01 02:52:40 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q2 c50 r1 intento 1
+[2026-11-01 03:00:09 CST] inicio corrida: postgres PROFILE_A_BASELINE Q1 c50 r1 intento 1
+[2026-11-01 03:07:31 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q1 c10 r1 intento 1
+[2026-11-01 03:14:51 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2 c10 r1 intento 1
+[2026-11-01 03:22:11 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q2 c1 r1 intento 1
+[2026-11-01 03:29:28 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c1 r1 intento 1
+[2026-11-01 03:36:45 CST] inicio corrida: postgres PROFILE_A_BASELINE Q2 c50 r1 intento 1
+[2026-11-01 03:44:13 CST] inicio corrida: mongo PROFILE_A_BASELINE Q1 c50 r1 intento 1
+[2026-11-01 03:51:42 CST] inicio corrida: mongo PROFILE_C_SEVERE Q1 c10 r1 intento 1
+[2026-11-01 03:59:02 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q1 c50 r1 intento 1
+[2026-11-01 04:06:48 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q1 c1 r1 intento 1
+[2026-11-01 04:14:05 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2_RELAXED c50 r1 intento 1
+[2026-11-01 04:21:36 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q2 c10 r1 intento 1
+[2026-11-01 04:28:56 CST] inicio corrida: postgres PROFILE_A_BASELINE Q1 c1 r1 intento 1
+[2026-11-01 04:36:13 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q2 c50 r1 intento 1
+[2026-11-01 04:43:42 CST] inicio corrida: postgres PROFILE_A_BASELINE Q2 c10 r1 intento 1
+[2026-11-01 04:51:01 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q1 c1 r1 intento 1
+[2026-11-01 04:58:19 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q2 c1 r1 intento 1
+[2026-11-01 05:05:36 CST] inicio corrida: postgres PROFILE_C_SEVERE Q1 c10 r1 intento 1
+[2026-11-01 05:12:56 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2_RELAXED c50 r1 intento 1
+[2026-11-01 05:20:30 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2 c10 r1 intento 1
+[2026-11-01 05:27:49 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2 c50 r1 intento 1
+[2026-11-01 05:35:19 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q2 c10 r1 intento 1
+[2026-11-01 05:42:39 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q1 c50 r1 intento 1
+[2026-11-01 05:50:09 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2 c1 r1 intento 1
+[2026-11-01 05:57:26 CST] ronda terminada: ronda 1
+[2026-11-01 05:57:28 CST] respaldo: C:\benchmark-respaldo\20261101T115726Z_results_ronda_01 (204 archivos); copia verificada
+[2026-11-01 05:57:28 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2 c1 r2 intento 1
+[2026-11-01 06:04:45 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2_RELAXED c50 r2 intento 1
+[2026-11-01 06:12:19 CST] inicio corrida: postgres PROFILE_A_BASELINE Q2 c1 r2 intento 1
+[2026-11-01 06:19:35 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q1 c1 r2 intento 1
+[2026-11-01 06:26:53 CST] inicio corrida: mongo PROFILE_A_BASELINE Q1 c10 r2 intento 1
+[2026-11-01 06:34:13 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q2 c10 r2 intento 1
+[2026-11-01 06:41:32 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q1 c1 r2 intento 1
+[2026-11-01 06:48:49 CST] inicio corrida: postgres PROFILE_C_SEVERE Q1 c1 r2 intento 1
+[2026-11-01 06:56:06 CST] inicio corrida: postgres PROFILE_C_SEVERE Q1 c50 r2 intento 1
+[2026-11-01 07:03:39 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q2 c1 r2 intento 1
+[2026-11-01 07:10:56 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q1 c50 r2 intento 1
+[2026-11-01 07:18:26 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2 c10 r2 intento 1
+[2026-11-01 07:25:47 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2 c1 r2 intento 1
+[2026-11-01 07:33:05 CST] inicio corrida: postgres PROFILE_A_BASELINE Q1 c1 r2 intento 1
+[2026-11-01 07:40:21 CST] inicio corrida: mongo PROFILE_A_BASELINE Q1 c1 r2 intento 1
+[2026-11-01 07:47:39 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2_RELAXED c50 r2 intento 1
+[2026-11-01 07:55:10 CST] inicio corrida: mongo PROFILE_A_BASELINE Q1 c50 r2 intento 1
+[2026-11-01 08:02:39 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c50 r2 intento 1
+[2026-11-01 08:10:08 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q1 c10 r2 intento 1
+[2026-11-01 08:17:27 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2 c50 r2 intento 1
+[2026-11-01 08:24:56 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q1 c10 r2 intento 1
+[2026-11-01 08:32:16 CST] inicio corrida: mongo PROFILE_C_SEVERE Q1 c50 r2 intento 1
+[2026-11-01 08:39:53 CST] inicio corrida: postgres PROFILE_A_BASELINE Q2 c10 r2 intento 1
+[2026-11-01 08:47:12 CST] inicio corrida: mongo PROFILE_C_SEVERE Q1 c1 r2 intento 1
+[2026-11-01 08:54:30 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q2 c50 r2 intento 1
+[2026-11-01 09:01:59 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c1 r2 intento 1
+[2026-11-01 09:09:16 CST] inicio corrida: postgres PROFILE_A_BASELINE Q2 c50 r2 intento 1
+[2026-11-01 09:16:44 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q2 c10 r2 intento 1
+[2026-11-01 09:24:04 CST] inicio corrida: postgres PROFILE_C_SEVERE Q1 c10 r2 intento 1
+[2026-11-01 09:31:24 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2 c50 r2 intento 1
+[2026-11-01 09:38:58 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q2 c50 r2 intento 1
+[2026-11-01 09:46:29 CST] inicio corrida: postgres PROFILE_A_BASELINE Q1 c10 r2 intento 1
+[2026-11-01 09:53:50 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2 c10 r2 intento 1
+[2026-11-01 10:01:11 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q2 c1 r2 intento 1
+[2026-11-01 10:08:28 CST] inicio corrida: postgres PROFILE_A_BASELINE Q1 c50 r2 intento 1
+[2026-11-01 10:15:56 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c10 r2 intento 1
+[2026-11-01 10:23:16 CST] inicio corrida: mongo PROFILE_C_SEVERE Q1 c10 r2 intento 1
+[2026-11-01 10:30:37 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q1 c50 r2 intento 1
+[2026-11-01 10:38:06 CST] ronda terminada: ronda 2
+[2026-11-01 10:38:09 CST] respaldo: C:\benchmark-respaldo\20261101T163806Z_results_ronda_02 (323 archivos); copia verificada
+[2026-11-01 10:38:10 CST] inicio corrida: postgres PROFILE_C_SEVERE Q1 c1 r3 intento 1
+[2026-11-01 10:45:27 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q1 c10 r3 intento 1
+[2026-11-01 10:52:47 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q1 c1 r3 intento 1
+[2026-11-01 11:00:04 CST] inicio corrida: postgres PROFILE_A_BASELINE Q2 c10 r3 intento 1
+[2026-11-01 11:07:23 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c50 r3 intento 1
+[2026-11-01 11:14:52 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q2 c50 r3 intento 1
+[2026-11-01 11:22:21 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q2 c10 r3 intento 1
+[2026-11-01 11:29:41 CST] inicio corrida: postgres PROFILE_A_BASELINE Q1 c50 r3 intento 1
+[2026-11-01 11:37:09 CST] inicio corrida: postgres PROFILE_A_BASELINE Q1 c10 r3 intento 1
+[2026-11-01 11:44:29 CST] inicio corrida: postgres PROFILE_A_BASELINE Q2 c50 r3 intento 1
+[2026-11-01 11:51:58 CST] inicio corrida: mongo PROFILE_C_SEVERE Q1 c50 r3 intento 1
+[2026-11-01 11:59:35 CST] pausa: archivo C:\Users\chapp\proyectos\benchmark\results\PAUSAR
+[2026-11-01 12:49:12 CST] reanudar: se borró PAUSAR; revisando el entorno
+[2026-11-01 12:49:30 CST] revisión de entorno (reanudar): OK | avisos: No se pudo comprobar con powercfg: accion_tapa (no cierres la tapa durante la matriz)
+[2026-11-01 12:49:30 CST] inicio corrida: mongo PROFILE_C_SEVERE Q1 c1 r3 intento 1
+[2026-11-01 12:56:48 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2 c10 r3 intento 1
+[2026-11-01 13:04:08 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2_RELAXED c50 r3 intento 1
+[2026-11-01 13:11:42 CST] inicio corrida: postgres PROFILE_A_BASELINE Q1 c1 r3 intento 1
+[2026-11-01 13:19:00 CST] inicio corrida: mongo PROFILE_A_BASELINE Q1 c10 r3 intento 1
+[2026-11-01 13:26:20 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c10 r3 intento 1
+[2026-11-01 13:33:39 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q2 c50 r3 intento 1
+[2026-11-01 13:41:09 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2 c50 r3 intento 1
+[2026-11-01 13:48:41 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2 c1 r3 intento 1
+[2026-11-01 13:55:58 CST] inicio corrida: mongo PROFILE_C_SEVERE Q1 c10 r3 intento 1
+[2026-11-01 14:03:19 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q1 c50 r3 intento 1
+[2026-11-01 14:11:50 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q1 c50 r3 intento 1
+[2026-11-01 14:19:20 CST] inicio corrida: postgres PROFILE_A_BASELINE Q2 c1 r3 intento 1
+[2026-11-01 14:26:38 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2 c50 r3 intento 1
+[2026-11-01 14:34:11 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q2 c1 r3 intento 1
+[2026-11-01 14:41:28 CST] inicio corrida: mongo PROFILE_A_BASELINE Q1 c50 r3 intento 1
+[2026-11-01 14:48:56 CST] inicio corrida: postgres PROFILE_C_SEVERE Q1 c10 r3 intento 1
+[2026-11-01 14:56:17 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q2 c1 r3 intento 1
+[2026-11-01 15:03:34 CST] inicio corrida: mongo PROFILE_C_SEVERE Q2 c1 r3 intento 1
+[2026-11-01 15:10:52 CST] inicio corrida: mongo PROFILE_A_BASELINE Q1 c1 r3 intento 1
+[2026-11-01 15:18:10 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q1 c10 r3 intento 1
+[2026-11-01 15:25:30 CST] inicio corrida: postgres PROFILE_C_SEVERE Q1 c50 r3 intento 1
+[2026-11-01 15:33:02 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2 c10 r3 intento 1
+[2026-11-01 15:40:22 CST] inicio corrida: postgres PROFILE_B_MEDIUM Q1 c1 r3 intento 1
+[2026-11-01 15:47:39 CST] inicio corrida: postgres PROFILE_C_SEVERE Q2_RELAXED c50 r3 intento 1
+[2026-11-01 15:55:11 CST] inicio corrida: mongo PROFILE_B_MEDIUM Q2 c10 r3 intento 1
+[2026-11-01 16:02:32 CST] inicio corrida: mongo PROFILE_A_BASELINE Q2 c1 r3 intento 1
+[2026-11-01 16:09:49 CST] ronda terminada: ronda 3
+[2026-11-01 16:09:53 CST] respaldo: C:\benchmark-respaldo\20261101T220949Z_results_ronda_03 (443 archivos); copia verificada
+[2026-11-01 16:09:53 CST] fin del orquestador: terminado
