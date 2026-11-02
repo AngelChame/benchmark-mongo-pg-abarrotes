@@ -10,3 +10,5 @@
 *.csv text eol=lf
 *.md text eol=lf
 *.env text eol=lf
+results/** -text
+evidence/** -text
