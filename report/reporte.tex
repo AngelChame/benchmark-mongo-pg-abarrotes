@@ -657,6 +657,10 @@ repetir la matriz en Linux nativo.
   cliente, que corre en Windows. Los documentos por consulta salen de los planes con el
   perfil A y 1 cliente y se asumen constantes. La razón de RSS por documentos/s es una
   interpretación del enunciado.
+\item \textbf{Variante relajada en el CSV.} Las 6 filas de \cod{Q2\_RELAXED} (2 celdas
+  $\times$ 3 rondas) usan \cod{query\_id = Q2\_RELAXED}, valor que el esquema del
+  enunciado no define; se usó para reportar ambas variantes de Q2 sin agregar ni renombrar
+  columnas. Para concatenar con otros CSV conviene filtrarlas o tratarlas como Q2.
 \end{enumerate}
 
 %=====================================================================
@@ -685,9 +689,11 @@ python analysis/consolidar.py                   # tablas y figuras de este repor
 \item \cod{evidence/plans/}, \cod{evidence/verificacion/}, \cod{evidence/entorno/}.
 \end{itemize}
 
-Los manifiestos SHA-256 de \cod{results/manifiestos/} verifican con \cod{sha256sum -c} en
-un clon del repositorio, salvo cuatro archivos que el orquestador actualizó después de
-hacer el respaldo de la ronda 3: \cod{bitacora.log}, \cod{estado.txt}, \cod{resumen.md} y
-\cod{orquestador\_matriz.out}.
+El manifiesto de la ronda 3 (el final) verifica con \cod{sha256sum -c} en un clon del
+repositorio, salvo cuatro archivos que el orquestador actualizó después de hacer ese
+respaldo: \cod{bitacora.log}, \cod{estado.txt}, \cod{resumen.md} y
+\cod{orquestador\_matriz.out}. Los manifiestos de las rondas 1 y 2 son copias intermedias:
+además de esos archivos difieren \cod{benchmark\_results.csv} y \cod{evidence/INDEX.md},
+que siguieron creciendo después de cada respaldo.
 
 \end{document}
